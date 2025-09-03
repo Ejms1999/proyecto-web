@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Catálogo | Custom20</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-battery-charging"></i> Custom20</a>
+    <div class="container">
+      <a class="btn btn-outline-secondary ms-auto" href="index.html"><i class="bi bi-house"></i> Inicio</a>
+      <a class="btn btn-outline-secondary ms-auto" href="productos.html">Repuestos</a>
+      <a class="btn btn-outline-secondary ms-auto" href="servicios.html">Servicios</a>
+      <a class="btn btn-outline-secondary ms-auto" href="preguntas.html">Preguntas</a>
+      <a class="btn btn-outline-secondary ms-auto" href="contacto.html">Contacto</a>
+    </div>
+</nav>
+
+<header class="bg-primary text-white py-5"><div class="container"><h1>Repuestos disponibles</h1></div></header>
+
+<main class="container my-4">
+  <div class="row" id="listaProductos"></div>
+</main>
+
+
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Catálogo | Custom20</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+
+<header class="bg-primary text-white py-5">
+  <div class="container">
+    <h1>Repuestos disponibles</h1>
+  </div>
+</header>
+
+<main class="container my-4">
+  <div class="row" id="listaProductos"></div>
+</main>
+
+<script>
+
+const PRODUCTOS = [
+  {
+    nombre:"Acelerador pulgar",
+    precio:12990,
+    img:"https://i.scdn.co/image/ab67616d0000b2734b9726a6ceef93f6d7737ff7" 
+  },
+  {
+    nombre:"BMS 13S 15A",
+    precio:22990,
+    img:"https://i.scdn.co/image/ab67616d0000b2734b9726a6ceef93f6d7737ff7"
+  },
+  {
+    nombre:"Cargador 54.6V 2A",
+    precio:21990,
+    img:"https://i.scdn.co/image/ab67616d0000b2734b9726a6ceef93f6d7737ff7"
+  },
+  {
+    nombre:"Faro LED + Bocina",
+    precio:14990,
+    img:"https://i.scdn.co/image/ab67616d0000b2734b9726a6ceef93f6d7737ff7"
+  },
+  {
+    nombre:"Acelerador tipo moto",
+    precio:20000,
+    img:"https://i.scdn.co/image/ab67616d0000b2734b9726a6ceef93f6d7737ff7" 
+  },
+  {
+    nombre:"BMS 10S 15A",
+    precio:18000,
+    img:"https://i.scdn.co/image/ab67616d0000b2734b9726a6ceef93f6d7737ff7" 
+  },
+];
+
+const lista=document.getElementById("listaProductos");
+PRODUCTOS.forEach(p=>{
+  lista.innerHTML+=`
+    <div class="col-md-3">
+      <div class="card mb-3">
+        <img src="${p.img}" class="card-img-top">
+        <div class="card-body">
+          <h6>${p.nombre}</h6>
+          <p class="fw-bold">$${p.precio.toLocaleString("es-CL")}</p>
+        </div>
+      </div>
+    </div>`;
+});
+</script>
+</body>
+</html>
