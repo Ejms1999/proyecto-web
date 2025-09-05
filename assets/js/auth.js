@@ -34,26 +34,51 @@ const LS_KEYS = {
   function findUserByEmail(email) {
     return getUsers().find(u => u.email.toLowerCase() === (email || '').toLowerCase().trim());
   }
+
+  // Función para verificar si un email ya existe (útil para validaciones en tiempo real)
+  function emailExists(email) {
+    return findUserByEmail(email) !== undefined;
+  }
   
   function setSession(user) {
     localStorage.setItem(LS_KEYS.CURRENT_USER, JSON.stringify({
       name: user.name, email: user.email, role: user.role
     }));
+    
+    // Disparar evento para actualizar navbar
+    if (window.dispatchEvent) {
+      window.dispatchEvent(new CustomEvent('auth:login', { detail: user }));
+    }
   }
   
-  function registerUser({ name, email, pass }) {
-    if (!name?.trim() || !email?.trim() || !pass?.trim()) {
+  function registerUser({ name, email, password }) {
+    // Validaciones básicas
+    if (!name?.trim() || !email?.trim() || !password?.trim()) {
       return { ok: false, code: 'missing_fields', message: 'Todos los campos son obligatorios.' };
     }
-    if (!emailDomainOk(email)) {
-      return { ok: false, code: 'bad_domain', message: 'Dominio no permitido. Usa @duocuc.cl o @gmail.com.' };
+    
+    // Validación de nombre
+    if (name.trim().length < 2) {
+      return { ok: false, code: 'invalid_name', message: 'El nombre debe tener al menos 2 caracteres.' };
     }
+    
+    // Validación de email
+    if (!emailDomainOk(email)) {
+      return { ok: false, code: 'bad_domain', message: 'Dominio no permitido. Usa @duocuc.cl, @duoc.cl o @gmail.com.' };
+    }
+    
+    // Validación de contraseña
+    if (password.length < 6) {
+      return { ok: false, code: 'weak_password', message: 'La contraseña debe tener al menos 6 caracteres.' };
+    }
+    
+    // Validación de email duplicado
     if (findUserByEmail(email)) {
       return { ok: false, code: 'already_exists', message: 'El correo ya está registrado.' };
     }
-  
+
     const users = getUsers();
-    const newUser = { name: name.trim(), email: email.trim(), pass: pass.trim(), role: 'user' };
+    const newUser = { name: name.trim(), email: email.trim(), password: password.trim(), role: 'user' };
     users.push(newUser);
     saveUsers(users);
   
@@ -66,19 +91,19 @@ const LS_KEYS = {
     return { ok: true, code: 'registered', user: newUser };
   }
   
-  function loginUser(email, pass) {
-    if (!email?.trim() || !pass?.trim()) {
+  function loginUser(email, password) {
+    if (!email?.trim() || !password?.trim()) {
       return { ok: false, code: 'missing_fields', message: 'Correo y contraseña son obligatorios.' };
     }
     if (!emailDomainOk(email)) {
-      return { ok: false, code: 'bad_domain', message: 'Dominio no permitido.' };
+      return { ok: false, code: 'bad_domain', message: 'Dominio no permitido. Usa @duocuc.cl, @duoc.cl o @gmail.com.' };
     }
-  
+
     const user = findUserByEmail(email);
     if (!user) {
       return { ok: false, code: 'not_found', message: 'Este correo no está registrado.' };
     }
-    if (user.pass !== pass) {
+    if (user.password !== password) {
       return { ok: false, code: 'bad_credentials', message: 'Usuario o contraseña incorrectos.' };
     }
   
@@ -94,6 +119,11 @@ const LS_KEYS = {
   
   function logout() {
     localStorage.removeItem(LS_KEYS.CURRENT_USER);
+    
+    // Disparar evento para actualizar navbar
+    if (window.dispatchEvent) {
+      window.dispatchEvent(new CustomEvent('auth:logout'));
+    }
   }
   
   // ====== PRODUCTOS SEED ======
@@ -148,14 +178,56 @@ const LS_KEYS = {
     }
   }
 
+  // Funciones de productos
+  function getProducts() {
+    try {
+      return JSON.parse(localStorage.getItem('APP_PRODS')) || [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveProducts(products) {
+    localStorage.setItem('APP_PRODS', JSON.stringify(products));
+  }
+
   seedUsersIfEmpty();
   seedProductsIfEmpty();
   
+  // Función global para logout que se puede usar desde cualquier página
+  function globalLogout() {
+    console.log('Ejecutando logout global...');
+    
+    // Llamar a la función de logout
+    if (window.AuthStore && window.AuthStore.logout) {
+      window.AuthStore.logout();
+    } else {
+      // Fallback directo
+      localStorage.removeItem('APP_CURRENT_USER');
+      if (window.dispatchEvent) {
+        window.dispatchEvent(new CustomEvent('auth:logout'));
+      }
+    }
+    
+    // Redirigir al index
+    window.location.href = 'index.html';
+  }
+
+  // Exponer función global
+  window.globalLogout = globalLogout;
+
   window.AuthStore = {
     LS_KEYS,
     registerUser,
     loginUser,
     getCurrentUser,
-    logout
+    logout,
+    // Funciones de validación
+    emailExists,
+    findUserByEmail,
+    // Funciones de productos
+    getProducts,
+    saveProducts,
+    generateUniqueProductCode
   };
   

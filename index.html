@@ -39,11 +39,8 @@
             </a>
           </li>
           <li class="nav-item" id="loginSection">
-            <a class="btn btn-outline-primary btn-sm me-2" href="login.html">
+            <a class="btn btn-outline-primary btn-sm" href="login.html">
               <i class="bi bi-box-arrow-in-right me-1"></i>Iniciar Sesión
-            </a>
-            <a class="btn btn-primary btn-sm" href="formulario_inscripcion.html">
-              <i class="bi bi-person-plus me-1"></i>Registrarse
             </a>
           </li>
           <li class="nav-item d-none" id="userSection">
@@ -135,34 +132,104 @@
   <script src="assets/js/auth.js"></script>
   <script src="assets/js/layout.js"></script>
   <script>
+    // Función para actualizar contador del carrito
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('APP_CART') || '[]');
+      const totalItems = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+      
+      const cartCountEl = document.getElementById('cartCount');
+      if (cartCountEl) {
+        cartCountEl.textContent = totalItems;
+      }
+    }
+
     $(function() {
       // Inicializar año
       document.getElementById("yearNow").textContent = new Date().getFullYear();
       
-      // Manejar visibilidad del login
-      const user = window.AuthStore ? window.AuthStore.getCurrentUser() : null;
-      const loginSection = document.getElementById('loginSection');
-      const userSection = document.getElementById('userSection');
+      // Inicializar contador del carrito
+      updateCartCount();
       
-      if (user) {
-        // Usuario logueado
-        if (loginSection) loginSection.classList.add('d-none');
-        if (userSection) {
-          userSection.classList.remove('d-none');
-          const userNameEl = document.getElementById('navUserName');
-          if (userNameEl) userNameEl.textContent = `${user.name} (${user.role})`;
+      // Manejar visibilidad del login
+      function updateNavbarAuth() {
+        console.log('Actualizando navbar de autenticación...');
+        
+        // Fallback si AuthStore no está disponible
+        let user = null;
+        if (window.AuthStore && window.AuthStore.getCurrentUser) {
+          user = window.AuthStore.getCurrentUser();
+        } else {
+          // Fallback directo desde localStorage
+          try {
+            const userData = localStorage.getItem('APP_CURRENT_USER');
+            if (userData) {
+              user = JSON.parse(userData);
+              console.log('Usuario obtenido desde localStorage:', user);
+            }
+          } catch (e) {
+            console.error('Error al obtener usuario desde localStorage:', e);
+          }
         }
         
-        // Mostrar enlaces de admin si es admin
-        if (user.role === 'admin') {
-          const adminLinks = document.querySelectorAll('.admin-only');
-          adminLinks.forEach(link => link.classList.remove('d-none'));
+        const loginSection = document.getElementById('loginSection');
+        const userSection = document.getElementById('userSection');
+        
+        console.log('Usuario actual:', user);
+        console.log('loginSection:', loginSection);
+        console.log('userSection:', userSection);
+        
+        if (user) {
+          // Usuario logueado
+          console.log('Usuario logueado, actualizando navbar...');
+          if (loginSection) loginSection.classList.add('d-none');
+          if (userSection) {
+            userSection.classList.remove('d-none');
+            const userNameEl = document.getElementById('navUserName');
+            if (userNameEl) {
+              userNameEl.textContent = user.name;
+              console.log('Nombre de usuario actualizado:', user.name);
+            }
+          }
+          
+          // Mostrar enlaces de admin si es admin
+          if (user.role === 'admin') {
+            const adminLinks = document.querySelectorAll('.admin-only');
+            adminLinks.forEach(link => link.classList.remove('d-none'));
+            console.log('Enlaces de admin mostrados');
+          }
+        } else {
+          // Usuario no logueado
+          console.log('Usuario no logueado, mostrando login...');
+          if (loginSection) loginSection.classList.remove('d-none');
+          if (userSection) userSection.classList.add('d-none');
         }
-      } else {
-        // Usuario no logueado
-        if (loginSection) loginSection.classList.remove('d-none');
-        if (userSection) userSection.classList.add('d-none');
       }
+      
+      // Ejecutar inmediatamente
+      updateNavbarAuth();
+      
+      // También ejecutar después de un pequeño delay para asegurar que AuthStore esté cargado
+      setTimeout(updateNavbarAuth, 100);
+      
+      // Escuchar eventos de autenticación
+      window.addEventListener('auth:login', updateNavbarAuth);
+      window.addEventListener('auth:logout', updateNavbarAuth);
+      
+      // Botón de logout
+      document.getElementById('btnLogout')?.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Cerrando sesión...');
+        
+        // Usar función global de logout
+        if (window.globalLogout) {
+          window.globalLogout();
+        } else {
+          // Fallback si la función global no está disponible
+          localStorage.removeItem('APP_CURRENT_USER');
+          updateNavbarAuth();
+          window.location.href = 'index.html';
+        }
+      });
       
       // Inicializar navbar logic
       if (window.Layout && window.Layout.initNavbarLogic) {

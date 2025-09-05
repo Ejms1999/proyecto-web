@@ -4,50 +4,144 @@
   <meta charset="utf-8">
   <title>Carrito | Custom20</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Custom20 Styles -->
+  <link href="assets/css/styles.css" rel="stylesheet">
 </head>
 <body>
-  <div id="navbar-container"></div>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-battery-charging"></i> Custom20.cl</a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item admin-only d-none"><a class="nav-link" href="admin.html">Admin Productos</a></li>
+          <li class="nav-item admin-only d-none"><a class="nav-link" href="admin_usuarios.html">Admin Usuarios</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="productos.html">Repuestos</a></li>
+          <li class="nav-item"><a class="nav-link" href="servicios.html">Servicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="preguntas.html">Preguntas</a></li>
+          <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item me-3">
+            <a class="nav-link position-relative" href="carrito.html">
+              🛒 Carrito
+              <span id="cartCount" class="badge bg-primary text-white position-absolute top-0 start-100 translate-middle">0</span>
+            </a>
+          </li>
+          <li class="nav-item" id="loginSection">
+            <a class="btn btn-outline-primary btn-sm" href="login.html">
+              <i class="bi bi-box-arrow-in-right me-1"></i>Iniciar Sesión
+            </a>
+          </li>
+          <li class="nav-item d-none" id="userSection">
+            <span class="navbar-text me-2" id="navUserName">Invitado</span>
+            <a class="btn btn-outline-secondary btn-sm" href="#" id="btnLogout">
+              <i class="bi bi-box-arrow-right me-1"></i>Salir
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <div id="navbar-container" style="display: none;"></div>
 
   <main class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h1 class="mb-0">Carrito de compras</h1>
-      <div>
-        <button class="btn btn-outline-danger btn-sm" id="btnVaciar">Vaciar carrito</button>
+      <div class="d-flex gap-2 align-items-center">
+        <button class="btn btn-outline-info btn-sm" id="btnDebug" title="Debug - Ver datos en consola">
+          <i class="bi bi-bug"></i>
+        </button>
+        <button class="btn btn-outline-warning btn-sm" id="btnReset" title="Reset - Limpiar y regenerar productos">
+          <i class="bi bi-arrow-clockwise"></i>
+        </button>
+        <button class="btn btn-outline-danger btn-sm" id="btnCleanInvalid" title="Limpiar productos inválidos del carrito">
+          <i class="bi bi-exclamation-triangle"></i>
+        </button>
+        <span class="badge bg-primary fs-6" id="cartCount">0 productos</span>
       </div>
     </div>
 
-    <div id="cartEmpty" class="alert alert-info d-none">Tu carrito está vacío.</div>
+    <div id="cartEmpty" class="alert alert-info d-none">
+      <div class="text-center">
+        <i class="bi bi-cart-x" style="font-size: 3rem; color: #6c757d;"></i>
+        <h4 class="mt-3">Tu carrito está vacío</h4>
+        <p class="mb-0">Agrega algunos productos para comenzar tu compra</p>
+        <a href="productos.html" class="btn btn-primary mt-3">
+          <i class="bi bi-arrow-left me-2"></i>Ver productos
+        </a>
+      </div>
+    </div>
 
     <div class="table-responsive">
-      <table class="table align-middle" id="tablaCarrito">
-        <thead>
+      <table class="table table-hover align-middle" id="tablaCarrito">
+        <thead class="table-dark">
           <tr>
-            <th>#</th><th>Producto</th><th class="text-end">Precio</th><th class="text-center">Cantidad</th><th class="text-end">Subtotal</th><th></th>
+            <th>#</th>
+            <th>Producto</th>
+            <th>Código</th>
+            <th class="text-end">Precio</th>
+            <th class="text-center">Cantidad</th>
+            <th class="text-end">Subtotal</th>
+            <th class="text-center">Acciones</th>
           </tr>
         </thead>
         <tbody></tbody>
-        <tfoot>
+        <tfoot class="table-light">
           <tr>
-            <th colspan="4" class="text-end">Total</th>
-            <th class="text-end" id="cartTotal">$0</th>
+            <th colspan="5" class="text-end fs-5">Total a pagar:</th>
+            <th class="text-end fs-4 text-primary" id="cartTotal">$0</th>
             <th></th>
           </tr>
         </tfoot>
       </table>
     </div>
 
-    <div class="d-flex justify-content-end gap-2 mt-3">
-      <a class="btn btn-outline-secondary" href="productos.html">Seguir comprando</a>
-      <button class="btn btn-primary" id="btnConfirmar" disabled>Confirmar compra</button>
+    <div class="d-flex justify-content-between align-items-center mt-4">
+      <div>
+        <a class="btn btn-outline-secondary" href="productos.html">
+          <i class="bi bi-arrow-left me-2"></i>Seguir comprando
+        </a>
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-danger" id="btnVaciar">
+          <i class="bi bi-trash me-2"></i>Vaciar carrito
+        </button>
+        <button class="btn btn-primary btn-lg" id="btnConfirmar" disabled>
+          <i class="bi bi-check-circle me-2"></i>Confirmar compra
+        </button>
+      </div>
     </div>
   </main>
 
-  <div id="footer-container"></div>
+  <footer class="custom20-footer mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Custom20.cl</h5>
+          <p>Repuestos y accesorios para scooters eléctricos</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p>&copy; <span id="yearNow"></span> Custom20.cl - Todos los derechos reservados</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <div id="footer-container" style="display: none;"></div>
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/auth.js"></script>
-  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/layaout.js"></script>
   <script>
     const CART_KEY = 'APP_CART';
     const PROD_KEY = 'APP_PRODS';
@@ -57,7 +151,9 @@
       try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch { return []; }
     }
     function saveCart(cart) {
+      console.log('Guardando carrito:', cart);
       localStorage.setItem(CART_KEY, JSON.stringify(cart));
+      console.log('Carrito guardado en localStorage');
       // avisa al navbar para refrescar badge
       window.dispatchEvent(new CustomEvent('cart:updated'));
     }
@@ -66,16 +162,91 @@
     }
     function findProdInfo(id) {
       const p = getProds().find(x => String(x.id) === String(id));
-      if (p) return { name: p.nombre, price: Number(p.precio)||0 };
+      if (p) return { 
+        name: p.nombre, 
+        price: Number(p.precio)||0,
+        codigo: p.codigo,
+        descripcion: p.descripcion,
+        categoria: p.categoria,
+        marca: p.marca,
+        stock: Number(p.stock) || 0
+      };
       return null;
     }
 
-    function renderCarrito() {
+    // Función para validar y corregir el carrito contra el inventario
+    function validateCartAgainstInventory() {
       const cart = getCart();
+      const products = getProds();
+      let cartModified = false;
+      let removedItems = [];
+      let adjustedItems = [];
+
+      const validCart = cart.filter(item => {
+        const product = products.find(p => String(p.id) === String(item.id));
+        
+        if (!product) {
+          // Producto no existe en inventario
+          removedItems.push(item.name || `Producto ${item.id}`);
+          cartModified = true;
+          return false;
+        }
+
+        const availableStock = Number(product.stock) || 0;
+        const requestedQty = Number(item.qty) || 1;
+
+        if (requestedQty > availableStock) {
+          // Ajustar cantidad al stock disponible
+          if (availableStock > 0) {
+            item.qty = availableStock;
+            adjustedItems.push({
+              name: item.name || product.nombre,
+              requested: requestedQty,
+              available: availableStock
+            });
+            cartModified = true;
+            return true;
+          } else {
+            // Sin stock disponible
+            removedItems.push(item.name || product.nombre);
+            cartModified = true;
+            return false;
+          }
+        }
+
+        return true;
+      });
+
+      if (cartModified) {
+        saveCart(validCart);
+        
+        // Mostrar notificaciones
+        if (removedItems.length > 0) {
+          alert(`Productos eliminados del carrito (sin stock):\n${removedItems.join('\n')}`);
+        }
+        
+        if (adjustedItems.length > 0) {
+          const adjustments = adjustedItems.map(item => 
+            `${item.name}: ${item.requested} → ${item.available}`
+          ).join('\n');
+          alert(`Cantidades ajustadas por stock disponible:\n${adjustments}`);
+        }
+      }
+
+      return validCart;
+    }
+
+    function renderCarrito() {
+      // Validar carrito contra inventario antes de renderizar
+      const validCart = validateCartAgainstInventory();
       const $tbody = $('#tablaCarrito tbody').empty();
       let total = 0;
+      
+      // Debug: mostrar carrito en consola
+      console.log('Carrito actual:', validCart);
+      console.log('Productos disponibles:', getProds());
 
-      if (!cart.length) {
+      if (!validCart.length) {
         $('#cartEmpty').removeClass('d-none');
         $('#btnConfirmar').prop('disabled', true);
       } else {
@@ -83,11 +254,21 @@
         $('#btnConfirmar').prop('disabled', false);
       }
 
-      cart.forEach((it, i) => {
-        // Normaliza info: intenta traer precio/nombre desde productos si faltan
-        let name = it.name || (findProdInfo(it.id)?.name) || `Producto ${it.id}`;
-        let price = (typeof it.price === 'number') ? it.price : (findProdInfo(it.id)?.price || 0);
+      validCart.forEach((it, i) => {
+        // Obtener información completa del producto
+        const prodInfo = findProdInfo(it.id);
+        
+        console.log(`Procesando item ${i}:`, it);
+        console.log(`Info del producto:`, prodInfo);
+        
+        // Usar información del carrito o del producto como fallback
+        let name = it.name || prodInfo?.name || `Producto ${it.id}`;
+        let price = (typeof it.price === 'number') ? it.price : (prodInfo?.price || 0);
+        let codigo = it.codigo || prodInfo?.codigo || 'N/A';
+        let descripcion = it.descripcion || prodInfo?.descripcion || '';
         let qty = Number(it.qty) || 1;
+
+        console.log(`Datos finales:`, { name, price, codigo, descripcion, qty });
 
         const subtotal = price * qty;
         total += subtotal;
@@ -95,7 +276,15 @@
         $tbody.append(`
           <tr data-id="${it.id}">
             <td>${i+1}</td>
-            <td>${name}</td>
+            <td>
+              <div>
+                <strong>${name}</strong>
+                ${descripcion ? `<br><small class="text-muted">${descripcion}</small>` : ''}
+              </div>
+            </td>
+            <td>
+              <code class="text-primary">${codigo}</code>
+            </td>
             <td class="text-end">${fmt.format(price)}</td>
             <td class="text-center">
               <div class="btn-group btn-group-sm" role="group">
@@ -105,64 +294,237 @@
               </div>
             </td>
             <td class="text-end">${fmt.format(subtotal)}</td>
-            <td class="text-end">
-              <button class="btn btn-sm btn-danger btnRemove">Eliminar</button>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-danger btnRemove" title="Eliminar producto">
+                <i class="bi bi-trash"></i>
+              </button>
             </td>
           </tr>
         `);
       });
 
       $('#cartTotal').text(fmt.format(total));
+      
+      console.log(`Carrito renderizado: ${validCart.length} productos, total: ${fmt.format(total)}`);
+    }
+
+    // Función para actualizar contador del carrito
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('APP_CART') || '[]');
+      const totalItems = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+      
+      // Actualizar badge del navbar
+      const cartCountEl = document.getElementById('cartCount');
+      if (cartCountEl) {
+        cartCountEl.textContent = totalItems;
+      }
+      
+      // Actualizar badge del header
+      const headerCartCount = document.querySelector('main .badge');
+      if (headerCartCount) {
+        headerCartCount.textContent = `${totalItems} producto${totalItems !== 1 ? 's' : ''}`;
+      }
     }
 
     $(function () {
-      // proteger página (ambos roles pueden comprar)
-      const user = AuthStore.getCurrentUser();
-      if (!user) { location.href = 'login.html'; return; }
-
-      Layout.loadPartials();
+      console.log('Inicializando carrito...');
+      
+      // Inicializar año
+      document.getElementById("yearNow").textContent = new Date().getFullYear();
+      
+      // Inicializar contador del carrito
+      updateCartCount();
+      
+      // Manejar visibilidad del login
+      function updateNavbarAuth() {
+        console.log('Actualizando navbar de autenticación en carrito...');
+        
+        // Fallback si AuthStore no está disponible
+        let user = null;
+        if (window.AuthStore && window.AuthStore.getCurrentUser) {
+          user = window.AuthStore.getCurrentUser();
+        } else {
+          // Fallback directo desde localStorage
+          try {
+            const userData = localStorage.getItem('APP_CURRENT_USER');
+            if (userData) {
+              user = JSON.parse(userData);
+              console.log('Usuario obtenido desde localStorage:', user);
+            }
+          } catch (e) {
+            console.error('Error al obtener usuario desde localStorage:', e);
+          }
+        }
+        
+        const loginSection = document.getElementById('loginSection');
+        const userSection = document.getElementById('userSection');
+        
+        if (user) {
+          // Usuario logueado
+          if (loginSection) loginSection.classList.add('d-none');
+          if (userSection) {
+            userSection.classList.remove('d-none');
+            const userNameEl = document.getElementById('navUserName');
+            if (userNameEl) userNameEl.textContent = user.name;
+          }
+          
+          // Mostrar enlaces de admin si es admin
+          if (user.role === 'admin') {
+            const adminLinks = document.querySelectorAll('.admin-only');
+            adminLinks.forEach(link => link.classList.remove('d-none'));
+          }
+        } else {
+          // Usuario no logueado
+          if (loginSection) loginSection.classList.remove('d-none');
+          if (userSection) userSection.classList.add('d-none');
+        }
+      }
+      
+      // Ejecutar inmediatamente
+      updateNavbarAuth();
+      
+      // También ejecutar después de un pequeño delay
+      setTimeout(updateNavbarAuth, 100);
+      
+      // Escuchar eventos de autenticación
+      window.addEventListener('auth:login', updateNavbarAuth);
+      window.addEventListener('auth:logout', updateNavbarAuth);
+      
+      // Botón de logout
+      document.getElementById('btnLogout')?.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Cerrando sesión...');
+        
+        // Usar función global de logout
+        if (window.globalLogout) {
+          window.globalLogout();
+        } else {
+          // Fallback si la función global no está disponible
+          localStorage.removeItem('APP_CURRENT_USER');
+          updateNavbarAuth();
+          window.location.href = 'index.html';
+        }
+      });
+      
+      // Cargar partials y renderizar carrito (funciona sin login)
+      if (window.Layout && window.Layout.loadPartials) {
+        Layout.loadPartials();
+      } else {
+        console.warn('Layout no está disponible, continuando sin partials');
+      }
       renderCarrito();
 
-      // Vaciar
-      $('#btnVaciar').on('click', () => {
-        saveCart([]);
-        renderCarrito();
+      // Botón de debug
+      $('#btnDebug').on('click', function() {
+        console.log('=== DEBUG CARRITO ===');
+        console.log('Carrito:', getCart());
+        console.log('Productos:', getProds());
+        console.log('localStorage APP_CART:', localStorage.getItem('APP_CART'));
+        console.log('localStorage APP_PRODS:', localStorage.getItem('APP_PRODS'));
+        alert('Datos mostrados en consola (F12)');
+      });
+
+      // Botón de reset
+      $('#btnReset').on('click', function() {
+        if (confirm('¿Estás seguro? Esto limpiará el carrito y regenerará los productos.')) {
+          localStorage.removeItem('APP_CART');
+          localStorage.removeItem('APP_PRODS');
+          // Recargar la página para regenerar productos
+          location.reload();
+        }
+      });
+
+      // Botón de limpiar productos inválidos
+      $('#btnCleanInvalid').on('click', function() {
+        if (confirm('¿Limpiar productos que exceden el stock disponible?')) {
+          const validCart = validateCartAgainstInventory();
+          renderCarrito();
+          updateCartCount();
+          alert('Carrito validado contra inventario');
+        }
+      });
+
+      // Vaciar carrito
+      $('#btnVaciar').on('click', function() {
+        if (confirm('¿Estás seguro de que quieres vaciar el carrito?')) {
+          saveCart([]);
+          renderCarrito();
+          updateCartCount();
+          console.log('Carrito vaciado');
+        }
       });
 
       // Cambiar cantidades
       $(document).on('click', '.btnQty', function () {
         const delta = Number($(this).data('delta'));
         const id = $(this).closest('tr').data('id');
+        console.log('Cambiando cantidad:', { delta, id });
+        
         const cart = getCart();
         const item = cart.find(x => String(x.id) === String(id));
-        if (!item) return;
+        if (!item) {
+          console.log('Item no encontrado en carrito');
+          return;
+        }
+        
         const newQty = (Number(item.qty) || 1) + delta;
+        console.log('Nueva cantidad:', newQty);
+        
         if (newQty <= 0) {
           // eliminar si queda en 0
           const next = cart.filter(x => String(x.id) !== String(id));
           saveCart(next);
+          console.log('Producto eliminado del carrito');
         } else {
+          // Verificar stock disponible antes de actualizar
+          const product = getProds().find(p => String(p.id) === String(id));
+          if (product) {
+            const availableStock = Number(product.stock) || 0;
+            if (newQty > availableStock) {
+              alert(`Solo hay ${availableStock} unidades disponibles de ${item.name || product.nombre}`);
+              return;
+            }
+          }
+          
           item.qty = newQty;
           saveCart(cart);
+          console.log('Cantidad actualizada');
         }
         renderCarrito();
+        updateCartCount();
       });
 
       // Eliminar item
       $(document).on('click', '.btnRemove', function () {
         const id = $(this).closest('tr').data('id');
-        const next = getCart().filter(x => String(x.id) !== String(id));
-        saveCart(next);
-        renderCarrito();
+        console.log('Eliminando producto:', id);
+        
+        if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
+          const next = getCart().filter(x => String(x.id) !== String(id));
+          saveCart(next);
+          renderCarrito();
+          updateCartCount();
+          console.log('Producto eliminado');
+        }
       });
 
       // Confirmar compra
       $('#btnConfirmar').on('click', () => {
+        const user = AuthStore.getCurrentUser();
+        
+        if (!user) {
+          // Si no está logueado, redirigir a login
+          alert('Debes iniciar sesión para confirmar tu compra');
+          location.href = 'login.html';
+          return;
+        }
+        
         const totalText = $('#cartTotal').text();
         // Guarda total para mostrar en "gracias"
         sessionStorage.setItem('LAST_ORDER_TOTAL', totalText);
         // Limpia carrito y badge
         saveCart([]);
+        updateCartCount();
         // a gracias
         location.href = 'gracias.html';
       });

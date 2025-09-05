@@ -29,7 +29,10 @@
             </form>
 
             <hr>
-            <p class="text-center">¿No tienes cuenta? <a href="formulario_inscripcion.html">Registrarse</a></p>
+            <p class="text-center text-muted">
+              ¿No tienes cuenta aún? 
+              <a href="formulario_inscripcion.html" class="text-decoration-none fw-bold">REGISTRATE</a>
+            </p>
           </div>
         </div>
       </div>
@@ -38,6 +41,43 @@
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="assets/js/auth.js"></script>
+  <script>
+  // Fallback si auth.js no se carga
+  if (typeof AuthStore === 'undefined') {
+    console.warn('AuthStore no se cargó, creando fallback...');
+    window.AuthStore = {
+      loginUser: function(email, password) {
+        // Validaciones básicas
+        if (!email || !password) {
+          return { ok: false, message: 'Correo y contraseña son obligatorios.' };
+        }
+        
+        // Obtener usuarios existentes
+        const users = JSON.parse(localStorage.getItem('APP_USERS') || '[]');
+        
+        // Buscar usuario
+        const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+        if (!user) {
+          return { ok: false, code: 'not_found', message: 'Este correo no está registrado.' };
+        }
+        
+        // Verificar contraseña
+        if (user.password !== password) {
+          return { ok: false, code: 'bad_credentials', message: 'Usuario o contraseña incorrectos.' };
+        }
+        
+        // Auto-login
+        localStorage.setItem('APP_CURRENT_USER', JSON.stringify({
+          name: user.name, email: user.email, role: user.role
+        }));
+        
+        const dest = user.role === 'admin' ? 'admin.html' : 'index.html';
+        return { ok: true, code: 'logged_in', user, dest };
+      }
+    };
+    console.log('Fallback AuthStore creado para login');
+  }
+  </script>
   <script>
   $(function(){
     $('#loginForm').on('submit', function(e){

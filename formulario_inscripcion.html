@@ -21,7 +21,7 @@
               <div class="mb-3"><label class="form-label">Contraseña</label><input id="pass" type="password" class="form-control" minlength="6" required></div>
               <div id="regError" class="alert alert-danger d-none"></div>
               <div id="regOk" class="alert alert-success d-none">Registro exitoso</div>
-              <button class="btn btn-success w-100">Registrarse</button>
+              <button type="submit" class="btn btn-success w-100">Registrarse</button>
             </form>
 
             <hr>
@@ -35,22 +35,88 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="assets/js/auth.js"></script>
   <script>
+  // Fallback si auth.js no se carga
+  if (typeof AuthStore === 'undefined') {
+    console.warn('AuthStore no se cargó, creando fallback...');
+    window.AuthStore = {
+      registerUser: function({name, email, password}) {
+        // Validaciones básicas
+        if (!name || !email || !password) {
+          return { ok: false, message: 'Todos los campos son obligatorios.' };
+        }
+        if (password.length < 6) {
+          return { ok: false, message: 'La contraseña debe tener al menos 6 caracteres.' };
+        }
+        if (!email.includes('@duocuc.cl') && !email.includes('@duoc.cl') && !email.includes('@gmail.com')) {
+          return { ok: false, message: 'Dominio no permitido. Usa @duocuc.cl, @duoc.cl o @gmail.com.' };
+        }
+        
+        // Obtener usuarios existentes
+        const users = JSON.parse(localStorage.getItem('APP_USERS') || '[]');
+        
+        // Verificar si el email ya existe
+        if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
+          return { ok: false, message: 'El correo ya está registrado.' };
+        }
+        
+        // Crear nuevo usuario
+        const newUser = { name: name.trim(), email: email.trim(), password: password.trim(), role: 'user' };
+        users.push(newUser);
+        localStorage.setItem('APP_USERS', JSON.stringify(users));
+        
+        // Auto-login
+        localStorage.setItem('APP_CURRENT_USER', JSON.stringify({
+          name: newUser.name, email: newUser.email, role: newUser.role
+        }));
+        
+        return { ok: true, code: 'registered_and_logged_in', user: newUser, dest: 'index.html' };
+      }
+    };
+    console.log('Fallback AuthStore creado');
+  }
+  </script>
+  <script>
   $(function(){
+    // Verificar si AuthStore se cargó correctamente
+    if (typeof AuthStore === 'undefined') {
+      console.error('AuthStore no se cargó correctamente');
+      $('#regError').removeClass('d-none').text('Error: No se pudo cargar el sistema de autenticación. Recarga la página.');
+      return;
+    }
+    
+    console.log('AuthStore cargado correctamente:', AuthStore);
+    
     const params = new URLSearchParams(location.search);
     if(params.has('email')) $('#correo').val(params.get('email'));
 
     $('#registroForm').on('submit', function(e){
       e.preventDefault();
-      const resp = AuthStore.registerUser({
+      console.log('Formulario enviado');
+      console.log('AuthStore disponible:', typeof AuthStore);
+      
+      const formData = {
         name: $('#nombre').val(),
         email: $('#correo').val(),
-        pass: $('#pass').val()
-      });
+        password: $('#pass').val()
+      };
+      
+      console.log('Datos del formulario:', formData);
+      
+      if (!AuthStore) {
+        $('#regError').removeClass('d-none').text('Error: AuthStore no está disponible');
+        return;
+      }
+      
+      const resp = AuthStore.registerUser(formData);
+      console.log('Respuesta del registro:', resp);
+      
       if(!resp.ok){
         $('#regError').removeClass('d-none').text(resp.message);
         return;
       }
+      
       $('#regOk').removeClass('d-none');
+      console.log('Registro exitoso, redirigiendo a:', resp.dest || 'index.html');
       setTimeout(()=> window.location.href = resp.dest || 'index.html', 800);
     });
   });

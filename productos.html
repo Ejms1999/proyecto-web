@@ -37,11 +37,8 @@
           </a>
         </li>
         <li class="nav-item" id="loginSection">
-          <a class="btn btn-outline-primary btn-sm me-2" href="login.html">
+          <a class="btn btn-outline-primary btn-sm" href="login.html">
             <i class="bi bi-box-arrow-in-right me-1"></i>Iniciar Sesión
-          </a>
-          <a class="btn btn-primary btn-sm" href="formulario_inscripcion.html">
-            <i class="bi bi-person-plus me-1"></i>Registrarse
           </a>
         </li>
         <li class="nav-item d-none" id="userSection">
@@ -52,7 +49,7 @@
         </li>
       </ul>
     </div>
-  </div>
+    </div>
 </nav>
 
 <header class="bg-primary text-white py-5"><div class="container"><h1>Repuestos disponibles</h1></div></header>
@@ -63,7 +60,7 @@
       <h2 class="h4 mb-4">Catálogo de Repuestos</h2>
       <p class="lead">Encuentra los repuestos que necesitas para tu vehículo eléctrico</p>
     </header>
-    <div class="row" id="listaProductos"></div>
+  <div class="row" id="listaProductos"></div>
   </section>
 </main>
 
@@ -88,36 +85,25 @@ function getProducts() {
   }
 }
 
-// Función para agregar al carrito
-function addToCart(producto) {
-  const cart = JSON.parse(localStorage.getItem('APP_CART') || '[]');
-  const existingItem = cart.find(item => item.id === producto.id);
-  
-  if (existingItem) {
-    existingItem.qty = (existingItem.qty || 1) + 1;
-  } else {
-    cart.push({
-      id: producto.id,
-      name: producto.nombre,
-      price: producto.precio,
-      qty: 1
-    });
-  }
-  
-  localStorage.setItem('APP_CART', JSON.stringify(cart));
-  
-  // Mostrar mensaje de éxito
+// Función para mostrar notificaciones
+function showToast(message, type = 'success') {
   const toast = document.createElement('div');
   toast.className = 'toast-container position-fixed top-0 end-0 p-3';
+  
+  const iconClass = type === 'success' ? 'bi-check-circle-fill text-success' : 
+                   type === 'error' ? 'bi-exclamation-triangle-fill text-danger' :
+                   type === 'warning' ? 'bi-exclamation-triangle-fill text-warning' :
+                   'bi-info-circle-fill text-info';
+  
   toast.innerHTML = `
     <div class="toast show" role="alert">
       <div class="toast-header">
-        <i class="bi bi-check-circle-fill text-success me-2"></i>
-        <strong class="me-auto">Producto agregado</strong>
+        <i class="bi ${iconClass} me-2"></i>
+        <strong class="me-auto">Custom20</strong>
         <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
       </div>
       <div class="toast-body">
-        ${producto.nombre} agregado al carrito
+        ${message}
       </div>
     </div>
   `;
@@ -125,13 +111,64 @@ function addToCart(producto) {
   
   // Remover toast después de 3 segundos
   setTimeout(() => {
-    toast.remove();
+    if (toast.parentNode) {
+      toast.remove();
+    }
   }, 3000);
+}
+
+// Función para agregar al carrito
+function addToCart(producto) {
+  // Verificar stock disponible
+  if (producto.stock <= 0) {
+    showToast('Producto sin stock disponible', 'error');
+    return;
+  }
+  
+  const cart = JSON.parse(localStorage.getItem('APP_CART') || '[]');
+  const existingItem = cart.find(item => item.id === producto.id);
+  
+  if (existingItem) {
+    // Verificar si excede el stock disponible
+    const newQty = (existingItem.qty || 1) + 1;
+    if (newQty > producto.stock) {
+      showToast(`Solo hay ${producto.stock} unidades disponibles. Ya tienes ${existingItem.qty} en el carrito.`, 'warning');
+      return;
+    }
+    // Si ya existe y hay stock, incrementar cantidad
+    existingItem.qty = newQty;
+  } else {
+    // Si no existe, agregarlo
+    cart.push({
+      id: producto.id,
+      codigo: producto.codigo,
+      name: producto.nombre,
+      descripcion: producto.descripcion,
+      price: producto.precio,
+      qty: 1,
+      img: producto.img,
+      stock: producto.stock,
+      categoria: producto.categoria,
+      marca: producto.marca
+    });
+  }
+  
+  localStorage.setItem('APP_CART', JSON.stringify(cart));
+  
+  // Mostrar notificación
+  showToast(`${producto.nombre} agregado al carrito`, 'success');
   
   // Actualizar contador del carrito
   if (window.dispatchEvent) {
     window.dispatchEvent(new CustomEvent('cart:updated'));
   }
+  
+  // Actualizar la vista de productos para reflejar el stock
+  renderProducts();
+  
+  // Debug: mostrar carrito en consola
+  console.log('Producto agregado:', producto);
+  console.log('Carrito actual:', JSON.parse(localStorage.getItem('APP_CART') || '[]'));
 }
 
 // Renderizar productos
@@ -151,10 +188,20 @@ function renderProducts() {
     return;
   }
   
+  // Obtener carrito actual para calcular stock disponible
+  const carrito = JSON.parse(localStorage.getItem('APP_CART') || '[]');
+  
   lista.innerHTML = '';
   productos.forEach(producto => {
-    const stockClass = producto.stock > 0 ? 'btn-custom20' : 'btn-secondary disabled';
-    const stockText = producto.stock > 0 ? 'Agregar al carrito' : 'Sin stock';
+    // Calcular stock disponible (stock original - cantidad en carrito)
+    const itemEnCarrito = carrito.find(item => item.id === producto.id);
+    const stockDisponible = producto.stock - (itemEnCarrito ? itemEnCarrito.qty : 0);
+    
+    const stockClass = stockDisponible > 0 ? 'btn-custom20' : 'btn-secondary disabled';
+    const stockText = stockDisponible > 0 ? 'Agregar al carrito' : 'Sin stock';
+    const stockMessage = stockDisponible > 0 ? 
+      `Stock: ${stockDisponible} unidades` : 
+      `Sin stock (${itemEnCarrito ? itemEnCarrito.qty + ' en carrito' : 'agotado'})`;
     
     lista.innerHTML += `
       <div class="col-md-3 mb-4">
@@ -169,11 +216,17 @@ function renderProducts() {
           </div>
           <div class="card-body">
             <h3 class="card-title">${producto.nombre}</h3>
+            <p class="text-muted small mb-1">
+              <strong>Código:</strong> ${producto.codigo || 'N/A'}
+            </p>
+            <p class="text-muted small mb-1">
+              <strong>Categoría:</strong> ${producto.categoria || 'N/A'}
+            </p>
             <p class="price">$${producto.precio.toLocaleString("es-CL")}</p>
-            <p class="text-muted small">Stock: ${producto.stock} unidades</p>
+            <p class="text-muted small">${stockMessage}</p>
             <button class="btn ${stockClass} btn-sm w-100" 
                     onclick="addToCart(${JSON.stringify(producto).replace(/"/g, '&quot;')})"
-                    ${producto.stock === 0 ? 'disabled' : ''}>
+                    ${stockDisponible === 0 ? 'disabled' : ''}>
               <i class="bi bi-cart-plus me-2"></i>${stockText}
             </button>
           </div>
@@ -183,9 +236,21 @@ function renderProducts() {
   });
 }
 
+// Función para actualizar contador del carrito
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem('APP_CART') || '[]');
+  const totalItems = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+  
+  const cartCountEl = document.getElementById('cartCount');
+  if (cartCountEl) {
+    cartCountEl.textContent = totalItems;
+  }
+}
+
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
   renderProducts();
+  updateCartCount();
   
   // Actualizar año en footer
   const yearEl = document.getElementById("yearNow");
@@ -194,29 +259,75 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Manejar visibilidad del login
-  const user = window.AuthStore ? window.AuthStore.getCurrentUser() : null;
-  const loginSection = document.getElementById('loginSection');
-  const userSection = document.getElementById('userSection');
-  
-  if (user) {
-    // Usuario logueado
-    if (loginSection) loginSection.classList.add('d-none');
-    if (userSection) {
-      userSection.classList.remove('d-none');
-      const userNameEl = document.getElementById('navUserName');
-      if (userNameEl) userNameEl.textContent = `${user.name} (${user.role})`;
+  function updateNavbarAuth() {
+    console.log('Actualizando navbar de autenticación en productos...');
+    
+    // Fallback si AuthStore no está disponible
+    let user = null;
+    if (window.AuthStore && window.AuthStore.getCurrentUser) {
+      user = window.AuthStore.getCurrentUser();
+    } else {
+      // Fallback directo desde localStorage
+      try {
+        const userData = localStorage.getItem('APP_CURRENT_USER');
+        if (userData) {
+          user = JSON.parse(userData);
+          console.log('Usuario obtenido desde localStorage:', user);
+        }
+      } catch (e) {
+        console.error('Error al obtener usuario desde localStorage:', e);
+      }
     }
     
-    // Mostrar enlaces de admin si es admin
-    if (user.role === 'admin') {
-      const adminLinks = document.querySelectorAll('.admin-only');
-      adminLinks.forEach(link => link.classList.remove('d-none'));
+    const loginSection = document.getElementById('loginSection');
+    const userSection = document.getElementById('userSection');
+    
+    if (user) {
+      // Usuario logueado
+      if (loginSection) loginSection.classList.add('d-none');
+      if (userSection) {
+        userSection.classList.remove('d-none');
+        const userNameEl = document.getElementById('navUserName');
+        if (userNameEl) userNameEl.textContent = user.name;
+      }
+      
+      // Mostrar enlaces de admin si es admin
+      if (user.role === 'admin') {
+        const adminLinks = document.querySelectorAll('.admin-only');
+        adminLinks.forEach(link => link.classList.remove('d-none'));
+      }
+    } else {
+      // Usuario no logueado
+      if (loginSection) loginSection.classList.remove('d-none');
+      if (userSection) userSection.classList.add('d-none');
     }
-  } else {
-    // Usuario no logueado
-    if (loginSection) loginSection.classList.remove('d-none');
-    if (userSection) userSection.classList.add('d-none');
   }
+  
+  // Ejecutar inmediatamente
+  updateNavbarAuth();
+  
+  // También ejecutar después de un pequeño delay
+  setTimeout(updateNavbarAuth, 100);
+  
+  // Escuchar eventos de autenticación
+  window.addEventListener('auth:login', updateNavbarAuth);
+  window.addEventListener('auth:logout', updateNavbarAuth);
+  
+  // Botón de logout
+  document.getElementById('btnLogout')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    console.log('Cerrando sesión...');
+    
+    // Usar función global de logout
+    if (window.globalLogout) {
+      window.globalLogout();
+    } else {
+      // Fallback si la función global no está disponible
+      localStorage.removeItem('APP_CURRENT_USER');
+      updateNavbarAuth();
+      window.location.href = 'index.html';
+    }
+  });
 });
 </script>
 </body>
