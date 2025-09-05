@@ -270,6 +270,8 @@ h1, h2, h3, h4, h5, h6 {
   height: 200px;
   object-fit: cover;
   transition: transform 0.3s ease;
+  background-color: #f8f9fa;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
 .custom20-product-card:hover .card-img-top {

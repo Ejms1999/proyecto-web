@@ -106,42 +106,42 @@ const LS_KEYS = {
           nombre: "Acelerador pulgar",
           precio: 12990,
           stock: 15,
-          img: "https://via.placeholder.com/300x200/1e3a8a/ffffff?text=Acelerador+Pulgar"
+          img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWUzYThhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BY2VsZXJhZG9yIFB1bGdhcjwvdGV4dD48L3N2Zz4="
         },
         {
           id: 2,
           nombre: "BMS 13S 15A",
           precio: 22990,
           stock: 8,
-          img: "https://via.placeholder.com/300x200/3b82f6/ffffff?text=BMS+13S+15A"
+          img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjM2I4MmY2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5CTVMgMTNTIDE1QTwvdGV4dD48L3N2Zz4="
         },
         {
           id: 3,
           nombre: "Cargador 54.6V 2A",
           precio: 21990,
           stock: 12,
-          img: "https://via.placeholder.com/300x200/f59e0b/ffffff?text=Cargador+54.6V"
+          img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjU5ZTBiIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5DYXJnYWRvciA1NC42ViAyQTwvdGV4dD48L3N2Zz4="
         },
         {
           id: 4,
           nombre: "Faro LED + Bocina",
           precio: 14990,
           stock: 20,
-          img: "https://via.placeholder.com/300x200/10b981/ffffff?text=Faro+LED"
+          img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMTBiOTgxIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5GYXJvIExFRCArIEJvY2luYTwvdGV4dD48L3N2Zz4="
         },
         {
           id: 5,
           nombre: "Acelerador tipo moto",
           precio: 20000,
           stock: 6,
-          img: "https://via.placeholder.com/300x200/ef4444/ffffff?text=Acelerador+Moto"
+          img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZWY0NDQ0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BY2VsZXJhZG9yIFRpcG8gTW90bzwvdGV4dD48L3N2Zz4="
         },
         {
           id: 6,
           nombre: "BMS 10S 15A",
           precio: 18000,
           stock: 10,
-          img: "https://via.placeholder.com/300x200/06b6d4/ffffff?text=BMS+10S+15A"
+          img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDZiNmQ0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5CTVMgMTBTIDE1QTwvdGV4dD48L3N2Zz4="
         }
       ];
       localStorage.setItem('APP_PRODS', JSON.stringify(seedProducts));
