@@ -109,7 +109,8 @@
   
     window.Layout = {
       loadPartials,
-      getCartCount
+      getCartCount,
+      initNavbarLogic
     };
   })();
   

@@ -43,66 +43,117 @@
 
 
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="assets/js/auth.js"></script>
 <script>
-
-const PRODUCTOS = [
-  {
-    nombre:"Acelerador pulgar",
-    precio:12990,
-    img:"https://i.scdn.co/image/ab67616d0000b2734b9726a6ceef93f6d7737ff7" 
-  },
-  {
-    nombre:"BMS 13S 15A",
-    precio:22990,
-    img:"https://i.scdn.co/image/ab67616d0000b2734b9726a6ceef93f6d7737ff7"
-  },
-  {
-    nombre:"Cargador 54.6V 2A",
-    precio:21990,
-    img:"https://i.scdn.co/image/ab67616d0000b2734b9726a6ceef93f6d7737ff7"
-  },
-  {
-    nombre:"Faro LED + Bocina",
-    precio:14990,
-    img:"https://i.scdn.co/image/ab67616d0000b2734b9726a6ceef93f6d7737ff7"
-  },
-  {
-    nombre:"Acelerador tipo moto",
-    precio:20000,
-    img:"https://i.scdn.co/image/ab67616d0000b2734b9726a6ceef93f6d7737ff7" 
-  },
-  {
-    nombre:"BMS 10S 15A",
-    precio:18000,
-    img:"https://i.scdn.co/image/ab67616d0000b2734b9726a6ceef93f6d7737ff7" 
-  },
-];
-
-const lista=document.getElementById("listaProductos");
-PRODUCTOS.forEach(p=>{
-  lista.innerHTML+=`
-    <div class="col-md-3">
-      <article class="custom20-product-card">
-        <img src="${p.img}" class="card-img-top" alt="${p.nombre}">
-        <div class="card-body">
-          <h3 class="card-title">${p.nombre}</h3>
-          <p class="price">$${p.precio.toLocaleString("es-CL")}</p>
-          <button class="btn btn-custom20 btn-sm w-100" onclick="addToCart('${p.nombre}', ${p.precio})">
-            <i class="bi bi-cart-plus me-2"></i>Agregar al carrito
-          </button>
-        </div>
-      </article>
-    </div>`;
-});
-
-// Función para agregar al carrito
-function addToCart(nombre, precio) {
-  // Implementación básica del carrito
-  alert(`Producto "${nombre}" agregado al carrito por $${precio.toLocaleString("es-CL")}`);
+// Función para obtener productos del localStorage
+function getProducts() {
+  try {
+    return JSON.parse(localStorage.getItem('APP_PRODS')) || [];
+  } catch {
+    return [];
+  }
 }
 
-// Actualizar año en footer
-document.getElementById("yearNow").textContent = new Date().getFullYear();
+// Función para agregar al carrito
+function addToCart(producto) {
+  const cart = JSON.parse(localStorage.getItem('APP_CART') || '[]');
+  const existingItem = cart.find(item => item.id === producto.id);
+  
+  if (existingItem) {
+    existingItem.qty = (existingItem.qty || 1) + 1;
+  } else {
+    cart.push({
+      id: producto.id,
+      name: producto.nombre,
+      price: producto.precio,
+      qty: 1
+    });
+  }
+  
+  localStorage.setItem('APP_CART', JSON.stringify(cart));
+  
+  // Mostrar mensaje de éxito
+  const toast = document.createElement('div');
+  toast.className = 'toast-container position-fixed top-0 end-0 p-3';
+  toast.innerHTML = `
+    <div class="toast show" role="alert">
+      <div class="toast-header">
+        <i class="bi bi-check-circle-fill text-success me-2"></i>
+        <strong class="me-auto">Producto agregado</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+      </div>
+      <div class="toast-body">
+        ${producto.nombre} agregado al carrito
+      </div>
+    </div>
+  `;
+  document.body.appendChild(toast);
+  
+  // Remover toast después de 3 segundos
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
+  
+  // Actualizar contador del carrito
+  if (window.dispatchEvent) {
+    window.dispatchEvent(new CustomEvent('cart:updated'));
+  }
+}
+
+// Renderizar productos
+function renderProducts() {
+  const productos = getProducts();
+  const lista = document.getElementById("listaProductos");
+  
+  if (productos.length === 0) {
+    lista.innerHTML = `
+      <div class="col-12 text-center">
+        <div class="alert alert-info">
+          <i class="bi bi-info-circle me-2"></i>
+          No hay productos disponibles en este momento.
+        </div>
+      </div>
+    `;
+    return;
+  }
+  
+  lista.innerHTML = '';
+  productos.forEach(producto => {
+    const stockClass = producto.stock > 0 ? 'btn-custom20' : 'btn-secondary disabled';
+    const stockText = producto.stock > 0 ? 'Agregar al carrito' : 'Sin stock';
+    
+    lista.innerHTML += `
+      <div class="col-md-3 mb-4">
+        <article class="custom20-product-card">
+          <img src="${producto.img}" class="card-img-top" alt="${producto.nombre}" 
+               onerror="this.src='https://via.placeholder.com/300x200/cccccc/666666?text=Sin+Imagen'">
+          <div class="card-body">
+            <h3 class="card-title">${producto.nombre}</h3>
+            <p class="price">$${producto.precio.toLocaleString("es-CL")}</p>
+            <p class="text-muted small">Stock: ${producto.stock} unidades</p>
+            <button class="btn ${stockClass} btn-sm w-100" 
+                    onclick="addToCart(${JSON.stringify(producto).replace(/"/g, '&quot;')})"
+                    ${producto.stock === 0 ? 'disabled' : ''}>
+              <i class="bi bi-cart-plus me-2"></i>${stockText}
+            </button>
+          </div>
+        </article>
+      </div>
+    `;
+  });
+}
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+  renderProducts();
+  
+  // Actualizar año en footer
+  const yearEl = document.getElementById("yearNow");
+  if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
+  }
+});
 </script>
 </body>
 </html>

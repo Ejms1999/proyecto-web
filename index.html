@@ -11,7 +11,41 @@
   <link href="assets/css/styles.css" rel="stylesheet">
 </head>
 <body>
-  <div id="navbar-container"></div>
+  <!-- Navbar con respaldo -->
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-battery-charging"></i> Custom20.cl</a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item admin-only d-none"><a class="nav-link" href="admin.html">Admin Productos</a></li>
+          <li class="nav-item admin-only d-none"><a class="nav-link" href="admin_usuarios.html">Admin Usuarios</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="productos.html">Repuestos</a></li>
+          <li class="nav-item"><a class="nav-link" href="servicios.html">Servicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="preguntas.html">Preguntas</a></li>
+          <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item me-3">
+            <a class="nav-link position-relative" href="carrito.html">
+              🛒 Carrito
+              <span id="cartCount" class="badge bg-primary text-white position-absolute top-0 start-100 translate-middle">0</span>
+            </a>
+          </li>
+          <li class="nav-item"><span class="navbar-text" id="navUserName">Invitado</span></li>
+          <li class="nav-item ms-2"><a class="btn btn-outline-secondary btn-sm" href="#" id="btnLogout">Salir</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <div id="navbar-container" style="display: none;"></div>
 
 
 
@@ -75,7 +109,14 @@
   </section>
 </main>
 
-  <div id="footer-container"></div>
+  <!-- Footer con respaldo -->
+  <footer class="custom20-footer mt-5">
+    <div class="container text-center">
+      <p class="mb-0">© <span id="yearNow"></span> Custom20. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+  
+  <div id="footer-container" style="display: none;"></div>
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -83,7 +124,18 @@
   <script src="assets/js/layout.js"></script>
   <script>
     $(function() {
-      Layout.loadPartials();
+      // Inicializar año
+      document.getElementById("yearNow").textContent = new Date().getFullYear();
+      
+      // Inicializar navbar logic
+      if (window.Layout && window.Layout.initNavbarLogic) {
+        window.Layout.initNavbarLogic();
+      }
+      
+      // Intentar cargar partials (fallback)
+      if (window.Layout && window.Layout.loadPartials) {
+        Layout.loadPartials();
+      }
     });
   </script>
 </body>

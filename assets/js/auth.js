@@ -4,14 +4,14 @@ const LS_KEYS = {
     CURRENT_USER: 'APP_CURRENT_USER'
   };
   
-  const ALLOWED_DOMAINS_RE = /@(?:duocuc\.cl|duoc\.cl|gmail\.com)$/i;
+  const ALLOWED_DOMAINS_RE = /@(?:duocuc\.cl|gmail\.com)$/i;
   const AUTO_LOGIN_AFTER_REGISTER = true;
   
   function seedUsersIfEmpty() {
     const raw = localStorage.getItem(LS_KEYS.USERS);
     if (!raw) {
       const seed = [
-        { name: 'Admin', email: 'admin@duoc.cl', pass: '123456', role: 'admin' },
+        { name: 'Admin', email: 'admin@duocuc.cl', pass: '123456', role: 'admin' },
         { name: 'Usuario', email: 'user@gmail.com', pass: '123456', role: 'user' }
       ];
       localStorage.setItem(LS_KEYS.USERS, JSON.stringify(seed));
@@ -46,7 +46,7 @@ const LS_KEYS = {
       return { ok: false, code: 'missing_fields', message: 'Todos los campos son obligatorios.' };
     }
     if (!emailDomainOk(email)) {
-      return { ok: false, code: 'bad_domain', message: 'Dominio no permitido. Usa @duocuc.cl, @duoc.cl o @gmail.com.' };
+      return { ok: false, code: 'bad_domain', message: 'Dominio no permitido. Usa @duocuc.cl o @gmail.com.' };
     }
     if (findUserByEmail(email)) {
       return { ok: false, code: 'already_exists', message: 'El correo ya está registrado.' };
@@ -96,7 +96,60 @@ const LS_KEYS = {
     localStorage.removeItem(LS_KEYS.CURRENT_USER);
   }
   
+  // ====== PRODUCTOS SEED ======
+  function seedProductsIfEmpty() {
+    const raw = localStorage.getItem('APP_PRODS');
+    if (!raw) {
+      const seedProducts = [
+        {
+          id: 1,
+          nombre: "Acelerador pulgar",
+          precio: 12990,
+          stock: 15,
+          img: "https://via.placeholder.com/300x200/1e3a8a/ffffff?text=Acelerador+Pulgar"
+        },
+        {
+          id: 2,
+          nombre: "BMS 13S 15A",
+          precio: 22990,
+          stock: 8,
+          img: "https://via.placeholder.com/300x200/3b82f6/ffffff?text=BMS+13S+15A"
+        },
+        {
+          id: 3,
+          nombre: "Cargador 54.6V 2A",
+          precio: 21990,
+          stock: 12,
+          img: "https://via.placeholder.com/300x200/f59e0b/ffffff?text=Cargador+54.6V"
+        },
+        {
+          id: 4,
+          nombre: "Faro LED + Bocina",
+          precio: 14990,
+          stock: 20,
+          img: "https://via.placeholder.com/300x200/10b981/ffffff?text=Faro+LED"
+        },
+        {
+          id: 5,
+          nombre: "Acelerador tipo moto",
+          precio: 20000,
+          stock: 6,
+          img: "https://via.placeholder.com/300x200/ef4444/ffffff?text=Acelerador+Moto"
+        },
+        {
+          id: 6,
+          nombre: "BMS 10S 15A",
+          precio: 18000,
+          stock: 10,
+          img: "https://via.placeholder.com/300x200/06b6d4/ffffff?text=BMS+10S+15A"
+        }
+      ];
+      localStorage.setItem('APP_PRODS', JSON.stringify(seedProducts));
+    }
+  }
+
   seedUsersIfEmpty();
+  seedProductsIfEmpty();
   
   window.AuthStore = {
     LS_KEYS,
