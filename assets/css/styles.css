@@ -1,0 +1,490 @@
+/* ===== CUSTOM20 - ESTILOS PERSONALIZADOS ===== */
+
+/* Variables CSS personalizadas */
+:root {
+  --custom20-primary: #1e3a8a;
+  --custom20-secondary: #3b82f6;
+  --custom20-accent: #f59e0b;
+  --custom20-success: #10b981;
+  --custom20-danger: #ef4444;
+  --custom20-warning: #f59e0b;
+  --custom20-info: #06b6d4;
+  --custom20-light: #f8fafc;
+  --custom20-dark: #1e293b;
+  --custom20-gray: #64748b;
+  
+  /* Tipografía */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* Espaciado */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
+  
+  /* Bordes */
+  --border-radius: 0.5rem;
+  --border-radius-lg: 1rem;
+  --border-width: 1px;
+  
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* ===== TIPOGRAFÍA PERSONALIZADA ===== */
+body {
+  font-family: var(--font-primary);
+  line-height: 1.6;
+  color: var(--custom20-dark);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--custom20-primary);
+}
+
+/* ===== NAVBAR PERSONALIZADA ===== */
+.custom20-navbar {
+  background: linear-gradient(135deg, var(--custom20-primary) 0%, var(--custom20-secondary) 100%);
+  box-shadow: var(--shadow-md);
+  border-bottom: 3px solid var(--custom20-accent);
+}
+
+.custom20-navbar .navbar-brand {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: white !important;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.custom20-navbar .navbar-brand:hover {
+  color: var(--custom20-accent) !important;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+.custom20-navbar .nav-link {
+  color: rgba(255,255,255,0.9) !important;
+  font-weight: 500;
+  padding: var(--spacing-sm) var(--spacing-md) !important;
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+}
+
+.custom20-navbar .nav-link:hover {
+  color: white !important;
+  background-color: rgba(255,255,255,0.1);
+  transform: translateY(-2px);
+}
+
+.custom20-navbar .nav-link.active {
+  background-color: var(--custom20-accent);
+  color: white !important;
+}
+
+/* ===== BOTONES PERSONALIZADOS ===== */
+.btn-custom20 {
+  background: linear-gradient(135deg, var(--custom20-primary) 0%, var(--custom20-secondary) 100%);
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.btn-custom20:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  color: white;
+}
+
+.btn-custom20-outline {
+  border: 2px solid var(--custom20-primary);
+  color: var(--custom20-primary);
+  background: transparent;
+  font-weight: 600;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+}
+
+.btn-custom20-outline:hover {
+  background: var(--custom20-primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===== TARJETAS PERSONALIZADAS ===== */
+.custom20-card {
+  border: none;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.custom20-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
+}
+
+.custom20-card .card-header {
+  background: linear-gradient(135deg, var(--custom20-primary) 0%, var(--custom20-secondary) 100%);
+  color: white;
+  border: none;
+  font-weight: 600;
+}
+
+.custom20-card .card-body {
+  padding: var(--spacing-lg);
+}
+
+/* ===== FORMULARIOS PERSONALIZADOS ===== */
+.custom20-form .form-control {
+  border: 2px solid #e2e8f0;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.custom20-form .form-control:focus {
+  border-color: var(--custom20-primary);
+  box-shadow: 0 0 0 0.2rem rgba(30, 58, 138, 0.25);
+  outline: none;
+}
+
+.custom20-form .form-label {
+  font-weight: 600;
+  color: var(--custom20-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.custom20-form .form-control.is-invalid {
+  border-color: var(--custom20-danger);
+  box-shadow: 0 0 0 0.2rem rgba(239, 68, 68, 0.25);
+}
+
+.custom20-form .form-control.is-valid {
+  border-color: var(--custom20-success);
+  box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.25);
+}
+
+/* ===== MENSAJES DE VALIDACIÓN ===== */
+.custom20-alert {
+  border: none;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  margin: var(--spacing-md) 0;
+  font-weight: 500;
+}
+
+.custom20-alert-success {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  color: #065f46;
+  border-left: 4px solid var(--custom20-success);
+}
+
+.custom20-alert-danger {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  color: #991b1b;
+  border-left: 4px solid var(--custom20-danger);
+}
+
+.custom20-alert-warning {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #92400e;
+  border-left: 4px solid var(--custom20-warning);
+}
+
+.custom20-alert-info {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  color: #1e40af;
+  border-left: 4px solid var(--custom20-info);
+}
+
+/* ===== HEADERS PERSONALIZADOS ===== */
+.custom20-header {
+  background: linear-gradient(135deg, var(--custom20-primary) 0%, var(--custom20-secondary) 100%);
+  color: white;
+  padding: var(--spacing-xxl) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom20-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  opacity: 0.3;
+}
+
+.custom20-header h1 {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.custom20-header .lead {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== PRODUCTOS Y CATÁLOGO ===== */
+.custom20-product-card {
+  border: none;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.custom20-product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+}
+
+.custom20-product-card .card-img-top {
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.custom20-product-card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+.custom20-product-card .card-body {
+  padding: var(--spacing-lg);
+}
+
+.custom20-product-card .card-title {
+  color: var(--custom20-primary);
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+}
+
+.custom20-product-card .price {
+  color: var(--custom20-success);
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+/* ===== FOOTER PERSONALIZADO ===== */
+.custom20-footer {
+  background: linear-gradient(135deg, var(--custom20-dark) 0%, #334155 100%);
+  color: white;
+  padding: var(--spacing-xl) 0;
+  margin-top: auto;
+}
+
+.custom20-footer a {
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.custom20-footer a:hover {
+  color: var(--custom20-accent);
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.6s ease-out;
+}
+
+/* ===== UTILIDADES ===== */
+.text-custom20-primary { color: var(--custom20-primary) !important; }
+.text-custom20-secondary { color: var(--custom20-secondary) !important; }
+.text-custom20-accent { color: var(--custom20-accent) !important; }
+.text-custom20-success { color: var(--custom20-success) !important; }
+.text-custom20-danger { color: var(--custom20-danger) !important; }
+
+.bg-custom20-primary { background-color: var(--custom20-primary) !important; }
+.bg-custom20-secondary { background-color: var(--custom20-secondary) !important; }
+.bg-custom20-accent { background-color: var(--custom20-accent) !important; }
+.bg-custom20-success { background-color: var(--custom20-success) !important; }
+.bg-custom20-danger { background-color: var(--custom20-danger) !important; }
+
+.border-custom20-primary { border-color: var(--custom20-primary) !important; }
+.border-custom20-secondary { border-color: var(--custom20-secondary) !important; }
+.border-custom20-accent { border-color: var(--custom20-accent) !important; }
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .custom20-header h1 {
+    font-size: 2rem;
+  }
+  
+  .custom20-header .lead {
+    font-size: 1.1rem;
+  }
+  
+  .custom20-navbar .navbar-brand {
+    font-size: 1.25rem;
+  }
+  
+  .custom20-product-card {
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 576px) {
+  .custom20-header {
+    padding: var(--spacing-xl) 0;
+  }
+  
+  .custom20-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .custom20-card .card-body {
+    padding: var(--spacing-md);
+  }
+}
+
+/* ===== ESTADOS DE CARGA ===== */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid var(--custom20-primary);
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== MEJORAS DE ACCESIBILIDAD ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.focus-visible:focus {
+  outline: 2px solid var(--custom20-accent);
+  outline-offset: 2px;
+}
+
+/* ===== ESTILOS ESPECÍFICOS PARA CUSTOM20 ===== */
+.battery-icon {
+  color: var(--custom20-accent);
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.electric-theme {
+  background: linear-gradient(45deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 1px solid #bae6fd;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+}
+
+.service-card {
+  background: white;
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+  border-left: 4px solid var(--custom20-primary);
+}
+
+.service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-left-color: var(--custom20-accent);
+}
+
+.service-card h5 {
+  color: var(--custom20-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.service-card .icon {
+  color: var(--custom20-accent);
+  font-size: 1.5rem;
+  margin-right: var(--spacing-sm);
+}

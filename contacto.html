@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Custom20 Styles -->
+  <link href="assets/css/styles.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
@@ -23,20 +25,265 @@
 
 <main class="container py-5">
   <h1 class="h3 mb-3">Formulario de contacto</h1>
-  <form class="row g-3" id="formContacto">
-    <div class="col-md-6"><label class="form-label">Nombre</label><input name="nombre" class="form-control" required></div>
-    <div class="col-md-6"><label class="form-label">Teléfono</label><input name="telefono" class="form-control" required></div>
-    <div class="col-12"><label class="form-label">Correo</label><input name="correo" type="email" class="form-control"></div>
-    <div class="col-12"><label class="form-label">Mensaje</label><textarea name="mensaje" class="form-control" rows="4" required></textarea></div>
-    <div class="col-12"><button class="btn btn-primary" type="submit">Enviar</button></div>
+  <form class="row g-3 custom20-form" id="formContacto">
+    <div class="col-md-6">
+      <label class="form-label" for="nombre">Nombre</label>
+      <input name="nombre" id="nombre" class="form-control" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label" for="telefono">Teléfono</label>
+      <input name="telefono" id="telefono" class="form-control" required>
+    </div>
+    <div class="col-12">
+      <label class="form-label" for="correo">Correo</label>
+      <input name="correo" id="correo" type="email" class="form-control" required>
+    </div>
+    <div class="col-12">
+      <label class="form-label" for="mensaje">Mensaje</label>
+      <textarea name="mensaje" id="mensaje" class="form-control" rows="4" required maxlength="500"></textarea>
+      <div class="form-text">Máximo 500 caracteres</div>
+    </div>
+    <div class="col-12">
+      <button class="btn btn-custom20" type="submit">
+        <i class="bi bi-send me-2"></i>Enviar mensaje
+      </button>
+    </div>
   </form>
 </main>
 
 <script>
-document.getElementById("formContacto").addEventListener("submit",e=>{
-  e.preventDefault();
-  alert("¡Gracias! Tu mensaje ha sido enviado.");
-  e.target.reset();
+// Validaciones personalizadas para el formulario de contacto
+class ContactFormValidator {
+  constructor() {
+    this.form = document.getElementById("formContacto");
+    this.fields = {
+      nombre: document.querySelector('input[name="nombre"]'),
+      telefono: document.querySelector('input[name="telefono"]'),
+      correo: document.querySelector('input[name="correo"]'),
+      mensaje: document.querySelector('textarea[name="mensaje"]')
+    };
+    this.init();
+  }
+
+  init() {
+    // Validación en tiempo real
+    Object.values(this.fields).forEach(field => {
+      field.addEventListener('blur', () => this.validateField(field));
+      field.addEventListener('input', () => this.clearFieldError(field));
+    });
+
+    // Validación al enviar
+    this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+  }
+
+  validateField(field) {
+    const value = field.value.trim();
+    const fieldName = field.name;
+    let isValid = true;
+    let message = '';
+
+    // Limpiar errores previos
+    this.clearFieldError(field);
+
+    switch(fieldName) {
+      case 'nombre':
+        if (!value) {
+          message = 'El nombre es obligatorio';
+          isValid = false;
+        } else if (value.length < 2) {
+          message = 'El nombre debe tener al menos 2 caracteres';
+          isValid = false;
+        } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(value)) {
+          message = 'El nombre solo puede contener letras y espacios';
+          isValid = false;
+        }
+        break;
+
+      case 'telefono':
+        if (!value) {
+          message = 'El teléfono es obligatorio';
+          isValid = false;
+        } else if (!/^[+]?[\d\s\-\(\)]{8,15}$/.test(value)) {
+          message = 'Ingresa un teléfono válido (8-15 dígitos)';
+          isValid = false;
+        }
+        break;
+
+      case 'correo':
+        if (!value) {
+          message = 'El correo es obligatorio';
+          isValid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          message = 'Ingresa un correo electrónico válido';
+          isValid = false;
+        }
+        break;
+
+      case 'mensaje':
+        if (!value) {
+          message = 'El mensaje es obligatorio';
+          isValid = false;
+        } else if (value.length < 10) {
+          message = 'El mensaje debe tener al menos 10 caracteres';
+          isValid = false;
+        } else if (value.length > 500) {
+          message = 'El mensaje no puede exceder 500 caracteres';
+          isValid = false;
+        }
+        break;
+    }
+
+    if (!isValid) {
+      this.showFieldError(field, message);
+    } else {
+      this.showFieldSuccess(field);
+    }
+
+    return isValid;
+  }
+
+  showFieldError(field, message) {
+    field.classList.add('is-invalid');
+    field.classList.remove('is-valid');
+    
+    // Crear o actualizar mensaje de error
+    let errorDiv = field.parentNode.querySelector('.invalid-feedback');
+    if (!errorDiv) {
+      errorDiv = document.createElement('div');
+      errorDiv.className = 'invalid-feedback';
+      field.parentNode.appendChild(errorDiv);
+    }
+    errorDiv.textContent = message;
+  }
+
+  showFieldSuccess(field) {
+    field.classList.add('is-valid');
+    field.classList.remove('is-invalid');
+    
+    // Remover mensaje de error si existe
+    const errorDiv = field.parentNode.querySelector('.invalid-feedback');
+    if (errorDiv) {
+      errorDiv.remove();
+    }
+  }
+
+  clearFieldError(field) {
+    field.classList.remove('is-invalid', 'is-valid');
+    const errorDiv = field.parentNode.querySelector('.invalid-feedback');
+    if (errorDiv) {
+      errorDiv.remove();
+    }
+  }
+
+  validateAllFields() {
+    let allValid = true;
+    Object.values(this.fields).forEach(field => {
+      if (!this.validateField(field)) {
+        allValid = false;
+      }
+    });
+    return allValid;
+  }
+
+  showSuccessMessage() {
+    const successDiv = document.createElement('div');
+    successDiv.className = 'custom20-alert custom20-alert-success animate-fadeInUp';
+    successDiv.innerHTML = `
+      <div class="d-flex align-items-center">
+        <i class="bi bi-check-circle-fill me-2"></i>
+        <div>
+          <strong>¡Mensaje enviado exitosamente!</strong><br>
+          <small>Te contactaremos pronto. Gracias por confiar en Custom20.</small>
+        </div>
+      </div>
+    `;
+    
+    this.form.parentNode.insertBefore(successDiv, this.form);
+    
+    // Remover mensaje después de 5 segundos
+    setTimeout(() => {
+      successDiv.remove();
+    }, 5000);
+  }
+
+  showErrorMessage(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'custom20-alert custom20-alert-danger animate-fadeInUp';
+    errorDiv.innerHTML = `
+      <div class="d-flex align-items-center">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <div>
+          <strong>Error al enviar el mensaje</strong><br>
+          <small>${message}</small>
+        </div>
+      </div>
+    `;
+    
+    this.form.parentNode.insertBefore(errorDiv, this.form);
+    
+    // Remover mensaje después de 5 segundos
+    setTimeout(() => {
+      errorDiv.remove();
+    }, 5000);
+  }
+
+  async handleSubmit(e) {
+    e.preventDefault();
+    
+    // Validar todos los campos
+    if (!this.validateAllFields()) {
+      this.showErrorMessage('Por favor, corrige los errores en el formulario');
+      return;
+    }
+
+    // Mostrar estado de carga
+    const submitBtn = this.form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Enviando...';
+    submitBtn.disabled = true;
+    this.form.classList.add('loading');
+
+    try {
+      // Simular envío (aquí iría la lógica real de envío)
+      await this.simulateSend();
+      
+      // Éxito
+      this.showSuccessMessage();
+      this.form.reset();
+      
+      // Limpiar estados de validación
+      Object.values(this.fields).forEach(field => {
+        this.clearFieldError(field);
+      });
+      
+    } catch (error) {
+      // Error
+      this.showErrorMessage('Hubo un problema al enviar tu mensaje. Inténtalo de nuevo.');
+    } finally {
+      // Restaurar botón
+      submitBtn.innerHTML = originalText;
+      submitBtn.disabled = false;
+      this.form.classList.remove('loading');
+    }
+  }
+
+  simulateSend() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        // Simular 90% de éxito
+        if (Math.random() > 0.1) {
+          resolve();
+        } else {
+          reject(new Error('Error de conexión simulado'));
+        }
+      }, 2000);
+    });
+  }
+}
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', () => {
+  new ContactFormValidator();
 });
 </script>
 </body>
