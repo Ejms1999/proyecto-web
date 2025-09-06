@@ -213,6 +213,21 @@ const LS_KEYS = {
     window.location.href = 'index.html';
   }
 
+  // Función para generar código único de producto
+  function generateUniqueProductCode() {
+    const prods = getProducts();
+    const existingCodes = prods.map(p => p.codigo).filter(Boolean);
+    
+    let codigo;
+    do {
+      // Generar código con formato: C20-XXXX
+      const randomNum = Math.floor(Math.random() * 9000) + 1000;
+      codigo = `C20-${randomNum}`;
+    } while (existingCodes.includes(codigo));
+    
+    return codigo;
+  }
+
   // Exponer función global
   window.globalLogout = globalLogout;
 
