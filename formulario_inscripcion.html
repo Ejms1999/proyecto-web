@@ -60,7 +60,7 @@
         }
         
         // Crear nuevo usuario
-        const newUser = { name: name.trim(), email: email.trim(), password: password.trim(), role: 'user' };
+        const newUser = { name: name.trim(), email: email.trim(), pass: password.trim(), role: 'user' };
         users.push(newUser);
         localStorage.setItem('APP_USERS', JSON.stringify(users));
         

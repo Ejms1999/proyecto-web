@@ -62,7 +62,7 @@
         }
         
         // Verificar contraseña
-        if (user.password !== password) {
+        if (user.pass !== password) {
           return { ok: false, code: 'bad_credentials', message: 'Usuario o contraseña incorrectos.' };
         }
         

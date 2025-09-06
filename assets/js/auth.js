@@ -78,7 +78,7 @@ const LS_KEYS = {
     }
 
     const users = getUsers();
-    const newUser = { name: name.trim(), email: email.trim(), password: password.trim(), role: 'user' };
+    const newUser = { name: name.trim(), email: email.trim(), pass: password.trim(), role: 'user' };
     users.push(newUser);
     saveUsers(users);
   
@@ -103,7 +103,7 @@ const LS_KEYS = {
     if (!user) {
       return { ok: false, code: 'not_found', message: 'Este correo no está registrado.' };
     }
-    if (user.password !== password) {
+    if (user.pass !== password) {
       return { ok: false, code: 'bad_credentials', message: 'Usuario o contraseña incorrectos.' };
     }
   
