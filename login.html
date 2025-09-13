@@ -2,37 +2,273 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Login</title>
+  <title>Login | Custom20</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Custom20 Styles -->
   <link href="assets/css/styles.css" rel="stylesheet">
+  
+  <!-- Estilos específicos para login de scooters -->
+  <style>
+    :root {
+      --scooter-orange: #FF6B35;
+      --scooter-blue: #2E86AB; 
+      --scooter-dark: #1a1a1a;
+      --scooter-success: #28A745;
+      --scooter-warning: #FFC107;
+    }
+
+    /* Aplicar colores scooter */
+    .btn-primary { background-color: var(--scooter-orange); border-color: var(--scooter-orange); }
+    .btn-primary:hover { background-color: #e55a2b; border-color: #e55a2b; }
+    .btn-outline-primary { color: var(--scooter-orange); border-color: var(--scooter-orange); }
+    .btn-outline-primary:hover { background-color: var(--scooter-orange); border-color: var(--scooter-orange); }
+    .text-primary { color: var(--scooter-orange) !important; }
+
+    body {
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(46, 134, 171, 0.1));
+      min-height: 100vh;
+    }
+
+    .login-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .login-card {
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .brand-section {
+      background: linear-gradient(135deg, var(--scooter-orange), var(--scooter-blue));
+      color: white;
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .brand-section h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .brand-section .lead {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .scooter-points-preview {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .points-feature {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.8rem;
+    }
+
+    .points-feature i {
+      font-size: 1.2rem;
+      margin-right: 0.8rem;
+      width: 20px;
+    }
+
+    .form-control:focus {
+      border-color: var(--scooter-orange);
+      box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+    }
+
+    .login-benefits {
+      background: rgba(46, 134, 171, 0.05);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.8rem;
+    }
+
+    .benefit-item i {
+      color: var(--scooter-blue);
+      font-size: 1.1rem;
+      margin-right: 0.8rem;
+      width: 20px;
+    }
+
+    .register-cta {
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(46, 134, 171, 0.1));
+      border: 2px solid var(--scooter-orange);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .brand-section {
+        padding: 2rem 1.5rem;
+      }
+      
+      .brand-section h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
-<body class="bg-light">
+<body>
   <div class="container py-5">
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h1 class="h4 mb-3 text-center">Iniciar sesión</h1>
-
-            <form id="loginForm">
-              <div class="mb-3">
-                <label for="email" class="form-label">Correo</label>
-                <input type="email" class="form-control" id="email" required>
+    <div class="login-container">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="card login-card">
+            <div class="row g-0">
+              <!-- Sección de branding -->
+              <div class="col-lg-5 d-none d-lg-block">
+                <div class="brand-section h-100">
+                  <div>
+                    <i class="bi bi-scooter" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                    <h1>Custom20</h1>
+                    <p class="lead">Especialistas en electromovilidad</p>
+                    
+                    <div class="scooter-points-preview">
+                      <h4><i class="bi bi-trophy"></i> Sistema ScooterPoints</h4>
+                      <p class="mb-3">Únete y comienza a ganar puntos con cada compra</p>
+                      
+                      <div class="points-feature">
+                        <i class="bi bi-star-fill"></i>
+                        <span>1 punto por cada $1.000 gastado</span>
+                      </div>
+                      <div class="points-feature">
+                        <i class="bi bi-people-fill"></i>
+                        <span>50 puntos por referir talleres</span>
+                      </div>
+                      <div class="points-feature">
+                        <i class="bi bi-gift-fill"></i>
+                        <span>Canjea puntos por descuentos</span>
+                      </div>
+                      <div class="points-feature">
+                        <i class="bi bi-shield-check"></i>
+                        <span>Talleres: 15% descuento permanente</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="mb-3">
-                <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="password" required>
-              </div>
-              <div id="loginMsg" class="alert d-none"></div>
-              <button type="submit" class="btn btn-primary w-100">Ingresar</button>
-            </form>
+              
+              <!-- Sección de login -->
+              <div class="col-lg-7">
+                <div class="card-body p-4 p-lg-5">
+                  <!-- Logo móvil -->
+                  <div class="text-center d-lg-none mb-4">
+                    <h2><i class="bi bi-scooter text-primary"></i> Custom20</h2>
+                    <p class="text-muted">Especialistas en electromovilidad</p>
+                  </div>
 
-            <hr>
-            <p class="text-center text-muted">
-              ¿No tienes cuenta aún? 
-              <a href="formulario_inscripcion.html" class="text-decoration-none fw-bold">REGISTRATE</a>
-            </p>
+                  <h1 class="h4 mb-4 text-center text-lg-start">Iniciar sesión</h1>
+
+                  <!-- Beneficios de tener cuenta -->
+                  <div class="login-benefits">
+                    <h5 class="text-primary mb-3">Beneficios de tu cuenta:</h5>
+                    <div class="benefit-item">
+                      <i class="bi bi-star"></i>
+                      <span>Gana ScooterPoints con cada compra</span>
+                    </div>
+                    <div class="benefit-item">
+                      <i class="bi bi-clock-history"></i>
+                      <span>Historial de compras y servicios</span>
+                    </div>
+                    <div class="benefit-item">
+                      <i class="bi bi-truck"></i>
+                      <span>Seguimiento de envíos en tiempo real</span>
+                    </div>
+                    <div class="benefit-item">
+                      <i class="bi bi-person-gear"></i>
+                      <span>Soporte técnico personalizado</span>
+                    </div>
+                  </div>
+
+                  <form id="loginForm">
+                    <div class="mb-3">
+                      <label for="email" class="form-label">
+                        <i class="bi bi-envelope me-2"></i>Correo Electrónico
+                      </label>
+                      <input type="email" class="form-control form-control-lg" id="email" required 
+                             placeholder="tu@correo.com">
+                      <small class="form-text text-muted">
+                        💡 Tip: Los correos @duocuc.cl tienen 20% de descuento permanente
+                      </small>
+                    </div>
+                    
+                    <div class="mb-3">
+                      <label for="password" class="form-label">
+                        <i class="bi bi-lock me-2"></i>Contraseña
+                      </label>
+                      <input type="password" class="form-control form-control-lg" id="password" required>
+                    </div>
+                    
+                    <div id="loginMsg" class="alert d-none"></div>
+                    
+                    <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+                      <i class="bi bi-box-arrow-in-right me-2"></i>Ingresar
+                    </button>
+                  </form>
+
+                  <div class="register-cta">
+                    <h5 class="text-primary mb-3">¿No tienes cuenta aún?</h5>
+                    <p class="mb-3">Regístrate y comienza a ganar ScooterPoints desde tu primera compra</p>
+                    <a href="formulario_inscripcion.html" class="btn btn-outline-primary btn-lg">
+                      <i class="bi bi-person-plus me-2"></i>REGISTRARSE GRATIS
+                    </a>
+                    <div class="mt-3">
+                      <small class="text-muted">
+                        <i class="bi bi-shield-check text-success me-1"></i>
+                        Registro seguro y rápido - Solo toma 2 minutos
+                      </small>
+                    </div>
+                  </div>
+
+                  <!-- Acceso rápido para mecánicos -->
+                  <div class="text-center mt-4">
+                    <small class="text-muted">
+                      <i class="bi bi-wrench me-1"></i>
+                      ¿Eres mecánico o taller? 
+                      <a href="formulario_inscripcion.html?tipo=taller" class="text-primary text-decoration-none">
+                        Regístrate como profesional
+                      </a>
+                    </small>
+                  </div>
+
+                  <!-- Links útiles -->
+                  <div class="text-center mt-4">
+                    <div class="row">
+                      <div class="col-6">
+                        <a href="productos.html" class="text-decoration-none text-muted">
+                          <i class="bi bi-bag me-1"></i>Ver Repuestos
+                        </a>
+                      </div>
+                      <div class="col-6">
+                        <a href="servicios.html" class="text-decoration-none text-muted">
+                          <i class="bi bi-tools me-1"></i>Servicios
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -40,9 +276,10 @@
   </div>
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/auth.js"></script>
   <script>
-  // Fallback si auth.js no se carga
+  // Fallback si auth.js no se carga (manteniendo tu código original)
   if (typeof AuthStore === 'undefined') {
     console.warn('AuthStore no se cargó, creando fallback...');
     window.AuthStore = {
@@ -66,35 +303,138 @@
           return { ok: false, code: 'bad_credentials', message: 'Usuario o contraseña incorrectos.' };
         }
         
-        // Auto-login
+        // Inicializar ScooterPoints si no existen
+        if (!localStorage.getItem('scooterPoints')) {
+          localStorage.setItem('scooterPoints', '0');
+        }
+        
+        // Auto-login con ScooterPoints
         localStorage.setItem('APP_CURRENT_USER', JSON.stringify({
-          name: user.name, email: user.email, role: user.role
+          name: user.name, 
+          email: user.email, 
+          role: user.role,
+          scooterPoints: parseInt(localStorage.getItem('scooterPoints') || '0'),
+          tier: calculateTier(parseInt(localStorage.getItem('scooterPoints') || '0'))
         }));
+        
+        // Disparar evento de login para actualizar navbar
+        if (window.dispatchEvent) {
+          window.dispatchEvent(new CustomEvent('auth:login', { 
+            detail: { user: user } 
+          }));
+        }
         
         const dest = user.role === 'admin' ? 'admin.html' : 'index.html';
         return { ok: true, code: 'logged_in', user, dest };
       }
     };
-    console.log('Fallback AuthStore creado para login');
+    
+    // Función para calcular tier de ScooterPoints
+    function calculateTier(points) {
+      if (points >= 1000) return "Pro";
+      if (points >= 500) return "Expert";
+      if (points >= 200) return "Advanced";
+      return "Beginner";
+    }
+    
+    console.log('Fallback AuthStore creado para login con ScooterPoints');
   }
-  </script>
-  <script>
+
+  // Funciones adicionales para ScooterPoints
+  function showWelcomeNotification(user) {
+    // Crear notificación de bienvenida
+    const notification = document.createElement('div');
+    notification.className = 'toast align-items-center text-white border-0 position-fixed';
+    notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; background: linear-gradient(135deg, #FF6B35, #2E86AB);';
+    notification.innerHTML = `
+      <div class="d-flex">
+        <div class="toast-body">
+          <i class="bi bi-person-check-fill"></i> ¡Bienvenido ${user.name}! 
+          <br><small>Tienes ${user.scooterPoints || 0} ScooterPoints</small>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    `;
+    
+    document.body.appendChild(notification);
+    const bsToast = new bootstrap.Toast(notification);
+    bsToast.show();
+    
+    // Remover después de que se oculte
+    notification.addEventListener('hidden.bs.toast', () => {
+      notification.remove();
+    });
+  }
+
+  function detectDuocEmail(email) {
+    return email.toLowerCase().includes('@duocuc.cl');
+  }
+
+  // Inicialización
   $(function(){
+    // Pre-llenar email si viene como parámetro
+    const urlParams = new URLSearchParams(window.location.search);
+    const emailParam = urlParams.get('email');
+    if (emailParam) {
+      $('#email').val(emailParam);
+    }
+
+    // Mostrar tip sobre correos Duoc si el usuario está escribiendo uno
+    $('#email').on('input', function() {
+      const email = $(this).val();
+      if (detectDuocEmail(email)) {
+        if (!$('.duoc-tip').length) {
+          $(this).after(`
+            <div class="alert alert-info duoc-tip mt-2">
+              <i class="bi bi-star-fill text-warning"></i> 
+              ¡Genial! Los estudiantes de Duoc UC tienen 20% de descuento permanente
+            </div>
+          `);
+        }
+      } else {
+        $('.duoc-tip').remove();
+      }
+    });
+
+    // Manejar envío del formulario (manteniendo tu lógica original + mejoras)
     $('#loginForm').on('submit', function(e){
       e.preventDefault();
-      const resp = AuthStore.loginUser($('#email').val(), $('#password').val());
-      const $msg = $('#loginMsg').removeClass('d-none alert-danger alert-info').empty();
+      
+      const email = $('#email').val();
+      const password = $('#password').val();
+      const resp = AuthStore.loginUser(email, password);
+      const $msg = $('#loginMsg').removeClass('d-none alert-danger alert-info alert-success').empty();
 
       if (!resp.ok) {
         if (resp.code === 'not_found') {
           $msg.addClass('alert alert-info')
-              .html(`Correo no registrado. <a href="formulario_inscripcion.html?email=${encodeURIComponent($('#email').val())}">Regístrate aquí</a>.`);
+              .html(`
+                <i class="bi bi-info-circle me-2"></i>
+                Correo no registrado. 
+                <a href="formulario_inscripcion.html?email=${encodeURIComponent(email)}" class="alert-link">
+                  Regístrate aquí y comienza a ganar ScooterPoints
+                </a>
+              `);
         } else {
-          $msg.addClass('alert alert-danger').text(resp.message);
+          $msg.addClass('alert alert-danger')
+              .html(`<i class="bi bi-exclamation-triangle me-2"></i>${resp.message}`);
         }
         return;
       }
-      window.location.href = resp.dest;
+
+      // Éxito - mostrar mensaje y redirigir
+      $msg.addClass('alert alert-success')
+          .html(`<i class="bi bi-check-circle me-2"></i>¡Bienvenido! Redirigiendo...`);
+      
+      // Mostrar notificación de bienvenida
+      setTimeout(() => {
+        showWelcomeNotification(resp.user);
+      }, 500);
+      
+      // Redirigir después de un breve delay
+      setTimeout(() => {
+        window.location.href = resp.dest;
+      }, 1500);
     });
   });
   </script>

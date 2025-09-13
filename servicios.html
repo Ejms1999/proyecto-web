@@ -8,25 +8,242 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Custom20 Styles -->
   <link href="assets/css/styles.css" rel="stylesheet">
+  
+  <!-- Estilos específicos para servicios de scooters -->
+  <style>
+    :root {
+      --scooter-orange: #FF6B35;
+      --scooter-blue: #2E86AB; 
+      --scooter-dark: #1a1a1a;
+      --scooter-success: #28A745;
+      --scooter-warning: #FFC107;
+    }
+
+    /* Aplicar colores scooter */
+    .bg-primary { background-color: var(--scooter-orange) !important; }
+    .btn-primary { background-color: var(--scooter-orange); border-color: var(--scooter-orange); }
+    .btn-primary:hover { background-color: #e55a2b; border-color: #e55a2b; }
+    .btn-outline-primary { color: var(--scooter-orange); border-color: var(--scooter-orange); }
+    .btn-outline-primary:hover { background-color: var(--scooter-orange); border-color: var(--scooter-orange); }
+    .text-primary { color: var(--scooter-orange) !important; }
+    .badge.bg-primary { background-color: var(--scooter-blue) !important; }
+    
+    /* Navbar brand con gradiente */
+    .navbar-brand {
+      background: linear-gradient(45deg, var(--scooter-orange), var(--scooter-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Header con gradiente */
+    header.bg-primary {
+      background: linear-gradient(135deg, var(#2563EB), var(#0891B2)) !important;
+    }
+
+    /* Service cards mejoradas */
+    .service-card {
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(46, 134, 171, 0.05));
+      border: 2px solid rgba(255, 107, 53, 0.1);
+      border-radius: 15px;
+      padding: 2rem;
+      height: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .service-card:hover {
+      border-color: var(--scooter-orange);
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(255, 107, 53, 0.2);
+    }
+
+    .service-card .icon {
+      color: var(--scooter-orange);
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .service-pricing {
+      background: linear-gradient(135deg, var(--scooter-orange), var(--scooter-blue));
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+      text-align: center;
+      margin: 1rem 0;
+    }
+
+    .service-points {
+      background: rgba(46, 134, 171, 0.1);
+      color: var(--scooter-blue);
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    /* Formularios de cotización */
+    .quote-form {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      border: 2px solid var(--scooter-orange);
+    }
+
+    .form-control:focus {
+      border-color: var(--scooter-orange);
+      box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+    }
+
+    .form-select:focus {
+      border-color: var(--scooter-orange);
+      box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+    }
+
+    /* WhatsApp buttons */
+    .btn.whatsapp-btn {
+      background: #25D366 !important;
+      border: none !important;
+      color: white !important;
+      border-radius: 25px;
+      padding: 0.75rem 1.5rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn.whatsapp-btn:hover {
+      background: #20a85a !important;
+      color: white !important;
+      transform: scale(1.05);
+    }
+
+    /* Especialidades técnicas */
+    .technical-specs {
+      background: rgba(46, 134, 171, 0.05);
+      border-left: 4px solid var(--scooter-blue);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 10px 10px 0;
+    }
+
+    /* Modal de servicios */
+    .service-modal .modal-content {
+      border-radius: 15px;
+      border: 2px solid var(--scooter-orange);
+    }
+
+    .service-modal .modal-header {
+      background: linear-gradient(135deg, var(--scooter-orange), var(--scooter-blue));
+      color: white;
+      border-radius: 13px 13px 0 0;
+    }
+
+    /* Emergency service */
+    .emergency-service {
+      background: linear-gradient(135deg, #dc3545, #fd7e14);
+      color: white;
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .emergency-service .btn {
+      background: rgba(255,255,255,0.2);
+      border: 2px solid white;
+      color: white;
+      font-weight: 600;
+    }
+
+    .emergency-service .btn:hover {
+      background: white;
+      color: #dc3545;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .service-card {
+        padding: 1.5rem;
+      }
+      
+      .quote-form {
+        padding: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
   <div class="container">
-    <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-battery-charging"></i> Custom20</a>
-    <div class="container">
-      <a class="btn btn-outline-secondary ms-auto" href="index.html"><i class="bi bi-house"></i> Inicio</a>
-      <a class="btn btn-outline-secondary ms-auto" href="productos.html">Repuestos</a>
-      <a class="btn btn-outline-secondary ms-auto" href="servicios.html">Servicios</a>
-      <a class="btn btn-outline-secondary ms-auto" href="preguntas.html">Preguntas</a>
-      <a class="btn btn-outline-secondary ms-auto" href="contacto.html">Contacto</a>
+    <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-scooter"></i> Custom20.cl</a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item admin-only d-none"><a class="nav-link" href="admin.html">Admin Productos</a></li>
+        <li class="nav-item admin-only d-none"><a class="nav-link" href="admin_usuarios.html">Admin Usuarios</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="productos.html">Repuestos</a></li>
+        <li class="nav-item"><a class="nav-link" href="servicios.html">Servicios</a></li>
+        <li class="nav-item"><a class="nav-link" href="preguntas.html">Preguntas</a></li>
+        <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
+        <!-- ScooterPoints (solo visible cuando hay usuario logueado) -->
+        <li class="nav-item d-none me-2" id="scooterPointsSection">
+          <span class="scooter-points">
+            <i class="bi bi-trophy"></i> <span id="user-tier">Beginner</span> | 
+            <i class="bi bi-star"></i> <span id="user-points">0</span> pts
+          </span>
+        </li>
+        
+        <li class="nav-item me-3">
+          <a class="nav-link position-relative" href="carrito.html">
+            <i class="bi bi-cart"></i> Carrito
+            <span id="cartCount" class="badge bg-primary text-white position-absolute top-0 start-100 translate-middle">0</span>
+          </a>
+        </li>
+        <li class="nav-item" id="loginSection">
+          <a class="btn btn-outline-primary btn-sm" href="login.html">
+            <i class="bi bi-box-arrow-in-right me-1"></i>Iniciar Sesión
+          </a>
+        </li>
+        <li class="nav-item d-none" id="userSection">
+          <span class="navbar-text me-2" id="navUserName">Invitado</span>
+          <a class="btn btn-outline-secondary btn-sm" href="#" id="btnLogout">
+            <i class="bi bi-box-arrow-right me-1"></i>Salir
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
 
-<header class="bg-primary text-white py-5"><div class="container"><h1>Servicios</h1></div></header>
-
+<header class="bg-primary text-white py-5">
+  <div class="container">
+    <h1><i class="bi bi-tools"></i> Servicios Especializados</h1>
+    <p class="lead">Soluciones técnicas profesionales para tu scooter eléctrico</p>
+  </div>
+</header>
 
 <main class="container my-5">
+  <!-- Servicio de Emergencia -->
+  <div class="emergency-service">
+    <h2><i class="bi bi-lightning-fill"></i> Servicio de Emergencia 24/7</h2>
+    <p class="lead">¿Tu scooter se quedó sin batería o tiene una falla? Te ayudamos inmediatamente</p>
+    <button class="btn btn-lg" onclick="openEmergencyWhatsApp()">
+      <i class="bi bi-whatsapp"></i> WhatsApp Urgente
+    </button>
+    <small class="d-block mt-2">Recargo en terreno | Diagnóstico inmediato | Servicio a domicilio</small>
+  </div>
+
   <section class="services-section">
     <header>
       <h2 class="h4 mb-4">Nuestros Servicios Especializados</h2>
@@ -34,71 +251,778 @@
     </header>
     
     <div class="row g-4">
-      <article class="col-md-4">
+      <article class="col-lg-4 col-md-6">
         <div class="service-card">
-          <header>
-            <h3 class="h5">
-              <i class="bi bi-battery-half icon"></i>
-              Diagnóstico y Reparación de Baterías
-            </h3>
-          </header>
+          <div class="text-center">
+            <i class="bi bi-battery-half icon"></i>
+            <h3 class="h5">Diagnóstico y Reparación de Baterías</h3>
+          </div>
           <p>Revisión y cambio de celdas y BMS, pruebas de descarga, carga y capacidad real, y balanceo de tu batería.</p>
-          <ul class="list-unstyled mt-3">
-            <li><i class="bi bi-check-circle text-custom20-success me-2"></i>Diagnóstico completo</li>
-            <li><i class="bi bi-check-circle text-custom20-success me-2"></i>Cambio de celdas</li>
-            <li><i class="bi bi-check-circle text-custom20-success me-2"></i>Pruebas de capacidad</li>
-            <li><i class="bi bi-check-circle text-custom20-success me-2"></i>Balanceo de baterías</li>
-          </ul>
+          
+          <div class="technical-specs">
+            <strong>Servicios incluidos:</strong>
+            <ul class="list-unstyled mt-2">
+              <li><i class="bi bi-check-circle text-success me-2"></i>Diagnóstico completo BMS</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Cambio de celdas 18650/21700</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Pruebas de capacidad real</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Balanceo de celdas</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Soldadura especializada</li>
+            </ul>
+          </div>
+
+          <div class="service-pricing">Desde $45.000</div>
+          <div class="service-points text-center">+45 ScooterPoints</div>
+          
+          <div class="text-center mt-3">
+            <button class="btn btn-primary btn-sm me-2" onclick="openServiceModal('bateria')">
+              <i class="bi bi-info-circle"></i> Más Info
+            </button>
+            <button class="btn whatsapp-btn btn-sm" onclick="openWhatsApp('bateria')">
+              <i class="bi bi-whatsapp"></i> Cotizar
+            </button>
+          </div>
         </div>
       </article>
       
-      <article class="col-md-4">
+      <article class="col-lg-4 col-md-6">
         <div class="service-card">
-          <header>
-            <h3 class="h5">
-              <i class="bi bi-gear icon"></i>
-              Fabricación de Baterías a Medida
-            </h3>
-          </header>
+          <div class="text-center">
+            <i class="bi bi-gear icon"></i>
+            <h3 class="h5">Fabricación de Baterías a Medida</h3>
+          </div>
           <p>Armado de packs personalizados según necesidades de voltaje, amperaje y medidas específicas para tu proyecto.</p>
-          <ul class="list-unstyled mt-3">
-            <li><i class="bi bi-check-circle text-custom20-success me-2"></i>Diseño personalizado</li>
-            <li><i class="bi bi-check-circle text-custom20-success me-2"></i>Medidas específicas</li>
-            <li><i class="bi bi-check-circle text-custom20-success me-2"></i>Voltaje y amperaje a medida</li>
-            <li><i class="bi bi-check-circle text-custom20-success me-2"></i>Garantía incluida</li>
-          </ul>
+          
+          <div class="technical-specs">
+            <strong>Especificaciones:</strong>
+            <ul class="list-unstyled mt-2">
+              <li><i class="bi bi-check-circle text-success me-2"></i>Voltajes: 24V, 36V, 48V, 60V, 72V</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Capacidades: 8Ah - 50Ah</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Medidas personalizadas</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>BMS inteligente incluido</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>6 meses de garantía</li>
+            </ul>
+          </div>
+
+          <div class="service-pricing">Desde $180.000</div>
+          <div class="service-points text-center">+180 ScooterPoints</div>
+          
+          <div class="text-center mt-3">
+            <button class="btn btn-primary btn-sm me-2" onclick="openServiceModal('fabricacion')">
+              <i class="bi bi-info-circle"></i> Más Info
+            </button>
+            <button class="btn whatsapp-btn btn-sm" onclick="openWhatsApp('fabricacion')">
+              <i class="bi bi-whatsapp"></i> Cotizar
+            </button>
+          </div>
         </div>
       </article>
       
-      <article class="col-md-4">
+      <article class="col-lg-4 col-md-6">
         <div class="service-card">
-          <header>
-            <h3 class="h5">
-              <i class="bi bi-lightning icon"></i>
-              Diagnóstico de Fallas Eléctricas
-            </h3>
-          </header>
+          <div class="text-center">
+            <i class="bi bi-lightning icon"></i>
+            <h3 class="h5">Diagnóstico de Fallas Eléctricas</h3>
+          </div>
           <p>Servicio especializado en fallas eléctricas de bicicletas, motos o scooters eléctricos.</p>
-          <ul class="list-unstyled mt-3">
-            <li><i class="bi bi-check-circle text-custom20-success me-2"></i>Diagnóstico de controladores</li>
-            <li><i class="bi bi-check-circle text-custom20-success me-2"></i>Revisión de motores</li>
-            <li><i class="bi bi-check-circle text-custom20-success me-2"></i>Prueba de aceleradores</li>
-            <li><i class="bi bi-check-circle text-custom20-success me-2"></i>Verificación de sensores</li>
-          </ul>
+          
+          <div class="technical-specs">
+            <strong>Diagnósticos:</strong>
+            <ul class="list-unstyled mt-2">
+              <li><i class="bi bi-check-circle text-success me-2"></i>Controladores y ESC</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Motores brushless/brush</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Aceleradores hall/thumb</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Sensores de freno</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Display y conectividad</li>
+            </ul>
+          </div>
+
+          <div class="service-pricing">Desde $25.000</div>
+          <div class="service-points text-center">+25 ScooterPoints</div>
+          
+          <div class="text-center mt-3">
+            <button class="btn btn-primary btn-sm me-2" onclick="openServiceModal('diagnostico')">
+              <i class="bi bi-info-circle"></i> Más Info
+            </button>
+            <button class="btn whatsapp-btn btn-sm" onclick="openWhatsApp('diagnostico')">
+              <i class="bi bi-whatsapp"></i> Cotizar
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Nuevos servicios específicos -->
+      <article class="col-lg-4 col-md-6">
+        <div class="service-card">
+          <div class="text-center">
+            <i class="bi bi-wrench icon"></i>
+            <h3 class="h5">Mantenimiento Preventivo</h3>
+          </div>
+          <p>Revisión completa para mantener tu scooter en óptimas condiciones y evitar fallas futuras.</p>
+          
+          <div class="technical-specs">
+            <strong>Incluye:</strong>
+            <ul class="list-unstyled mt-2">
+              <li><i class="bi bi-check-circle text-success me-2"></i>Revisión general eléctrica</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Limpieza de contactos</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Ajuste de frenos</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Revisión de neumáticos</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Calibración display</li>
+            </ul>
+          </div>
+
+          <div class="service-pricing">$35.000</div>
+          <div class="service-points text-center">+35 ScooterPoints</div>
+          
+          <div class="text-center mt-3">
+            <button class="btn btn-primary btn-sm me-2" onclick="openServiceModal('mantenimiento')">
+              <i class="bi bi-info-circle"></i> Más Info
+            </button>
+            <button class="btn whatsapp-btn btn-sm" onclick="openWhatsApp('mantenimiento')">
+              <i class="bi bi-whatsapp"></i> Agendar
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="col-lg-4 col-md-6">
+        <div class="service-card">
+          <div class="text-center">
+            <i class="bi bi-house icon"></i>
+            <h3 class="h5">Servicio a Domicilio</h3>
+          </div>
+          <p>Llevamos nuestro taller a tu casa. Reparaciones menores y diagnósticos sin que tengas que salir.</p>
+          
+          <div class="technical-specs">
+            <strong>Servicios disponibles:</strong>
+            <ul class="list-unstyled mt-2">
+              <li><i class="bi bi-check-circle text-success me-2"></i>Diagnóstico in-situ</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Cambio de componentes</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Programación displays</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Instalación accesorios</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Carga de emergencia</li>
+            </ul>
+          </div>
+
+          <div class="service-pricing">+$15.000 traslado</div>
+          <div class="service-points text-center">+20 ScooterPoints</div>
+          
+          <div class="text-center mt-3">
+            <button class="btn btn-primary btn-sm me-2" onclick="openServiceModal('domicilio')">
+              <i class="bi bi-info-circle"></i> Más Info
+            </button>
+            <button class="btn whatsapp-btn btn-sm" onclick="openWhatsApp('domicilio')">
+              <i class="bi bi-whatsapp"></i> Solicitar
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="col-lg-4 col-md-6">
+        <div class="service-card">
+          <div class="text-center">
+            <i class="bi bi-speedometer2 icon"></i>
+            <h3 class="h5">Optimización de Rendimiento</h3>
+          </div>
+          <p>Mejora el rendimiento de tu scooter con configuraciones avanzadas y upgrades de componentes.</p>
+          
+          <div class="technical-specs">
+            <strong>Optimizaciones:</strong>
+            <ul class="list-unstyled mt-2">
+              <li><i class="bi bi-check-circle text-success me-2"></i>Programación controladores</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Ajuste curvas de potencia</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Upgrade de componentes</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Calibración sensores</li>
+              <li><i class="bi bi-check-circle text-success me-2"></i>Instalación firmware custom</li>
+            </ul>
+          </div>
+
+          <div class="service-pricing">Desde $50.000</div>
+          <div class="service-points text-center">+50 ScooterPoints</div>
+          
+          <div class="text-center mt-3">
+            <button class="btn btn-primary btn-sm me-2" onclick="openServiceModal('optimizacion')">
+              <i class="bi bi-info-circle"></i> Más Info
+            </button>
+            <button class="btn whatsapp-btn btn-sm" onclick="openWhatsApp('optimizacion')">
+              <i class="bi bi-whatsapp"></i> Consultar
+            </button>
+          </div>
         </div>
       </article>
     </div>
   </section>
 
-  <section class="contact-cta mt-5">
-    <div class="electric-theme text-center p-4 rounded">
-      <h3 class="h5 mb-3">¿Necesitas un servicio personalizado?</h3>
-      <p class="mb-3">Contáctanos para una cotización personalizada y descubre cómo podemos ayudarte con tu proyecto de electromovilidad.</p>
-      <a href="contacto.html" class="btn btn-custom20">
-        <i class="bi bi-telephone me-2"></i>Contactar Ahora
-      </a>
+  <!-- Formulario de Cotización Rápida -->
+  <section class="quote-section mt-5">
+    <div class="quote-form">
+      <h3 class="text-center mb-4"><i class="bi bi-calculator text-primary"></i> Cotización Rápida</h3>
+      <form id="quoteForm">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="serviceType" class="form-label">Tipo de Servicio</label>
+              <select class="form-select" id="serviceType" required>
+                <option value="">Selecciona un servicio</option>
+                <option value="bateria">Reparación de Batería</option>
+                <option value="fabricacion">Batería a Medida</option>
+                <option value="diagnostico">Diagnóstico Eléctrico</option>
+                <option value="mantenimiento">Mantenimiento Preventivo</option>
+                <option value="domicilio">Servicio a Domicilio</option>
+                <option value="optimizacion">Optimización Rendimiento</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="scooterBrand" class="form-label">Marca del Scooter</label>
+              <select class="form-select" id="scooterBrand">
+                <option value="">Selecciona marca</option>
+                <option value="xiaomi">Xiaomi</option>
+                <option value="segway">Segway-Ninebot</option>
+                <option value="kugoo">Kugoo</option>
+                <option value="citybird">CityBird</option>
+                <option value="otro">Otra marca</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="customerName" class="form-label">Nombre Completo</label>
+              <input type="text" class="form-control" id="customerName" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="customerPhone" class="form-label">Teléfono</label>
+              <input type="tel" class="form-control" id="customerPhone" placeholder="+56 9 1234 5678" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="problemDescription" class="form-label">Descripción del Problema</label>
+          <textarea class="form-control" id="problemDescription" rows="3" placeholder="Describe los síntomas o qué necesitas..."></textarea>
+        </div>
+
+        <div class="mb-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="urgentService">
+            <label class="form-check-label" for="urgentService">
+              <strong>Servicio Urgente</strong> (Respuesta en 2 horas - Recargo adicional)
+            </label>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <div class="d-grid gap-3">
+            <button type="submit" class="btn btn-primary btn-lg">
+              <i class="bi bi-send"></i> Enviar Cotización
+            </button>
+            <button type="button" class="btn whatsapp-btn btn-lg" onclick="sendWhatsAppQuote()">
+              <i class="bi bi-whatsapp"></i> Enviar por WhatsApp
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   </section>
 </main>
+
+<!-- Modal de información de servicios -->
+<div class="modal fade service-modal" id="serviceInfoModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="serviceModalTitle">Información del Servicio</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="serviceModalBody">
+        <!-- Contenido dinámico -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn whatsapp-btn" id="modalWhatsAppBtn">
+          <i class="bi bi-whatsapp"></i> Contactar por WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="custom20-footer mt-5">
+  <div class="container text-center">
+    <div class="row">
+      <div class="col-md-4">
+        <h5>Contacto Directo</h5>
+        <p><i class="bi bi-whatsapp text-success"></i> +56 9 97290901</p>
+        <p><i class="bi bi-envelope"></i> servicios@custom20.cl</p>
+      </div>
+      <div class="col-md-4">
+        <h5>Horarios</h5>
+        <p>Lun - Vie: 9:00 - 18:00</p>
+        <p>Sáb: 10:00 - 14:00</p>
+        <p class="text-danger">Emergencias: 24/7</p>
+      </div>
+      <div class="col-md-4">
+        <h5>Ubicación</h5>
+        <p>Santiago, Chile</p>
+        <p>Servicio a domicilio disponible</p>
+      </div>
+    </div>
+    <hr>
+    <p class="mb-0">© <span id="yearNow"></span> Custom20. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+// Sistema ScooterPoints
+class ScooterPointsSystem {
+  constructor() {
+    this.userPoints = parseInt(localStorage.getItem('scooterPoints') || '0');
+    this.userTier = this.calculateTier(this.userPoints);
+    this.updateDisplay();
+  }
+  
+  calculateTier(points) {
+    if (points >= 1000) return "Pro";
+    if (points >= 500) return "Expert";
+    if (points >= 200) return "Advanced";
+    return "Beginner";
+  }
+  
+  updateDisplay() {
+    const tierElement = document.getElementById('user-tier');
+    const pointsElement = document.getElementById('user-points');
+    if (tierElement) tierElement.textContent = this.userTier;
+    if (pointsElement) pointsElement.textContent = this.userPoints;
+  }
+}
+
+let scooterPoints = new ScooterPointsSystem();
+
+// Información detallada de servicios
+const serviceDetails = {
+  bateria: {
+    title: "Reparación de Baterías de Litio",
+    content: `
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Proceso de Diagnóstico:</h5>
+          <ul>
+            <li>Medición de voltajes individuales por celda</li>
+            <li>Prueba de capacidad real vs nominal</li>
+            <li>Verificación del BMS (Battery Management System)</li>
+            <li>Test de resistencia interna</li>
+            <li>Evaluación del balanceador</li>
+          </ul>
+          <h5>Tipos de Reparación:</h5>
+          <ul>
+            <li>Cambio de celdas 18650/21700 defectuosas</li>
+            <li>Reemplazo de BMS completo</li>
+            <li>Soldadura de nuevos conectores</li>
+            <li>Re-balanceo del pack completo</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h5>Garantía y Tiempos:</h5>
+          <ul>
+            <li><strong>Garantía:</strong> 3 meses en mano de obra</li>
+            <li><strong>Tiempo:</strong> 3-5 días hábiles</li>
+            <li><strong>Urgente:</strong> 24-48 horas (+$20.000)</li>
+          </ul>
+          <h5>Precios Referenciales:</h5>
+          <ul>
+            <li>Diagnóstico: $15.000 (bonificable)</li>
+            <li>Cambio 1-3 celdas: $45.000</li>
+            <li>Cambio BMS: $35.000</li>
+            <li>Pack completo: Cotización</li>
+          </ul>
+        </div>
+      </div>
+    `
+  },
+  fabricacion: {
+    title: "Fabricación de Baterías a Medida",
+    content: `
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Configuraciones Disponibles:</h5>
+          <ul>
+            <li><strong>24V:</strong> 8Ah, 10Ah, 12Ah, 15Ah</li>
+            <li><strong>36V:</strong> 8Ah, 10Ah, 13Ah, 17Ah, 20Ah</li>
+            <li><strong>48V:</strong> 10Ah, 13Ah, 17Ah, 20Ah, 25Ah</li>
+            <li><strong>60V:</strong> 12Ah, 15Ah, 20Ah, 25Ah</li>
+            <li><strong>72V:</strong> 15Ah, 20Ah, 25Ah, 30Ah</li>
+          </ul>
+          <h5>Tipos de Celdas:</h5>
+          <ul>
+            <li>Samsung 29E (2900mAh) - Premium</li>
+            <li>Panasonic NCR18650B (3400mAh)</li>
+            <li>LG MJ1 (3500mAh) - Alta capacidad</li>
+            <li>Samsung 30Q (3000mAh) - Alto descarga</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h5>Características Incluidas:</h5>
+          <ul>
+            <li>BMS inteligente con bluetooth (opcional)</li>
+            <li>Protección contra sobrecarga/descarga</li>
+            <li>Balance automático de celdas</li>
+            <li>Carcasa personalizada</li>
+            <li>Conector compatible con tu scooter</li>
+            <li>Indicador LED de carga</li>
+          </ul>
+          <h5>Proceso de Fabricación:</h5>
+          <ol>
+            <li>Consulta técnica (gratuita)</li>
+            <li>Diseño y cotización</li>
+            <li>50% de anticipo</li>
+            <li>Fabricación (5-10 días)</li>
+            <li>Pruebas y entrega</li>
+          </ol>
+        </div>
+      </div>
+    `
+  },
+  diagnostico: {
+    title: "Diagnóstico de Fallas Eléctricas",
+    content: `
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Equipamiento de Diagnóstico:</h5>
+          <ul>
+            <li>Multímetro de precisión</li>
+            <li>Osciloscopio digital</li>
+            <li>Carga electrónica programable</li>
+            <li>Analizador de espectro</li>
+            <li>Software de diagnóstico especializado</li>
+          </ul>
+          <h5>Componentes que Revisamos:</h5>
+          <ul>
+            <li>Controladores ESC (Electronic Speed Control)</li>
+            <li>Motores brushless y con escobillas</li>
+            <li>Aceleradores hall effect y thumb</li>
+            <li>Sensores de freno electromagnético</li>
+            <li>Displays y paneles de control</li>
+            <li>Conectores y cableado</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h5>Fallas Comunes que Solucionamos:</h5>
+          <ul>
+            <li>Scooter no enciende</li>
+            <li>Motor no responde al acelerador</li>
+            <li>Pérdida de potencia</li>
+            <li>Frenado regenerativo no funciona</li>
+            <li>Display muestra errores</li>
+            <li>Consumo excesivo de batería</li>
+            <li>Ruidos extraños en el motor</li>
+          </ul>
+          <h5>Informe Técnico:</h5>
+          <p>Recibes un reporte detallado con:</p>
+          <ul>
+            <li>Estado de cada componente</li>
+            <li>Mediciones técnicas</li>
+            <li>Fotos del problema</li>
+            <li>Presupuesto de reparación</li>
+          </ul>
+        </div>
+      </div>
+    `
+  },
+  mantenimiento: {
+    title: "Mantenimiento Preventivo Integral",
+    content: `
+      <h5>Checklist de Mantenimiento (26 puntos):</h5>
+      <div class="row">
+        <div class="col-md-6">
+          <strong>Sistema Eléctrico:</strong>
+          <ul>
+            <li>Voltaje de batería en reposo y carga</li>
+            <li>Estado de conectores y cables</li>
+            <li>Funcionamiento del display</li>
+            <li>Calibración del acelerador</li>
+            <li>Test de sensores de freno</li>
+            <li>Verificación de luces</li>
+          </ul>
+          <strong>Sistema Mecánico:</strong>
+          <ul>
+            <li>Presión de neumáticos</li>
+            <li>Estado de frenos</li>
+            <li>Ajuste de manubrio</li>
+            <li>Lubricación de piezas móviles</li>
+            <li>Tornillería en general</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <strong>Limpieza y Protección:</strong>
+          <ul>
+            <li>Limpieza profunda de contactos</li>
+            <li>Desoxidación de terminales</li>
+            <li>Aplicación de dieléctrico</li>
+            <li>Protección IP contra humedad</li>
+          </ul>
+          <strong>Optimizaciones:</strong>
+          <ul>
+            <li>Actualización de firmware (si aplica)</li>
+            <li>Calibración de parámetros</li>
+            <li>Optimización de eficiencia</li>
+            <li>Configuración personalizada</li>
+          </ul>
+          <div class="alert alert-info mt-3">
+            <strong>Incluye:</strong> Certificado de mantenimiento válido por 6 meses
+          </div>
+        </div>
+      </div>
+    `
+  },
+  domicilio: {
+    title: "Servicio Técnico a Domicilio",
+    content: `
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Servicios Disponibles en Terreno:</h5>
+          <ul>
+            <li><strong>Diagnóstico completo:</strong> Llevamos nuestro equipamiento</li>
+            <li><strong>Reparaciones menores:</strong> Cambio de componentes</li>
+            <li><strong>Instalaciones:</strong> Accesorios y upgrades</li>
+            <li><strong>Configuración:</strong> Programación de displays</li>
+            <li><strong>Mantenimiento:</strong> Servicio preventivo completo</li>
+            <li><strong>Emergencias:</strong> Rescate y carga in-situ</li>
+          </ul>
+          <h5>Kit de Herramientas Móvil:</h5>
+          <ul>
+            <li>Multímetro profesional</li>
+            <li>Soldador portátil</li>
+            <li>Cargador de emergencia</li>
+            <li>Repuestos comunes</li>
+            <li>Herramientas especializadas</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h5>Cobertura y Horarios:</h5>
+          <ul>
+            <li><strong>Zona Norte:</strong> Las Condes, Vitacura, Providencia</li>
+            <li><strong>Zona Centro:</strong> Santiago, Ñuñoa, San Miguel</li>
+            <li><strong>Zona Sur:</strong> La Florida, Puente Alto, Maipú</li>
+            <li><strong>Otras comunas:</strong> Consultar disponibilidad</li>
+          </ul>
+          <h5>Modalidades de Servicio:</h5>
+          <ul>
+            <li><strong>Programado:</strong> Lun-Vie 9:00-18:00</li>
+            <li><strong>Express:</strong> Mismo día (+$10.000)</li>
+            <li><strong>Emergencia:</strong> 24/7 (+$25.000)</li>
+          </ul>
+          <div class="alert alert-warning">
+            <strong>Costo de traslado:</strong> $15.000 (gratuito en servicios sobre $80.000)
+          </div>
+        </div>
+      </div>
+    `
+  },
+  optimizacion: {
+    title: "Optimización y Mejora de Rendimiento",
+    content: `
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Servicios de Optimización:</h5>
+          <ul>
+            <li><strong>Programación de controladores:</strong> Ajuste de curvas de potencia</li>
+            <li><strong>Desbloques seguros:</strong> Aumento de velocidad controlado</li>
+            <li><strong>Mejora de aceleración:</strong> Optimización de torque</li>
+            <li><strong>Eficiencia energética:</strong> Mayor autonomía</li>
+            <li><strong>Freno regenerativo:</strong> Configuración avanzada</li>
+            <li><strong>Modos de conducción:</strong> Eco, Normal, Sport, Custom</li>
+          </ul>
+          <h5>Upgrades Populares:</h5>
+          <ul>
+            <li>Controlador de mayor potencia</li>
+            <li>Display con más funciones</li>
+            <li>Acelerador con cruise control</li>
+            <li>Sistema de luces LED</li>
+            <li>Bocina eléctrica potente</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h5>Firmware y Software:</h5>
+          <ul>
+            <li>Actualización a versiones más recientes</li>
+            <li>Instalación de firmware personalizado</li>
+            <li>Configuración de parámetros avanzados</li>
+            <li>Backup de configuración original</li>
+            <li>Modo de recuperación en caso de problemas</li>
+          </ul>
+          <h5>Mejoras de Rendimiento Típicas:</h5>
+          <ul>
+            <li><strong>Velocidad:</strong> +15-30% (según modelo)</li>
+            <li><strong>Aceleración:</strong> +20-40% mejora</li>
+            <li><strong>Autonomía:</strong> +10-25% eficiencia</li>
+            <li><strong>Frenado:</strong> +30% recuperación energética</li>
+          </ul>
+          <div class="alert alert-danger">
+            <strong>Importante:</strong> Las modificaciones pueden afectar la garantía original
+          </div>
+        </div>
+      </div>
+    `
+  }
+};
+
+// Funciones de WhatsApp especializadas
+function openEmergencyWhatsApp() {
+  const message = encodeURIComponent("🚨 SERVICIO DE EMERGENCIA - Mi scooter tiene una falla urgente y necesito ayuda inmediata. Ubicación: ");
+  window.open(`https://wa.me/56912345678?text=${message}`, '_blank');
+}
+
+function openWhatsApp(serviceType) {
+  const messages = {
+    bateria: "Hola, necesito cotizar una reparación de batería para mi scooter. Detalles:",
+    fabricacion: "Hola, me interesa una batería a medida. Especificaciones que necesito:",
+    diagnostico: "Hola, mi scooter tiene una falla eléctrica y necesito un diagnóstico. Síntomas:",
+    mantenimiento: "Hola, quiero agendar un mantenimiento preventivo para mi scooter. Disponibilidad:",
+    domicilio: "Hola, necesito servicio técnico a domicilio. Mi dirección es:",
+    optimizacion: "Hola, me interesa optimizar el rendimiento de mi scooter. Mi modelo es:"
+  };
+  
+  const message = encodeURIComponent(messages[serviceType] || "Hola, necesito información sobre sus servicios técnicos.");
+  window.open(`https://wa.me/56912345678?text=${message}`, '_blank');
+}
+
+function openServiceModal(serviceType) {
+  const service = serviceDetails[serviceType];
+  if (service) {
+    document.getElementById('serviceModalTitle').textContent = service.title;
+    document.getElementById('serviceModalBody').innerHTML = service.content;
+    document.getElementById('modalWhatsAppBtn').onclick = () => openWhatsApp(serviceType);
+    
+    const modal = new bootstrap.Modal(document.getElementById('serviceInfoModal'));
+    modal.show();
+  }
+}
+
+function sendWhatsAppQuote() {
+  const serviceType = document.getElementById('serviceType').value;
+  const brand = document.getElementById('scooterBrand').value;
+  const name = document.getElementById('customerName').value;
+  const phone = document.getElementById('customerPhone').value;
+  const description = document.getElementById('problemDescription').value;
+  const urgent = document.getElementById('urgentService').checked;
+  
+  if (!serviceType || !name || !phone) {
+    alert('Por favor completa los campos obligatorios (Servicio, Nombre y Teléfono)');
+    return;
+  }
+  
+  let message = `🔧 COTIZACIÓN DE SERVICIO\n\n`;
+  message += `👤 Cliente: ${name}\n`;
+  message += `📱 Teléfono: ${phone}\n`;
+  message += `🛴 Servicio: ${document.getElementById('serviceType').options[document.getElementById('serviceType').selectedIndex].text}\n`;
+  
+  if (brand) {
+    message += `🏷️ Marca: ${document.getElementById('scooterBrand').options[document.getElementById('scooterBrand').selectedIndex].text}\n`;
+  }
+  
+  if (description) {
+    message += `📝 Descripción: ${description}\n`;
+  }
+  
+  if (urgent) {
+    message += `⚡ SERVICIO URGENTE SOLICITADO\n`;
+  }
+  
+  message += `\n¿Cuándo podrían atenderme?`;
+  
+  const encodedMessage = encodeURIComponent(message);
+  window.open(`https://wa.me/56912345678?text=${encodedMessage}`, '_blank');
+}
+
+// Manejar formulario de cotización
+document.addEventListener('DOMContentLoaded', function() {
+  // Año en footer
+  document.getElementById("yearNow").textContent = new Date().getFullYear();
+  
+  // Formulario de cotización
+  document.getElementById('quoteForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    sendWhatsAppQuote();
+  });
+  
+  // Manejar visibilidad del login y ScooterPoints
+  function updateNavbarAuth() {
+    let user = null;
+    if (window.AuthStore && window.AuthStore.getCurrentUser) {
+      user = window.AuthStore.getCurrentUser();
+    } else {
+      try {
+        const userData = localStorage.getItem('APP_CURRENT_USER');
+        if (userData) {
+          user = JSON.parse(userData);
+        }
+      } catch (e) {
+        console.error('Error al obtener usuario desde localStorage:', e);
+      }
+    }
+    
+    const loginSection = document.getElementById('loginSection');
+    const userSection = document.getElementById('userSection');
+    const scooterPointsSection = document.getElementById('scooterPointsSection');
+    
+    if (user) {
+      if (loginSection) loginSection.classList.add('d-none');
+      if (userSection) {
+        userSection.classList.remove('d-none');
+        const userNameEl = document.getElementById('navUserName');
+        if (userNameEl) userNameEl.textContent = user.name;
+      }
+      if (scooterPointsSection) {
+        scooterPointsSection.classList.remove('d-none');
+      }
+      if (user.role === 'admin') {
+        const adminLinks = document.querySelectorAll('.admin-only');
+        adminLinks.forEach(link => link.classList.remove('d-none'));
+      }
+    } else {
+      if (loginSection) loginSection.classList.remove('d-none');
+      if (userSection) userSection.classList.add('d-none');
+      if (scooterPointsSection) scooterPointsSection.classList.add('d-none');
+    }
+  }
+  
+  updateNavbarAuth();
+  setTimeout(updateNavbarAuth, 100);
+  
+  window.addEventListener('auth:login', updateNavbarAuth);
+  window.addEventListener('auth:logout', updateNavbarAuth);
+  
+  document.getElementById('btnLogout')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (window.globalLogout) {
+      window.globalLogout();
+    } else {
+      localStorage.removeItem('APP_CURRENT_USER');
+      updateNavbarAuth();
+      window.location.href = 'index.html';
+    }
+  });
+  
+  // Actualizar contador del carrito
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('APP_CART') || '[]');
+    const totalItems = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+    const cartCountEl = document.getElementById('cartCount');
+    if (cartCountEl) {
+      cartCountEl.textContent = totalItems;
+    }
+  }
+  
+  updateCartCount();
+});
+</script>
 </body>
 </html>

@@ -8,51 +8,659 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Custom20 Styles -->
   <link href="assets/css/styles.css" rel="stylesheet">
+  
+  <!-- Estilos específicos para contacto técnico -->
+  <style>
+    :root {
+      --scooter-orange: #FF6B35;
+      --scooter-blue: #2E86AB; 
+      --scooter-dark: #1a1a1a;
+      --scooter-success: #28A745;
+      --scooter-warning: #FFC107;
+    }
+
+    /* Aplicar colores scooter */
+    .bg-primary { background-color: var(--scooter-orange) !important; }
+    .btn-primary { background-color: var(--scooter-orange); border-color: var(--scooter-orange); }
+    .btn-primary:hover { background-color: #e55a2b; border-color: #e55a2b; }
+    .btn-outline-primary { color: var(--scooter-orange); border-color: var(--scooter-orange); }
+    .btn-outline-primary:hover { background-color: var(--scooter-orange); border-color: var(--scooter-orange); }
+    .text-primary { color: var(--scooter-orange) !important; }
+    .badge.bg-primary { background-color: var(--scooter-blue) !important; }
+    
+    /* Navbar brand con gradiente */
+    .navbar-brand {
+      background: linear-gradient(45deg, var(--scooter-orange), var(--scooter-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Header con gradiente */
+    header.bg-primary {
+      background: linear-gradient(135deg, var(#2563EB), var(#0891B2)) !important;
+    }
+
+    /* Consultas técnicas especializadas */
+    .contact-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .contact-card {
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(46, 134, 171, 0.05));
+      border: 2px solid rgba(255, 107, 53, 0.1);
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .contact-card:hover {
+      border-color: var(--scooter-orange);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(255, 107, 53, 0.2);
+    }
+
+    .contact-card i {
+      font-size: 3rem;
+      color: var(--scooter-orange);
+      margin-bottom: 1rem;
+    }
+
+    .contact-card h4 {
+      color: var(--scooter-blue);
+      margin-bottom: 1rem;
+    }
+
+    /* Formulario técnico */
+    .technical-form {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      border: 2px solid var(--scooter-orange);
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--scooter-orange);
+      box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+    }
+
+    /* WhatsApp buttons */
+    .whatsapp-btn {
+      background: #25D366;
+      border: none;
+      color: white;
+      border-radius: 25px;
+      padding: 0.75rem 1.5rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .whatsapp-btn:hover {
+      background: #20a85a;
+      color: white;
+      transform: scale(1.05);
+      text-decoration: none;
+    }
+
+    /* Diagnóstico inteligente */
+    .diagnostic-section {
+      background: rgba(46, 134, 171, 0.05);
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border-left: 4px solid var(--scooter-blue);
+    }
+
+    .symptom-checkbox {
+      margin-bottom: 0.8rem;
+    }
+
+    .symptom-checkbox input[type="checkbox"]:checked + label {
+      color: var(--scooter-orange);
+      font-weight: 600;
+    }
+
+    /* Información de contacto mejorada */
+    .contact-info {
+      background: linear-gradient(135deg, var(--scooter-orange), var(--scooter-blue));
+      color: white;
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .contact-info h3 {
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .contact-detail i {
+      font-size: 1.5rem;
+      margin-right: 1rem;
+    }
+
+    /* Alerts personalizadas */
+    .custom20-alert {
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      margin: 1rem 0;
+      border: none;
+    }
+
+    .custom20-alert-success {
+      background: linear-gradient(135deg, rgba(40, 167, 69, 0.15), rgba(40, 167, 69, 0.05));
+      border-left: 4px solid var(--scooter-success);
+      color: #155724;
+    }
+
+    .custom20-alert-danger {
+      background: linear-gradient(135deg, rgba(220, 53, 69, 0.15), rgba(220, 53, 69, 0.05));
+      border-left: 4px solid #dc3545;
+      color: #721c24;
+    }
+
+    /* Animaciones */
+    .animate-fadeInUp {
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Loading state */
+    .form.loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .contact-options {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .contact-card {
+        padding: 1.5rem;
+      }
+      
+      .technical-form {
+        padding: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
   <div class="container">
-    <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-battery-charging"></i> Custom20</a>
-    <div class="container">
-      <a class="btn btn-outline-secondary ms-auto" href="index.html"><i class="bi bi-house"></i> Inicio</a>
-      <a class="btn btn-outline-secondary ms-auto" href="productos.html">Repuestos</a>
-      <a class="btn btn-outline-secondary ms-auto" href="servicios.html">Servicios</a>
-      <a class="btn btn-outline-secondary ms-auto" href="preguntas.html">Preguntas</a>
-      <a class="btn btn-outline-secondary ms-auto" href="contacto.html">Contacto</a>
+    <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-scooter"></i> Custom20.cl</a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item admin-only d-none"><a class="nav-link" href="admin.html">Admin Productos</a></li>
+        <li class="nav-item admin-only d-none"><a class="nav-link" href="admin_usuarios.html">Admin Usuarios</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="productos.html">Repuestos</a></li>
+        <li class="nav-item"><a class="nav-link" href="servicios.html">Servicios</a></li>
+        <li class="nav-item"><a class="nav-link" href="preguntas.html">Preguntas</a></li>
+        <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
+        <!-- ScooterPoints (solo visible cuando hay usuario logueado) -->
+        <li class="nav-item d-none me-2" id="scooterPointsSection">
+          <span class="scooter-points">
+            <i class="bi bi-trophy"></i> <span id="user-tier">Beginner</span> | 
+            <i class="bi bi-star"></i> <span id="user-points">0</span> pts
+          </span>
+        </li>
+        
+        <li class="nav-item me-3">
+          <a class="nav-link position-relative" href="carrito.html">
+            <i class="bi bi-cart"></i> Carrito
+            <span id="cartCount" class="badge bg-primary text-white position-absolute top-0 start-100 translate-middle">0</span>
+          </a>
+        </li>
+        <li class="nav-item" id="loginSection">
+          <a class="btn btn-outline-primary btn-sm" href="login.html">
+            <i class="bi bi-box-arrow-in-right me-1"></i>Iniciar Sesión
+          </a>
+        </li>
+        <li class="nav-item d-none" id="userSection">
+          <span class="navbar-text me-2" id="navUserName">Invitado</span>
+          <a class="btn btn-outline-secondary btn-sm" href="#" id="btnLogout">
+            <i class="bi bi-box-arrow-right me-1"></i>Salir
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
 
+<!-- Header -->
+<header class="bg-primary text-white py-4">
+  <div class="container">
+    <h1><i class="bi bi-headset"></i> Contacto Técnico Especializado</h1>
+    <p class="lead">Obtén ayuda personalizada para tu scooter eléctrico</p>
+  </div>
+</header>
+
 <main class="container py-5">
-  <h1 class="h3 mb-3">Formulario de contacto</h1>
-  <form class="row g-3 custom20-form" id="formContacto">
-    <div class="col-md-6">
-      <label class="form-label" for="nombre">Nombre</label>
-      <input name="nombre" id="nombre" class="form-control" required>
+  <!-- Opciones de contacto rápido -->
+  <section class="contact-options">
+    <div class="contact-card" onclick="openTechnicalWhatsApp()">
+      <i class="bi bi-whatsapp"></i>
+      <h4>Consulta Técnica WhatsApp</h4>
+      <p>Chatea directamente con nuestros técnicos especializados</p>
+      <small class="text-muted">Respuesta inmediata • 9:00 - 18:00</small>
     </div>
-    <div class="col-md-6">
-      <label class="form-label" for="telefono">Teléfono</label>
-      <input name="telefono" id="telefono" class="form-control" required>
+
+    <div class="contact-card" onclick="openEmergencyWhatsApp()">
+      <i class="bi bi-lightning-fill"></i>
+      <h4>Emergencia 24/7</h4>
+      <p>Servicio urgente para fallas críticas de tu scooter</p>
+      <small class="text-muted">Disponible 24/7 • Recargo adicional</small>
     </div>
-    <div class="col-12">
-      <label class="form-label" for="correo">Correo</label>
-      <input name="correo" id="correo" type="email" class="form-control" required>
+
+    <div class="contact-card" onclick="openQuoteWhatsApp()">
+      <i class="bi bi-calculator"></i>
+      <h4>Cotizar Reparación</h4>
+      <p>Envía fotos y obtén un presupuesto estimado</p>
+      <small class="text-muted">Cotización gratuita • 30 min aprox</small>
     </div>
-    <div class="col-12">
-      <label class="form-label" for="mensaje">Mensaje</label>
-      <textarea name="mensaje" id="mensaje" class="form-control" rows="4" required maxlength="500"></textarea>
-      <div class="form-text">Máximo 500 caracteres</div>
+  </section>
+
+  <div class="row">
+    <!-- Formulario de contacto técnico -->
+    <div class="col-lg-8">
+      <div class="technical-form">
+        <h3 class="mb-4"><i class="bi bi-gear-fill text-primary"></i> Formulario de Consulta Técnica</h3>
+        
+        <form class="row g-3 custom20-form" id="formContacto">
+          <div class="col-md-6">
+            <label class="form-label" for="nombre">
+              <i class="bi bi-person me-2"></i>Nombre Completo
+            </label>
+            <input name="nombre" id="nombre" class="form-control" required>
+          </div>
+          
+          <div class="col-md-6">
+            <label class="form-label" for="telefono">
+              <i class="bi bi-phone me-2"></i>Teléfono
+            </label>
+            <input name="telefono" id="telefono" class="form-control" required placeholder="+56 9 1234 5678">
+          </div>
+          
+          <div class="col-12">
+            <label class="form-label" for="correo">
+              <i class="bi bi-envelope me-2"></i>Correo Electrónico
+            </label>
+            <input name="correo" id="correo" type="email" class="form-control" required>
+          </div>
+
+          <!-- Información del scooter -->
+          <div class="col-md-6">
+            <label class="form-label" for="marca">
+              <i class="bi bi-tag me-2"></i>Marca del Scooter
+            </label>
+            <select name="marca" id="marca" class="form-select">
+              <option value="">Selecciona marca</option>
+              <option value="xiaomi">Xiaomi</option>
+              <option value="segway">Segway-Ninebot</option>
+              <option value="kugoo">Kugoo</option>
+              <option value="citybird">CityBird</option>
+              <option value="inokim">Inokim</option>
+              <option value="speedway">Speedway</option>
+              <option value="otro">Otra marca</option>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label" for="modelo">
+              <i class="bi bi-cpu me-2"></i>Modelo del Scooter
+            </label>
+            <input name="modelo" id="modelo" class="form-control" placeholder="Ej: M365, ES2, S1 Pro">
+          </div>
+
+          <!-- Tipo de consulta -->
+          <div class="col-12">
+            <label class="form-label" for="tipoConsulta">
+              <i class="bi bi-question-circle me-2"></i>Tipo de Consulta
+            </label>
+            <select name="tipoConsulta" id="tipoConsulta" class="form-select" required onchange="updateConsultaType()">
+              <option value="">Selecciona el tipo de consulta</option>
+              <option value="falla_electrica">Falla Eléctrica</option>
+              <option value="bateria">Problema de Batería</option>
+              <option value="motor">Problema de Motor</option>
+              <option value="frenos">Sistema de Frenos</option>
+              <option value="display">Display/Pantalla</option>
+              <option value="carga">Problema de Carga</option>
+              <option value="ruidos">Ruidos Extraños</option>
+              <option value="mantenimiento">Mantenimiento Preventivo</option>
+              <option value="upgrade">Upgrade/Mejoras</option>
+              <option value="otro">Otra consulta</option>
+            </select>
+          </div>
+
+          <!-- Diagnóstico inteligente (se muestra según el tipo) -->
+          <div class="col-12 diagnostic-section" id="diagnosticSection" style="display: none;">
+            <h5><i class="bi bi-search text-primary"></i> Diagnóstico Inteligente</h5>
+            <p>Selecciona los síntomas que presenta tu scooter:</p>
+            <div id="symptomsContainer">
+              <!-- Se llena dinámicamente según el tipo de consulta -->
+            </div>
+          </div>
+          
+          <div class="col-12">
+            <label class="form-label" for="mensaje">
+              <i class="bi bi-chat-dots me-2"></i>Descripción Detallada
+            </label>
+            <textarea name="mensaje" id="mensaje" class="form-control" rows="4" required maxlength="500" 
+                      placeholder="Describe los síntomas, cuándo ocurre el problema, y cualquier detalle relevante..."></textarea>
+            <div class="form-text">Máximo 500 caracteres • Sé específico para una mejor ayuda</div>
+          </div>
+
+          <!-- Prioridad -->
+          <div class="col-12">
+            <label class="form-label">
+              <i class="bi bi-exclamation-triangle me-2"></i>Prioridad
+            </label>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="prioridad" id="prioridadBaja" value="baja" checked>
+                  <label class="form-check-label" for="prioridadBaja">
+                    <span class="badge bg-success me-2">Baja</span>Consulta general
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="prioridad" id="prioridadMedia" value="media">
+                  <label class="form-check-label" for="prioridadMedia">
+                    <span class="badge bg-warning me-2">Media</span>Problema molesto
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="prioridad" id="prioridadAlta" value="alta">
+                  <label class="form-check-label" for="prioridadAlta">
+                    <span class="badge bg-danger me-2">Alta</span>Scooter inutilizable
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-12">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+              <button class="btn btn-primary btn-lg" type="submit">
+                <i class="bi bi-send me-2"></i>Enviar Consulta Técnica
+              </button>
+              <button class="whatsapp-btn btn-lg" type="button" onclick="sendTechnicalWhatsApp()">
+                <i class="bi bi-whatsapp me-2"></i>Enviar por WhatsApp
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="col-12">
-      <button class="btn btn-custom20" type="submit">
-        <i class="bi bi-send me-2"></i>Enviar mensaje
-      </button>
+
+    <!-- Información de contacto -->
+    <div class="col-lg-4">
+      <div class="contact-info">
+        <h3><i class="bi bi-telephone-fill"></i> Información de Contacto</h3>
+        
+        <div class="contact-detail">
+          <i class="bi bi-whatsapp"></i>
+          <div>
+            <strong>WhatsApp Técnico</strong><br>
+            <small>+56 9 1234 5678</small>
+          </div>
+        </div>
+        
+        <div class="contact-detail">
+          <i class="bi bi-envelope-fill"></i>
+          <div>
+            <strong>Email Técnico</strong><br>
+            <small>soporte@custom20.cl</small>
+          </div>
+        </div>
+        
+        <div class="contact-detail">
+          <i class="bi bi-clock-fill"></i>
+          <div>
+            <strong>Horarios Atención</strong><br>
+            <small>Lun-Vie: 9:00-18:00<br>Sáb: 10:00-14:00</small>
+          </div>
+        </div>
+        
+        <div class="contact-detail">
+          <i class="bi bi-lightning-fill"></i>
+          <div>
+            <strong>Emergencias 24/7</strong><br>
+            <small>Disponible fines de semana</small>
+          </div>
+        </div>
+
+        <hr style="border-color: rgba(255,255,255,0.3);">
+        
+        <h4>Tiempo de Respuesta</h4>
+        <ul class="list-unstyled">
+          <li><i class="bi bi-check-circle me-2"></i>WhatsApp: Inmediato</li>
+          <li><i class="bi bi-check-circle me-2"></i>Email: 2-4 horas</li>
+          <li><i class="bi bi-check-circle me-2"></i>Formulario: 24 horas</li>
+        </ul>
+      </div>
+
+      <!-- Tips técnicos -->
+      <div class="mt-4 p-3" style="background: rgba(46, 134, 171, 0.1); border-radius: 10px;">
+        <h5 class="text-primary">💡 Tips antes de contactar:</h5>
+        <ul class="small">
+          <li>Ten a mano el modelo exacto de tu scooter</li>
+          <li>Si es posible, toma fotos del problema</li>
+          <li>Anota cuándo comenzó el problema</li>
+          <li>Verifica si tienes garantía vigente</li>
+        </ul>
+      </div>
     </div>
-  </form>
+  </div>
 </main>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/auth.js"></script>
 <script>
-// Validaciones personalizadas para el formulario de contacto
+// Sistema ScooterPoints básico
+class ScooterPointsSystem {
+  constructor() {
+    this.userPoints = parseInt(localStorage.getItem('scooterPoints') || '0');
+    this.userTier = this.calculateTier(this.userPoints);
+    this.updateDisplay();
+  }
+  
+  calculateTier(points) {
+    if (points >= 1000) return "Pro";
+    if (points >= 500) return "Expert";
+    if (points >= 200) return "Advanced";
+    return "Beginner";
+  }
+  
+  updateDisplay() {
+    const tierElement = document.getElementById('user-tier');
+    const pointsElement = document.getElementById('user-points');
+    if (tierElement) tierElement.textContent = this.userTier;
+    if (pointsElement) pointsElement.textContent = this.userPoints;
+  }
+}
+
+let scooterPoints = new ScooterPointsSystem();
+
+// Síntomas por tipo de consulta
+const symptomsByType = {
+  falla_electrica: [
+    'No enciende',
+    'Se apaga solo',
+    'Luces no funcionan',
+    'Display en blanco',
+    'Chispas o humo'
+  ],
+  bateria: [
+    'Carga muy poco',
+    'No carga completamente',
+    'Se descarga rápido',
+    'Cargador se calienta',
+    'Batería inflada'
+  ],
+  motor: [
+    'No acelera',
+    'Pérdida de potencia',
+    'Ruidos metálicos',
+    'Vibración excesiva',
+    'Se detiene súbitamente'
+  ],
+  frenos: [
+    'Frenos no responden',
+    'Ruido al frenar',
+    'Freno regenerativo falla',
+    'Pastillas desgastadas',
+    'Palanca suelta'
+  ],
+  display: [
+    'Pantalla en blanco',
+    'Pixeles muertos',
+    'No responde botones',
+    'Información errónea',
+    'Se reinicia solo'
+  ],
+  carga: [
+    'Cargador no funciona',
+    'Puerto de carga dañado',
+    'Luz de carga no enciende',
+    'Carga lenta',
+    'Cargador hace ruido'
+  ],
+  ruidos: [
+    'Ruido al acelerar',
+    'Crujidos al girar',
+    'Sonido eléctrico agudo',
+    'Vibración en manubrio',
+    'Ruido en ruedas'
+  ]
+};
+
+// Funciones de WhatsApp especializadas
+function openTechnicalWhatsApp() {
+  const message = encodeURIComponent("Hola, necesito ayuda técnica con mi scooter eléctrico. Mi consulta es sobre:");
+  window.open(`https://wa.me/56912345678?text=${message}`, '_blank');
+}
+
+function openEmergencyWhatsApp() {
+  const message = encodeURIComponent("🚨 EMERGENCIA - Mi scooter tiene una falla crítica y necesito ayuda urgente. Detalles:");
+  window.open(`https://wa.me/56912345678?text=${message}`, '_blank');
+}
+
+function openQuoteWhatsApp() {
+  const message = encodeURIComponent("Hola, necesito cotizar una reparación para mi scooter. Envío fotos del problema:");
+  window.open(`https://wa.me/56912345678?text=${message}`, '_blank');
+}
+
+function updateConsultaType() {
+  const tipo = document.getElementById('tipoConsulta').value;
+  const diagnosticSection = document.getElementById('diagnosticSection');
+  const symptomsContainer = document.getElementById('symptomsContainer');
+  
+  if (tipo && symptomsByType[tipo]) {
+    diagnosticSection.style.display = 'block';
+    symptomsContainer.innerHTML = '';
+    
+    symptomsByType[tipo].forEach((symptom, index) => {
+      symptomsContainer.innerHTML += `
+        <div class="symptom-checkbox">
+          <input class="form-check-input" type="checkbox" id="symptom${index}" name="symptoms[]" value="${symptom}">
+          <label class="form-check-label" for="symptom${index}">
+            ${symptom}
+          </label>
+        </div>
+      `;
+    });
+  } else {
+    diagnosticSection.style.display = 'none';
+  }
+}
+
+function sendTechnicalWhatsApp() {
+  const form = document.getElementById('formContacto');
+  const formData = new FormData(form);
+  
+  let message = "🔧 CONSULTA TÉCNICA\n\n";
+  message += `👤 Cliente: ${formData.get('nombre') || 'No especificado'}\n`;
+  message += `📱 Teléfono: ${formData.get('telefono') || 'No especificado'}\n`;
+  message += `✉️ Email: ${formData.get('correo') || 'No especificado'}\n\n`;
+  
+  if (formData.get('marca')) {
+    message += `🛴 Scooter: ${formData.get('marca')}`;
+    if (formData.get('modelo')) {
+      message += ` ${formData.get('modelo')}`;
+    }
+    message += `\n`;
+  }
+  
+  if (formData.get('tipoConsulta')) {
+    const tipoSelect = document.getElementById('tipoConsulta');
+    message += `🔍 Tipo: ${tipoSelect.options[tipoSelect.selectedIndex].text}\n`;
+  }
+  
+  // Síntomas seleccionados
+  const symptoms = Array.from(document.querySelectorAll('input[name="symptoms[]"]:checked')).map(cb => cb.value);
+  if (symptoms.length > 0) {
+    message += `⚠️ Síntomas: ${symptoms.join(', ')}\n`;
+  }
+  
+  if (formData.get('mensaje')) {
+    message += `📝 Descripción: ${formData.get('mensaje')}\n`;
+  }
+  
+  const prioridad = formData.get('prioridad');
+  if (prioridad) {
+    const prioridadTexto = prioridad === 'alta' ? '🔴 ALTA' : prioridad === 'media' ? '🟡 MEDIA' : '🟢 BAJA';
+    message += `⚡ Prioridad: ${prioridadTexto}\n`;
+  }
+  
+  const encodedMessage = encodeURIComponent(message);
+  window.open(`https://wa.me/56912345678?text=${encodedMessage}`, '_blank');
+}
+
+// Validaciones personalizadas para el formulario de contacto (manteniendo tu código original mejorado)
 class ContactFormValidator {
   constructor() {
     this.form = document.getElementById("formContacto");
@@ -182,6 +790,14 @@ class ContactFormValidator {
         allValid = false;
       }
     });
+    
+    // Validar tipo de consulta
+    const tipoConsulta = document.getElementById('tipoConsulta');
+    if (!tipoConsulta.value) {
+      this.showFieldError(tipoConsulta, 'Selecciona el tipo de consulta');
+      allValid = false;
+    }
+    
     return allValid;
   }
 
@@ -192,8 +808,8 @@ class ContactFormValidator {
       <div class="d-flex align-items-center">
         <i class="bi bi-check-circle-fill me-2"></i>
         <div>
-          <strong>¡Mensaje enviado exitosamente!</strong><br>
-          <small>Te contactaremos pronto. Gracias por confiar en Custom20.</small>
+          <strong>¡Consulta técnica enviada exitosamente!</strong><br>
+          <small>Nuestros técnicos te contactarán pronto. Tiempo estimado de respuesta: 2-4 horas.</small>
         </div>
       </div>
     `;
@@ -213,7 +829,7 @@ class ContactFormValidator {
       <div class="d-flex align-items-center">
         <i class="bi bi-exclamation-triangle-fill me-2"></i>
         <div>
-          <strong>Error al enviar el mensaje</strong><br>
+          <strong>Error al enviar la consulta</strong><br>
           <small>${message}</small>
         </div>
       </div>
@@ -239,7 +855,7 @@ class ContactFormValidator {
     // Mostrar estado de carga
     const submitBtn = this.form.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Enviando...';
+    submitBtn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Enviando consulta...';
     submitBtn.disabled = true;
     this.form.classList.add('loading');
 
@@ -251,14 +867,17 @@ class ContactFormValidator {
       this.showSuccessMessage();
       this.form.reset();
       
-      // Limpiar estados de validación
+      // Limpiar estados de validación y secciones dinámicas
       Object.values(this.fields).forEach(field => {
         this.clearFieldError(field);
       });
       
+      // Ocultar sección de diagnóstico
+      document.getElementById('diagnosticSection').style.display = 'none';
+      
     } catch (error) {
       // Error
-      this.showErrorMessage('Hubo un problema al enviar tu mensaje. Inténtalo de nuevo.');
+      this.showErrorMessage('Hubo un problema al enviar tu consulta técnica. Inténtalo de nuevo o usa WhatsApp.');
     } finally {
       // Restaurar botón
       submitBtn.innerHTML = originalText;
@@ -270,8 +889,8 @@ class ContactFormValidator {
   simulateSend() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        // Simular 90% de éxito
-        if (Math.random() > 0.1) {
+        // Simular 95% de éxito para consultas técnicas
+        if (Math.random() > 0.05) {
           resolve();
         } else {
           reject(new Error('Error de conexión simulado'));
@@ -281,9 +900,83 @@ class ContactFormValidator {
   }
 }
 
+// Funciones para manejar la autenticación y navbar
+function updateNavbarAuth() {
+  let user = null;
+  if (window.AuthStore && window.AuthStore.getCurrentUser) {
+    user = window.AuthStore.getCurrentUser();
+  } else {
+    try {
+      const userData = localStorage.getItem('APP_CURRENT_USER');
+      if (userData) {
+        user = JSON.parse(userData);
+      }
+    } catch (e) {
+      console.error('Error al obtener usuario desde localStorage:', e);
+    }
+  }
+  
+  const loginSection = document.getElementById('loginSection');
+  const userSection = document.getElementById('userSection');
+  const scooterPointsSection = document.getElementById('scooterPointsSection');
+  
+  if (user) {
+    if (loginSection) loginSection.classList.add('d-none');
+    if (userSection) {
+      userSection.classList.remove('d-none');
+      const userNameEl = document.getElementById('navUserName');
+      if (userNameEl) userNameEl.textContent = user.name;
+    }
+    if (scooterPointsSection) {
+      scooterPointsSection.classList.remove('d-none');
+    }
+    if (user.role === 'admin') {
+      const adminLinks = document.querySelectorAll('.admin-only');
+      adminLinks.forEach(link => link.classList.remove('d-none'));
+    }
+  } else {
+    if (loginSection) loginSection.classList.remove('d-none');
+    if (userSection) userSection.classList.add('d-none');
+    if (scooterPointsSection) scooterPointsSection.classList.add('d-none');
+  }
+}
+
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem('APP_CART') || '[]');
+  const totalItems = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+  const cartCountEl = document.getElementById('cartCount');
+  if (cartCountEl) {
+    cartCountEl.textContent = totalItems;
+  }
+}
+
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
+  // Inicializar validador de formulario
   new ContactFormValidator();
+  
+  // Inicializar autenticación
+  updateNavbarAuth();
+  setTimeout(updateNavbarAuth, 100);
+  
+  // Actualizar contador del carrito
+  updateCartCount();
+  
+  // Escuchar eventos de autenticación
+  window.addEventListener('auth:login', updateNavbarAuth);
+  window.addEventListener('auth:logout', updateNavbarAuth);
+  
+  // Botón de logout
+  document.getElementById('btnLogout')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (window.globalLogout) {
+      window.globalLogout();
+    } else {
+      localStorage.removeItem('APP_CURRENT_USER');
+      updateNavbarAuth();
+      window.location.href = 'index.html';
+    }
+  });
 });
 </script>
 </body>

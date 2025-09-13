@@ -9,12 +9,102 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Custom20 Styles -->
   <link href="assets/css/styles.css" rel="stylesheet">
+  
+  <!-- Nuevos colores específicos para scooters (sin cambiar estructura) -->
+  <style>
+    :root {
+      --scooter-orange: #FF6B35;
+      --scooter-blue: #2E86AB; 
+      --scooter-dark: #1a1a1a;
+      --scooter-success: #28A745;
+      --scooter-warning: #FFC107;
+    }
+
+    /* Reemplazar colores Bootstrap primary por los colores scooter */
+    .bg-primary {
+      background-color: var(--scooter-orange) !important;
+    }
+    
+    .btn-primary {
+      background-color: var(--scooter-orange);
+      border-color: var(--scooter-orange);
+    }
+    
+    .btn-primary:hover {
+      background-color: #e55a2b;
+      border-color: #e55a2b;
+    }
+    
+    .btn-outline-primary {
+      color: var(--scooter-orange);
+      border-color: var(--scooter-orange);
+    }
+    
+    .btn-outline-primary:hover {
+      background-color: var(--scooter-orange);
+      border-color: var(--scooter-orange);
+    }
+    
+    .text-primary {
+      color: var(--scooter-orange) !important;
+    }
+    
+    .badge.bg-primary {
+      background-color: var(--scooter-blue) !important;
+    }
+
+    /* Añadir efectos hover a las service-cards */
+    .service-card {
+      transition: all 0.3s ease;
+      padding: 1.5rem;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(46, 134, 171, 0.1));
+      border: 1px solid rgba(255, 107, 53, 0.2);
+      height: 100%;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(255, 107, 53, 0.2);
+      border-color: var(--scooter-orange);
+    }
+    
+    .service-card .icon {
+      color: var(--scooter-orange);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    /* ScooterPoints en navbar */
+    .scooter-points {
+      background: linear-gradient(135deg, var(--scooter-orange), var(--scooter-blue));
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      margin-right: 1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* Navbar brand con gradiente */
+    .navbar-brand {
+      background: linear-gradient(45deg, var(--scooter-orange), var(--scooter-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Header con gradiente */
+    header.bg-primary {
+      background: linear-gradient(135deg, var(--scooter-orange), var(--scooter-blue)) !important;
+    }
+  </style>
 </head>
 <body>
   <!-- Navbar con respaldo -->
   <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-battery-charging"></i> Custom20.cl</a>
+      <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-scooter"></i> Custom20.cl</a>
       
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
         <span class="navbar-toggler-icon"></span>
@@ -32,9 +122,17 @@
         </ul>
 
         <ul class="navbar-nav ms-auto">
+          <!-- ScooterPoints (solo visible cuando hay usuario logueado) -->
+          <li class="nav-item d-none me-2" id="scooterPointsSection">
+            <span class="scooter-points">
+              <i class="bi bi-trophy"></i> Nivel: <span id="user-tier">Beginner</span> | 
+              <i class="bi bi-star"></i> <span id="user-points">0</span> pts
+            </span>
+          </li>
+          
           <li class="nav-item me-3">
             <a class="nav-link position-relative" href="carrito.html">
-              🛒 Carrito
+              <i class="bi bi-cart"></i> Carrito
               <span id="cartCount" class="badge bg-primary text-white position-absolute top-0 start-100 translate-middle">0</span>
             </a>
           </li>
@@ -56,71 +154,158 @@
   
   <div id="navbar-container" style="display: none;"></div>
 
-
-
-<header class="bg-primary text-white text-center py-5">
-  <div class="container">
-    <h1 class="fw-bold">Reparación, repuestos, accesorios y baterías de litio a medida</h1>
-    <p class="lead">Scooters eléctricos, bicicletas eléctricas y proyectos eléctricos</p>
-    <div class="d-flex justify-content-center gap-2">
-      <a href="productos.html" class="btn btn-light text-primary"><i class="bi bi-bag me-1"></i>Ver repuestos</a>
-      <a href="servicios.html" class="btn btn-outline-light"><i class="bi bi-tools me-1"></i>Servicios</a>
+  <header class="bg-primary text-white text-center py-5">
+    <div class="container">
+      <h1 class="fw-bold">Reparación, repuestos, accesorios y baterías de litio a medida</h1>
+      <p class="lead">Scooters eléctricos, bicicletas eléctricas y proyectos eléctricos</p>
+      <div class="d-flex justify-content-center gap-2 flex-wrap">
+        <a href="productos.html" class="btn btn-light text-primary"><i class="bi bi-bag me-1"></i>Ver repuestos</a>
+        <a href="servicios.html" class="btn btn-outline-light"><i class="bi bi-tools me-1"></i>Servicios</a>
+        <a href="login.html" class="btn btn-warning"><i class="bi bi-star me-1"></i>Únete y gana ScooterPoints</a>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
-
-<main class="container my-5">
-  <section class="welcome-section">
-    <header>
-      <h2 class="h4 mb-3">Bienvenido a Custom20</h2>
-    </header>
-    <article class="about-content">
-      <p class="lead">🔋 Con más de 6 años de experiencia en electromovilidad nos respaldan.</p>
-      <p>Ofrecemos reparación y fabricación de baterías de litio a medida, mantención y diagnóstico eléctrico de scooters y bicicletas, además de la venta de repuestos y accesorios de calidad.</p>
-      <p>Nuestro compromiso es brindarte seguridad, rendimiento y confianza en cada servicio, con garantía y soporte personalizado.</p>
-    </article>
-  </section>
-
-  <section class="services-preview mt-5">
-    <header>
-      <h2 class="h4 mb-4">Nuestros Servicios</h2>
-    </header>
-    <div class="row g-4">
-      <article class="col-md-4">
-        <div class="service-card">
-          <h3 class="h5">
-            <i class="bi bi-battery-half icon"></i>
-            Reparación de Baterías
-          </h3>
-          <p>Diagnóstico y reparación de baterías de litio de todo tipo de dispositivos eléctricos.</p>
+  <main class="container my-5">
+    <section class="welcome-section">
+      <header>
+        <h2 class="h4 mb-3">Bienvenido a Custom20</h2>
+      </header>
+      <article class="about-content">
+        <p class="lead"><i class="bi bi-battery-charging text-primary"></i> Con más de 6 años de experiencia en electromovilidad nos respaldan.</p>
+        <p>Ofrecemos reparación y fabricación de baterías de litio a medida, mantención y diagnóstico eléctrico de scooters y bicicletas, además de la venta de repuestos y accesorios de calidad.</p>
+        <p>Nuestro compromiso es brindarte seguridad, rendimiento y confianza en cada servicio, con garantía y soporte personalizado.</p>
+        
+        <!-- Nueva sección: ScooterPoints -->
+        <div class="alert" style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(46, 134, 171, 0.1)); border: 1px solid var(--scooter-orange);">
+          <h5 class="text-primary"><i class="bi bi-trophy"></i> Sistema ScooterPoints</h5>
+          <p class="mb-2">¡Gana puntos con cada compra y canjéalos por descuentos!</p>
+          <ul class="list-unstyled mb-0">
+            <li><i class="bi bi-check-circle text-success"></i> 1 punto por cada $1.000 gastado</li>
+            <li><i class="bi bi-check-circle text-success"></i> 50 puntos extra por referir talleres</li>
+            <li><i class="bi bi-check-circle text-success"></i> Niveles: Beginner → Advanced → Expert → Pro</li>
+            <li><i class="bi bi-check-circle text-success"></i> Descuentos especiales para talleres registrados</li>
+          </ul>
         </div>
       </article>
-      <article class="col-md-4">
-        <div class="service-card">
-          <h3 class="h5">
-            <i class="bi bi-gear icon"></i>
-            Fabricación a Medida
-          </h3>
-          <p>Armado de packs personalizados según necesidades de voltaje, amperaje y medidas.</p>
-        </div>
-      </article>
-      <article class="col-md-4">
-        <div class="service-card">
-          <h3 class="h5">
-            <i class="bi bi-lightning icon"></i>
-            Diagnóstico Eléctrico
-          </h3>
-          <p>Servicio de fallas eléctricas de bicicletas, motos o scooters eléctricos.</p>
-        </div>
-      </article>
-    </div>
-  </section>
-</main>
+    </section>
+
+    <section class="services-preview mt-5">
+      <header>
+        <h2 class="h4 mb-4">Nuestros Servicios</h2>
+      </header>
+      <div class="row g-4">
+        <article class="col-md-4">
+          <div class="service-card">
+            <h3 class="h5">
+              <i class="bi bi-battery-half icon"></i>
+              Reparación de Baterías
+            </h3>
+            <p>Diagnóstico y reparación de baterías de litio de todo tipo de dispositivos eléctricos.</p>
+            <small class="text-muted">Desde $25.000 | +25 ScooterPoints</small>
+          </div>
+        </article>
+        <article class="col-md-4">
+          <div class="service-card">
+            <h3 class="h5">
+              <i class="bi bi-gear icon"></i>
+              Fabricación a Medida
+            </h3>
+            <p>Armado de packs personalizados según necesidades de voltaje, amperaje y medidas.</p>
+            <small class="text-muted">Cotización gratis | +50 ScooterPoints</small>
+          </div>
+        </article>
+        <article class="col-md-4">
+          <div class="service-card">
+            <h3 class="h5">
+              <i class="bi bi-lightning icon"></i>
+              Diagnóstico Eléctrico
+            </h3>
+            <p>Servicio de fallas eléctricas de bicicletas, motos o scooters eléctricos.</p>
+            <small class="text-muted">Desde $15.000 | +15 ScooterPoints</small>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Nueva sección: Productos Destacados -->
+    <section class="featured-products mt-5">
+      <header>
+        <h2 class="h4 mb-4"><i class="bi bi-star-fill text-warning"></i> Productos Más Vendidos</h2>
+      </header>
+      <div class="row g-4">
+        <article class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="badge bg-success">En Stock</span>
+                <small class="text-primary">+25 pts</small>
+              </div>
+              <h5 class="card-title">Batería Litio 36V 10Ah</h5>
+              <p class="card-text">Compatible con la mayoría de scooters eléctricos</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <strong class="h5 text-primary mb-0">$185.000</strong>
+                <button class="btn btn-primary btn-sm" onclick="addToCartQuick('BAT001')">
+                  <i class="bi bi-cart-plus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="badge bg-warning text-dark">Pocas unidades</span>
+                <small class="text-primary">+15 pts</small>
+              </div>
+              <h5 class="card-title">Cargador 42V 2A</h5>
+              <p class="card-text">Cargador universal para baterías 36V</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <strong class="h5 text-primary mb-0">$35.000</strong>
+                <button class="btn btn-primary btn-sm" onclick="addToCartQuick('CAR001')">
+                  <i class="bi bi-cart-plus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="badge bg-success">En Stock</span>
+                <small class="text-primary">+10 pts</small>
+              </div>
+              <h5 class="card-title">Kit Frenos V-Brake</h5>
+              <p class="card-text">Sistema completo de frenos para scooter</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <strong class="h5 text-primary mb-0">$28.000</strong>
+                <button class="btn btn-primary btn-sm" onclick="addToCartQuick('FRE001')">
+                  <i class="bi bi-cart-plus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="text-center mt-4">
+        <a href="productos.html" class="btn btn-primary">
+          <i class="bi bi-eye"></i> Ver Todos los Repuestos
+        </a>
+      </div>
+    </section>
+  </main>
 
   <!-- Footer con respaldo -->
   <footer class="custom20-footer mt-5">
     <div class="container text-center">
+      <p class="mb-2">
+        <i class="bi bi-whatsapp text-success"></i> 
+        <a href="https://wa.me/56912345678?text=Hola,%20necesito%20consultar%20sobre%20repuestos%20para%20mi%20scooter" class="text-decoration-none">
+          Consultas por WhatsApp
+        </a>
+      </p>
       <p class="mb-0">© <span id="yearNow"></span> Custom20. Todos los derechos reservados.</p>
     </div>
   </footer>
@@ -132,6 +317,115 @@
   <script src="assets/js/auth.js"></script>
   <script src="assets/js/layout.js"></script>
   <script>
+    // Sistema ScooterPoints básico
+    class ScooterPointsSystem {
+      constructor() {
+        this.userPoints = parseInt(localStorage.getItem('scooterPoints') || '0');
+        this.userTier = this.calculateTier(this.userPoints);
+        this.updateDisplay();
+      }
+      
+      calculateTier(points) {
+        if (points >= 1000) return "Pro";
+        if (points >= 500) return "Expert";
+        if (points >= 200) return "Advanced";
+        return "Beginner";
+      }
+      
+      addPoints(points) {
+        this.userPoints += points;
+        localStorage.setItem('scooterPoints', this.userPoints.toString());
+        this.userTier = this.calculateTier(this.userPoints);
+        this.updateDisplay();
+        this.showPointsNotification(points);
+      }
+      
+      updateDisplay() {
+        const tierElement = document.getElementById('user-tier');
+        const pointsElement = document.getElementById('user-points');
+        if (tierElement) tierElement.textContent = this.userTier;
+        if (pointsElement) pointsElement.textContent = this.userPoints;
+      }
+      
+      showPointsNotification(points) {
+        // Crear notificación toast
+        const toast = document.createElement('div');
+        toast.className = 'toast align-items-center text-white border-0 position-fixed';
+        toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; background: linear-gradient(135deg, #FF6B35, #2E86AB);';
+        toast.innerHTML = `
+          <div class="d-flex">
+            <div class="toast-body">
+              <i class="bi bi-star-fill"></i> +${points} ScooterPoints ganados!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+          </div>
+        `;
+        
+        document.body.appendChild(toast);
+        const bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
+        
+        // Remover después de que se oculte
+        toast.addEventListener('hidden.bs.toast', () => {
+          toast.remove();
+        });
+      }
+    }
+
+    // Inicializar sistema de puntos
+    let scooterPoints = new ScooterPointsSystem();
+
+    // Función para agregar productos al carrito rápidamente
+    function addToCartQuick(productCode) {
+      // Simular agregar al carrito (aquí usarías tu lógica existente)
+      let cart = JSON.parse(localStorage.getItem('APP_CART') || '[]');
+      
+      // Productos de ejemplo
+      const products = {
+        'BAT001': { id: 'BAT001', name: 'Batería Litio 36V 10Ah', price: 185000, points: 185 },
+        'CAR001': { id: 'CAR001', name: 'Cargador 42V 2A', price: 35000, points: 35 },
+        'FRE001': { id: 'FRE001', name: 'Kit Frenos V-Brake', price: 28000, points: 28 }
+      };
+      
+      const product = products[productCode];
+      if (product) {
+        // Verificar si ya existe en el carrito
+        const existingItem = cart.find(item => item.id === product.id);
+        if (existingItem) {
+          existingItem.qty += 1;
+        } else {
+          cart.push({ ...product, qty: 1 });
+        }
+        
+        localStorage.setItem('APP_CART', JSON.stringify(cart));
+        updateCartCount();
+        
+        // Agregar puntos ScooterPoints
+        scooterPoints.addPoints(Math.floor(product.points / 10));
+        
+        // Mostrar notificación de éxito
+        const toast = document.createElement('div');
+        toast.className = 'toast align-items-center text-white bg-success border-0 position-fixed';
+        toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999;';
+        toast.innerHTML = `
+          <div class="d-flex">
+            <div class="toast-body">
+              <i class="bi bi-check-circle"></i> ${product.name} agregado al carrito
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+          </div>
+        `;
+        
+        document.body.appendChild(toast);
+        const bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
+        
+        toast.addEventListener('hidden.bs.toast', () => {
+          toast.remove();
+        });
+      }
+    }
+
     // Función para actualizar contador del carrito
     function updateCartCount() {
       const cart = JSON.parse(localStorage.getItem('APP_CART') || '[]');
@@ -150,7 +444,7 @@
       // Inicializar contador del carrito
       updateCartCount();
       
-      // Manejar visibilidad del login
+      // Manejar visibilidad del login y ScooterPoints
       function updateNavbarAuth() {
         console.log('Actualizando navbar de autenticación...');
         
@@ -173,10 +467,9 @@
         
         const loginSection = document.getElementById('loginSection');
         const userSection = document.getElementById('userSection');
+        const scooterPointsSection = document.getElementById('scooterPointsSection');
         
         console.log('Usuario actual:', user);
-        console.log('loginSection:', loginSection);
-        console.log('userSection:', userSection);
         
         if (user) {
           // Usuario logueado
@@ -191,6 +484,11 @@
             }
           }
           
+          // Mostrar ScooterPoints
+          if (scooterPointsSection) {
+            scooterPointsSection.classList.remove('d-none');
+          }
+          
           // Mostrar enlaces de admin si es admin
           if (user.role === 'admin') {
             const adminLinks = document.querySelectorAll('.admin-only');
@@ -202,6 +500,7 @@
           console.log('Usuario no logueado, mostrando login...');
           if (loginSection) loginSection.classList.remove('d-none');
           if (userSection) userSection.classList.add('d-none');
+          if (scooterPointsSection) scooterPointsSection.classList.add('d-none');
         }
       }
       

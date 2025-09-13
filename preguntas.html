@@ -10,18 +10,55 @@
   <link href="assets/css/styles.css" rel="stylesheet">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-battery-charging"></i> Custom20</a>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
     <div class="container">
-      <a class="btn btn-outline-secondary ms-auto" href="index.html"><i class="bi bi-house"></i> Inicio</a>
-      <a class="btn btn-outline-secondary ms-auto" href="productos.html">Repuestos</a>
-      <a class="btn btn-outline-secondary ms-auto" href="servicios.html">Servicios</a>
-      <a class="btn btn-outline-secondary ms-auto" href="preguntas.html">Preguntas</a>
-      <a class="btn btn-outline-secondary ms-auto" href="contacto.html">Contacto</a>
+      <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-scooter"></i> Custom20.cl</a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item admin-only d-none"><a class="nav-link" href="admin.html">Admin Productos</a></li>
+          <li class="nav-item admin-only d-none"><a class="nav-link" href="admin_usuarios.html">Admin Usuarios</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="productos.html">Repuestos</a></li>
+          <li class="nav-item"><a class="nav-link" href="servicios.html">Servicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="preguntas.html">Preguntas</a></li>
+          <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+        </ul>
+  
+        <ul class="navbar-nav ms-auto">
+          <!-- ScooterPoints (solo visible cuando hay usuario logueado) -->
+          <li class="nav-item d-none me-2" id="scooterPointsSection">
+            <span class="scooter-points">
+              <i class="bi bi-trophy"></i> <span id="user-tier">Beginner</span> | 
+              <i class="bi bi-star"></i> <span id="user-points">0</span> pts
+            </span>
+          </li>
+          
+          <li class="nav-item me-3">
+            <a class="nav-link position-relative" href="carrito.html">
+              <i class="bi bi-cart"></i> Carrito
+              <span id="cartCount" class="badge bg-primary text-white position-absolute top-0 start-100 translate-middle">0</span>
+            </a>
+          </li>
+          <li class="nav-item" id="loginSection">
+            <a class="btn btn-outline-primary btn-sm" href="login.html">
+              <i class="bi bi-box-arrow-in-right me-1"></i>Iniciar Sesión
+            </a>
+          </li>
+          <li class="nav-item d-none" id="userSection">
+            <span class="navbar-text me-2" id="navUserName">Invitado</span>
+            <a class="btn btn-outline-secondary btn-sm" href="#" id="btnLogout">
+              <i class="bi bi-box-arrow-right me-1"></i>Salir
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
 <main class="container py-5">
   <h1 class="h3 mb-4">Preguntas frecuentes</h1>

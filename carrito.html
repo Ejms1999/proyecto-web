@@ -334,7 +334,21 @@
       
       // Inicializar contador del carrito
       updateCartCount();
-      
+      // Escuchar cambios del carrito desde otras páginas  
+      window.addEventListener('cart:updated', function() {
+      console.log('Evento cart:updated recibido');
+      updateCartCount();
+      renderCarrito();
+});
+
+// Escuchar cambios en localStorage (para múltiples pestañas)
+      window.addEventListener('storage', function(e) {
+      if (e.key === 'APP_CART') {
+        console.log('Cambio detectado en localStorage del carrito');
+        updateCartCount();
+        renderCarrito();
+    }
+});
       // Manejar visibilidad del login
       function updateNavbarAuth() {
         console.log('Actualizando navbar de autenticación en carrito...');

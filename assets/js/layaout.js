@@ -81,7 +81,7 @@
         }
       });
     }
-  
+    
     function loadPartials() {
       const $navTarget = $('#navbar-container');
       const $footerTarget = $('#footer-container');

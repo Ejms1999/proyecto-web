@@ -8,11 +8,156 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Custom20 Styles -->
   <link href="assets/css/styles.css" rel="stylesheet">
+  
+  <!-- Estilos específicos para scooters -->
+  <style>
+    :root {
+      --scooter-orange: #FF6B35;
+      --scooter-blue: #2E86AB; 
+      --scooter-dark: #1a1a1a;
+      --scooter-success: #28A745;
+      --scooter-warning: #FFC107;
+    }
+
+    /* Aplicar colores scooter */
+    .bg-primary { background-color: var(--scooter-orange) !important; }
+    .btn-primary { background-color: var(--scooter-orange); border-color: var(--scooter-orange); }
+    .btn-primary:hover { background-color: #e55a2b; border-color: #e55a2b; }
+    .btn-outline-primary { color: var(--scooter-orange); border-color: var(--scooter-orange); }
+    .btn-outline-primary:hover { background-color: var(--scooter-orange); border-color: var(--scooter-orange); }
+    .text-primary { color: var(--scooter-orange) !important; }
+    .badge.bg-primary { background-color: var(--scooter-blue) !important; }
+    
+    /* Navbar brand con gradiente */
+    .navbar-brand {
+      background: linear-gradient(45deg, var(--scooter-orange), var(--scooter-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ScooterPoints en navbar */
+    .scooter-points {
+      background: linear-gradient(135deg, var(--scooter-orange), var(--scooter-blue));
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      margin-right: 1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* Sidebar de filtros */
+    .filters-sidebar {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 107, 53, 0.2);
+    }
+
+    .filter-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-group h5 {
+      color: var(--scooter-orange);
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+
+    /* Búsqueda avanzada */
+    .search-section {
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(46, 134, 171, 0.1));
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--scooter-orange);
+    }
+
+    .search-input {
+      border: 2px solid var(--scooter-blue);
+      border-radius: 25px;
+      padding: 0.75rem 1.5rem;
+    }
+
+    .search-input:focus {
+      border-color: var(--scooter-orange);
+      box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+    }
+
+    /* Cards de productos mejoradas */
+    .custom20-product-card {
+      border: 2px solid transparent;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      background: white;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .custom20-product-card:hover {
+      border-color: var(--scooter-orange);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(255, 107, 53, 0.2);
+    }
+
+    .compatibility-badge {
+      background: var(--scooter-blue);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      margin: 0.2rem;
+      display: inline-block;
+    }
+
+    .stock-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      z-index: 2;
+    }
+
+    .stock-available { background: var(--scooter-success); color: white; }
+    .stock-low { background: var(--scooter-warning); color: black; }
+    .stock-out { background: #dc3545; color: white; }
+
+    .points-earned {
+      background: linear-gradient(45deg, var(--scooter-orange), var(--scooter-blue));
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+      
+      .filters-sidebar.active {
+        bottom: 0;
+      }
+      
+      .mobile-filter-toggle {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1051;
+      }
+    
+
+    header.bg-primary {
+      background: linear-gradient(135deg, #2563EB, #0891B2) !important;
+    }
+  </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
   <div class="container">
-    <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-battery-charging"></i> Custom20.cl</a>
+    <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-scooter"></i> Custom20.cl</a>
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
       <span class="navbar-toggler-icon"></span>
@@ -30,9 +175,17 @@
       </ul>
 
       <ul class="navbar-nav ms-auto">
+        <!-- ScooterPoints (solo visible cuando hay usuario logueado) -->
+        <li class="nav-item d-none me-2" id="scooterPointsSection">
+          <span class="scooter-points">
+            <i class="bi bi-trophy"></i> <span id="user-tier">Beginner</span> | 
+            <i class="bi bi-star"></i> <span id="user-points">0</span> pts
+          </span>
+        </li>
+        
         <li class="nav-item me-3">
           <a class="nav-link position-relative" href="carrito.html">
-            🛒 Carrito
+            <i class="bi bi-cart"></i> Carrito
             <span id="cartCount" class="badge bg-primary text-white position-absolute top-0 start-100 translate-middle">0</span>
           </a>
         </li>
@@ -49,33 +202,208 @@
         </li>
       </ul>
     </div>
-    </div>
+  </div>
 </nav>
 
-<header class="bg-primary text-white py-5"><div class="container"><h1>Repuestos disponibles</h1></div></header>
+<header class="bg-primary text-white py-5">
+  <div class="container">
+    <h1><i class="bi bi-gear-fill"></i> Repuestos disponibles</h1>
+    <p class="lead">Encuentra repuestos originales y compatibles para tu scooter eléctrico</p>
+  </div>
+</header>
+
+<!-- Botón flotante para filtros en móvil -->
+<button class="btn btn-primary mobile-filter-toggle d-md-none" onclick="toggleMobileFilters()">
+  <i class="bi bi-funnel"></i> Filtros
+</button>
 
 <main class="container my-4">
-  <section class="products-section">
-    <header>
-      <h2 class="h4 mb-4">Catálogo de Repuestos</h2>
-      <p class="lead">Encuentra los repuestos que necesitas para tu vehículo eléctrico</p>
-    </header>
-  <div class="row" id="listaProductos"></div>
-  </section>
+  <!-- Sección de búsqueda avanzada -->
+  <div class="search-section">
+    <div class="row">
+      <div class="col-md-6">
+        <h4><i class="bi bi-search text-primary"></i> <span style="color: #FF6B35;">Búsqueda Avanzada</span></h4>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control search-input" placeholder="Buscar por nombre, código o descripción..." id="searchInput">
+          <button class="btn btn-primary" type="button" onclick="searchProducts()">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h5 style="color: #FF6B35;">Búsqueda por código de repuesto:</h5>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Ej: BAT-36V-10AH" id="codeSearchInput">
+          <button class="btn btn-outline-primary" onclick="searchByCode()">
+            <i class="bi bi-upc-scan"></i> Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Sidebar de filtros -->
+    <div class="col-md-3">
+      <div class="filters-sidebar" id="filtersSidebar">
+        <h4><i class="bi bi-funnel text-primary"></i> <span style="color: #FF6B35;">Filtros</span></h4>
+        
+        <!-- Filtro por categoría -->
+        <div class="filter-group">
+          <h5>Categoría</h5>
+          <select class="form-select" id="categoryFilter" onchange="applyFilters()">
+            <option value="">Todas las categorías</option>
+            <option value="baterias">Baterías</option>
+            <option value="cargadores">Cargadores</option>
+            <option value="frenos">Sistema de Frenos</option>
+            <option value="motor">Motor y Transmisión</option>
+            <option value="neumaticos">Neumáticos</option>
+            <option value="electrico">Sistema Eléctrico</option>
+            <option value="carroceria">Carrocería</option>
+            <option value="herramientas">Herramientas</option>
+          </select>
+        </div>
+
+        <!-- Filtro por marca compatible -->
+        <div class="filter-group">
+          <h5>Marca Compatible</h5>
+          <select class="form-select" id="brandFilter" onchange="applyFilters()">
+            <option value="">Todas las marcas</option>
+            <option value="xiaomi">Xiaomi</option>
+            <option value="segway">Segway-Ninebot</option>
+            <option value="kugoo">Kugoo</option>
+            <option value="citybird">CityBird</option>
+            <option value="universal">Universal</option>
+          </select>
+        </div>
+
+        <!-- Filtro por rango de precio -->
+        <div class="filter-group">
+          <h5>Rango de Precio</h5>
+          <div class="row">
+            <div class="col-6">
+              <input type="number" class="form-control form-control-sm" placeholder="Mín" id="minPrice" onchange="applyFilters()">
+            </div>
+            <div class="col-6">
+              <input type="number" class="form-control form-control-sm" placeholder="Máx" id="maxPrice" onchange="applyFilters()">
+            </div>
+          </div>
+          <small class="text-muted">Precios en CLP</small>
+        </div>
+
+        <!-- Filtro por disponibilidad -->
+        <div class="filter-group">
+          <h5>Disponibilidad</h5>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="inStockOnly" onchange="applyFilters()">
+            <label class="form-check-label" for="inStockOnly">
+              Solo productos en stock
+            </label>
+          </div>
+        </div>
+
+        <!-- Verificador de compatibilidad -->
+        <div class="filter-group">
+          <h5>Verificar Compatibilidad</h5>
+          <select class="form-select form-select-sm mb-2" id="scooterModel" onchange="checkCompatibility()">
+            <option value="">Selecciona tu modelo</option>
+            <option value="xiaomi-m365">Xiaomi M365</option>
+            <option value="xiaomi-pro2">Xiaomi Pro 2</option>
+            <option value="segway-es2">Segway ES2</option>
+            <option value="segway-es4">Segway ES4</option>
+            <option value="kugoo-s1">Kugoo S1</option>
+          </select>
+          <button class="btn btn-sm btn-outline-primary w-100" onclick="filterByCompatibility()">
+            <i class="bi bi-check-circle"></i> Mostrar Compatible
+          </button>
+        </div>
+
+        <!-- Botón limpiar filtros -->
+        <button class="btn btn-outline-secondary w-100" onclick="clearFilters()">
+          <i class="bi bi-x-circle"></i> Limpiar Filtros
+        </button>
+      </div>
+    </div>
+
+    <!-- Lista de productos -->
+    <div class="col-md-9">
+      <!-- Información de resultados -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <span id="resultsCount" class="text-muted">Cargando productos...</span>
+        </div>
+        <div class="d-flex gap-2">
+          <select class="form-select form-select-sm" id="sortFilter" onchange="applyFilters()" style="width: auto;">
+            <option value="name">Ordenar por nombre</option>
+            <option value="price-asc">Precio: menor a mayor</option>
+            <option value="price-desc">Precio: mayor a menor</option>
+            <option value="stock">Mayor stock</option>
+          </select>
+        </div>
+      </div>
+
+      <section class="products-section">
+        <div class="row" id="listaProductos"></div>
+      </section>
+    </div>
+  </div>
 </main>
 
 <footer class="custom20-footer mt-5">
   <div class="container text-center">
+    <p class="mb-2">
+      <i class="bi bi-whatsapp text-success"></i> 
+      <a href="https://wa.me/56912345678?text=Necesito%20ayuda%20para%20encontrar%20un%20repuesto%20específico" class="text-decoration-none">
+        Ayuda para encontrar repuestos por WhatsApp
+      </a>
+    </p>
     <p class="mb-0">© <span id="yearNow"></span> Custom20. Todos los derechos reservados.</p>
   </div>
 </footer>
 
-
-
-
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/auth.js"></script>
 <script>
+// Sistema ScooterPoints
+class ScooterPointsSystem {
+  constructor() {
+    this.userPoints = parseInt(localStorage.getItem('scooterPoints') || '0');
+    this.userTier = this.calculateTier(this.userPoints);
+    this.updateDisplay();
+  }
+  
+  calculateTier(points) {
+    if (points >= 1000) return "Pro";
+    if (points >= 500) return "Expert";
+    if (points >= 200) return "Advanced";
+    return "Beginner";
+  }
+  
+  addPoints(points) {
+    this.userPoints += points;
+    localStorage.setItem('scooterPoints', this.userPoints.toString());
+    this.userTier = this.calculateTier(this.userPoints);
+    this.updateDisplay();
+    this.showPointsNotification(points);
+  }
+  
+  updateDisplay() {
+    const tierElement = document.getElementById('user-tier');
+    const pointsElement = document.getElementById('user-points');
+    if (tierElement) tierElement.textContent = this.userTier;
+    if (pointsElement) pointsElement.textContent = this.userPoints;
+  }
+  
+  showPointsNotification(points) {
+    showToast(`+${points} ScooterPoints ganados!`, 'success');
+  }
+}
+
+let scooterPoints = new ScooterPointsSystem();
+let allProducts = [];
+let filteredProducts = [];
+
 // Función para obtener productos del localStorage
 function getProducts() {
   try {
@@ -85,7 +413,7 @@ function getProducts() {
   }
 }
 
-// Función para mostrar notificaciones
+// Función para mostrar notificaciones (manteniendo tu implementación)
 function showToast(message, type = 'success') {
   const toast = document.createElement('div');
   toast.className = 'toast-container position-fixed top-0 end-0 p-3';
@@ -109,7 +437,6 @@ function showToast(message, type = 'success') {
   `;
   document.body.appendChild(toast);
   
-  // Remover toast después de 3 segundos
   setTimeout(() => {
     if (toast.parentNode) {
       toast.remove();
@@ -117,9 +444,8 @@ function showToast(message, type = 'success') {
   }, 3000);
 }
 
-// Función para agregar al carrito
+// Función para agregar al carrito (manteniendo tu lógica + ScooterPoints)
 function addToCart(producto) {
-  // Verificar stock disponible
   if (producto.stock <= 0) {
     showToast('Producto sin stock disponible', 'error');
     return;
@@ -129,16 +455,13 @@ function addToCart(producto) {
   const existingItem = cart.find(item => item.id === producto.id);
   
   if (existingItem) {
-    // Verificar si excede el stock disponible
     const newQty = (existingItem.qty || 1) + 1;
     if (newQty > producto.stock) {
       showToast(`Solo hay ${producto.stock} unidades disponibles. Ya tienes ${existingItem.qty} en el carrito.`, 'warning');
       return;
     }
-    // Si ya existe y hay stock, incrementar cantidad
     existingItem.qty = newQty;
   } else {
-    // Si no existe, agregarlo
     cart.push({
       id: producto.id,
       codigo: producto.codigo,
@@ -155,57 +478,169 @@ function addToCart(producto) {
   
   localStorage.setItem('APP_CART', JSON.stringify(cart));
   
-  // Mostrar notificación
+  // Agregar ScooterPoints
+  const points = Math.floor(producto.precio / 1000);
+  scooterPoints.addPoints(points);
+  
   showToast(`${producto.nombre} agregado al carrito`, 'success');
   
-  // Actualizar contador del carrito
   if (window.dispatchEvent) {
     window.dispatchEvent(new CustomEvent('cart:updated'));
   }
   
-  // Actualizar la vista de productos para reflejar el stock
   renderProducts();
-  
-  // Debug: mostrar carrito en consola
-  console.log('Producto agregado:', producto);
-  console.log('Carrito actual:', JSON.parse(localStorage.getItem('APP_CART') || '[]'));
 }
 
-// Renderizar productos
+// Nuevas funciones de filtrado
+function applyFilters() {
+  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+  const category = document.getElementById('categoryFilter').value;
+  const brand = document.getElementById('brandFilter').value;
+  const minPrice = parseInt(document.getElementById('minPrice').value) || 0;
+  const maxPrice = parseInt(document.getElementById('maxPrice').value) || Infinity;
+  const inStockOnly = document.getElementById('inStockOnly').checked;
+  const sortBy = document.getElementById('sortFilter').value;
+  
+  filteredProducts = allProducts.filter(producto => {
+    const matchesSearch = !searchTerm || 
+      producto.nombre.toLowerCase().includes(searchTerm) ||
+      producto.descripcion.toLowerCase().includes(searchTerm) ||
+      (producto.codigo && producto.codigo.toLowerCase().includes(searchTerm));
+    
+    const matchesCategory = !category || producto.categoria === category;
+    const matchesBrand = !brand || producto.marca === brand;
+    const matchesPrice = producto.precio >= minPrice && producto.precio <= maxPrice;
+    const matchesStock = !inStockOnly || producto.stock > 0;
+    
+    return matchesSearch && matchesCategory && matchesBrand && matchesPrice && matchesStock;
+  });
+  
+  // Ordenar
+  if (sortBy === 'price-asc') {
+    filteredProducts.sort((a, b) => a.precio - b.precio);
+  } else if (sortBy === 'price-desc') {
+    filteredProducts.sort((a, b) => b.precio - a.precio);
+  } else if (sortBy === 'stock') {
+    filteredProducts.sort((a, b) => b.stock - a.stock);
+  } else {
+    filteredProducts.sort((a, b) => a.nombre.localeCompare(b.nombre));
+  }
+  
+  updateResultsCount();
+  renderProducts();
+}
+
+function searchProducts() {
+  applyFilters();
+}
+
+function searchByCode() {
+  const code = document.getElementById('codeSearchInput').value.trim();
+  if (code) {
+    document.getElementById('searchInput').value = code;
+    applyFilters();
+  }
+}
+
+function checkCompatibility() {
+  const model = document.getElementById('scooterModel').value;
+  if (model) {
+    showToast(`Mostrando repuestos compatibles con ${model}`, 'info');
+    // Aquí implementarías la lógica de compatibilidad específica
+  }
+}
+
+function filterByCompatibility() {
+  const model = document.getElementById('scooterModel').value;
+  if (!model) {
+    showToast('Selecciona un modelo primero', 'warning');
+    return;
+  }
+  
+  // Filtrar por compatibilidad (ejemplo básico)
+  filteredProducts = allProducts.filter(producto => {
+    return producto.marca === 'universal' || 
+           producto.descripcion.toLowerCase().includes(model.split('-')[0]);
+  });
+  
+  updateResultsCount();
+  renderProducts();
+}
+
+function clearFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('codeSearchInput').value = '';
+  document.getElementById('categoryFilter').value = '';
+  document.getElementById('brandFilter').value = '';
+  document.getElementById('minPrice').value = '';
+  document.getElementById('maxPrice').value = '';
+  document.getElementById('inStockOnly').checked = false;
+  document.getElementById('scooterModel').value = '';
+  document.getElementById('sortFilter').value = 'name';
+  
+  filteredProducts = [...allProducts];
+  updateResultsCount();
+  renderProducts();
+}
+
+function updateResultsCount() {
+  const count = filteredProducts.length;
+  const total = allProducts.length;
+  document.getElementById('resultsCount').textContent = 
+    `Mostrando ${count} de ${total} productos`;
+}
+
+function toggleMobileFilters() {
+  const sidebar = document.getElementById('filtersSidebar');
+  sidebar.classList.toggle('active');
+}
+
+// Renderizar productos (mejorado)
 function renderProducts() {
-  const productos = getProducts();
   const lista = document.getElementById("listaProductos");
+  const productos = filteredProducts.length > 0 ? filteredProducts : allProducts;
   
   if (productos.length === 0) {
     lista.innerHTML = `
       <div class="col-12 text-center">
         <div class="alert alert-info">
           <i class="bi bi-info-circle me-2"></i>
-          No hay productos disponibles en este momento.
+          No hay productos disponibles con los filtros seleccionados.
+          <button class="btn btn-sm btn-outline-primary ms-2" onclick="clearFilters()">
+            Limpiar filtros
+          </button>
         </div>
       </div>
     `;
     return;
   }
   
-  // Obtener carrito actual para calcular stock disponible
   const carrito = JSON.parse(localStorage.getItem('APP_CART') || '[]');
   
   lista.innerHTML = '';
   productos.forEach(producto => {
-    // Calcular stock disponible (stock original - cantidad en carrito)
     const itemEnCarrito = carrito.find(item => item.id === producto.id);
     const stockDisponible = producto.stock - (itemEnCarrito ? itemEnCarrito.qty : 0);
     
-    const stockClass = stockDisponible > 0 ? 'btn-custom20' : 'btn-secondary disabled';
+    const stockClass = stockDisponible > 0 ? 'btn-primary' : 'btn-secondary disabled';
     const stockText = stockDisponible > 0 ? 'Agregar al carrito' : 'Sin stock';
-    const stockMessage = stockDisponible > 0 ? 
-      `Stock: ${stockDisponible} unidades` : 
-      `Sin stock (${itemEnCarrito ? itemEnCarrito.qty + ' en carrito' : 'agotado'})`;
+    
+    let stockBadge = '';
+    if (stockDisponible > 10) {
+      stockBadge = `<span class="stock-badge stock-available">En Stock</span>`;
+    } else if (stockDisponible > 0) {
+      stockBadge = `<span class="stock-badge stock-low">Quedan ${stockDisponible}</span>`;
+    } else {
+      stockBadge = `<span class="stock-badge stock-out">Sin Stock</span>`;
+    }
+    
+    const points = Math.floor(producto.precio / 1000);
+    const compatibilidad = producto.marca ? [`Compatible: ${producto.marca}`] : ['Universal'];
     
     lista.innerHTML += `
-      <div class="col-md-3 mb-4">
-        <article class="custom20-product-card">
+      <div class="col-lg-4 col-md-6 mb-4">
+        <article class="custom20-product-card position-relative">
+          ${stockBadge}
           <div class="image-container">
             <img src="${producto.img}" class="card-img-top" alt="${producto.nombre}" 
                  loading="lazy" 
@@ -215,15 +650,21 @@ function renderProducts() {
             </div>
           </div>
           <div class="card-body">
-            <h3 class="card-title">${producto.nombre}</h3>
+            <h3 class="card-title h5">${producto.nombre}</h3>
+            <div class="mb-2">
+              ${compatibilidad.map(comp => `<span class="compatibility-badge">${comp}</span>`).join('')}
+            </div>
             <p class="text-muted small mb-1">
               <strong>Código:</strong> ${producto.codigo || 'N/A'}
             </p>
-            <p class="text-muted small mb-1">
+            <p class="text-muted small mb-2">
               <strong>Categoría:</strong> ${producto.categoria || 'N/A'}
             </p>
-            <p class="price">$${producto.precio.toLocaleString("es-CL")}</p>
-            <p class="text-muted small">${stockMessage}</p>
+            <p class="price h5 text-primary">$${producto.precio.toLocaleString("es-CL")}</p>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="points-earned">+${points} ScooterPoints</span>
+              <small class="text-muted">Stock: ${stockDisponible}</small>
+            </div>
             <button class="btn ${stockClass} btn-sm w-100" 
                     onclick="addToCart(${JSON.stringify(producto).replace(/"/g, '&quot;')})"
                     ${stockDisponible === 0 ? 'disabled' : ''}>
@@ -249,8 +690,12 @@ function updateCartCount() {
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
+  allProducts = getProducts();
+  filteredProducts = [...allProducts];
+  
   renderProducts();
   updateCartCount();
+  updateResultsCount();
   
   // Actualizar año en footer
   const yearEl = document.getElementById("yearNow");
@@ -258,16 +703,19 @@ document.addEventListener('DOMContentLoaded', function() {
     yearEl.textContent = new Date().getFullYear();
   }
   
-  // Manejar visibilidad del login
+  // Búsqueda en tiempo real
+  document.getElementById('searchInput').addEventListener('input', function() {
+    setTimeout(applyFilters, 300); // Debounce
+  });
+  
+  // Manejar visibilidad del login y ScooterPoints
   function updateNavbarAuth() {
     console.log('Actualizando navbar de autenticación en productos...');
     
-    // Fallback si AuthStore no está disponible
     let user = null;
     if (window.AuthStore && window.AuthStore.getCurrentUser) {
       user = window.AuthStore.getCurrentUser();
     } else {
-      // Fallback directo desde localStorage
       try {
         const userData = localStorage.getItem('APP_CURRENT_USER');
         if (userData) {
@@ -281,6 +729,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const loginSection = document.getElementById('loginSection');
     const userSection = document.getElementById('userSection');
+    const scooterPointsSection = document.getElementById('scooterPointsSection');
     
     if (user) {
       // Usuario logueado
@@ -289,6 +738,11 @@ document.addEventListener('DOMContentLoaded', function() {
         userSection.classList.remove('d-none');
         const userNameEl = document.getElementById('navUserName');
         if (userNameEl) userNameEl.textContent = user.name;
+      }
+      
+      // Mostrar ScooterPoints
+      if (scooterPointsSection) {
+        scooterPointsSection.classList.remove('d-none');
       }
       
       // Mostrar enlaces de admin si es admin
@@ -300,13 +754,12 @@ document.addEventListener('DOMContentLoaded', function() {
       // Usuario no logueado
       if (loginSection) loginSection.classList.remove('d-none');
       if (userSection) userSection.classList.add('d-none');
+      if (scooterPointsSection) scooterPointsSection.classList.add('d-none');
     }
   }
   
   // Ejecutar inmediatamente
   updateNavbarAuth();
-  
-  // También ejecutar después de un pequeño delay
   setTimeout(updateNavbarAuth, 100);
   
   // Escuchar eventos de autenticación
@@ -318,16 +771,41 @@ document.addEventListener('DOMContentLoaded', function() {
     e.preventDefault();
     console.log('Cerrando sesión...');
     
-    // Usar función global de logout
     if (window.globalLogout) {
       window.globalLogout();
     } else {
-      // Fallback si la función global no está disponible
       localStorage.removeItem('APP_CURRENT_USER');
       updateNavbarAuth();
       window.location.href = 'index.html';
     }
   });
+
+  // Procesar parámetros URL para filtros automáticos
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchParam = urlParams.get('search');
+  const categoryParam = urlParams.get('categoria');
+  
+  if (searchParam) {
+    document.getElementById('searchInput').value = searchParam;
+    applyFilters();
+  }
+  
+  if (categoryParam) {
+    document.getElementById('categoryFilter').value = categoryParam;
+    applyFilters();
+  }
+});
+
+// Cerrar filtros móviles al hacer clic fuera
+document.addEventListener('click', function(event) {
+  const sidebar = document.getElementById('filtersSidebar');
+  const toggle = document.querySelector('.mobile-filter-toggle');
+  
+  if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
+    if (!sidebar.contains(event.target) && !toggle.contains(event.target)) {
+      sidebar.classList.remove('active');
+    }
+  }
 });
 </script>
 </body>
