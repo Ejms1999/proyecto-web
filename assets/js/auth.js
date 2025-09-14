@@ -133,45 +133,113 @@ const LS_KEYS = {
       const seedProducts = [
         {
           id: 1,
+          codigo: "C20-1001",
           nombre: "Acelerador pulgar",
+          descripcion: "Acelerador de pulgar ergonómico para scooters eléctricos. Diseño compacto y resistente al agua.",
           precio: 12990,
           stock: 15,
+          categoria: "Control",
+          marca: "Custom20",
           img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWUzYThhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BY2VsZXJhZG9yIFB1bGdhcjwvdGV4dD48L3N2Zz4="
         },
         {
           id: 2,
+          codigo: "C20-1002",
           nombre: "BMS 13S 15A",
+          descripcion: "Sistema de gestión de batería 13S 15A para baterías de litio. Protección contra sobrecarga y descarga.",
           precio: 22990,
           stock: 8,
+          categoria: "Batería",
+          marca: "Custom20",
           img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjM2I4MmY2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5CTVMgMTNTIDE1QTwvdGV4dD48L3N2Zz4="
         },
         {
           id: 3,
+          codigo: "C20-1003",
           nombre: "Cargador 54.6V 2A",
+          descripcion: "Cargador rápido 54.6V 2A con indicador LED. Compatible con baterías de litio 13S.",
           precio: 21990,
           stock: 12,
+          categoria: "Carga",
+          marca: "Custom20",
           img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjU5ZTBiIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5DYXJnYWRvciA1NC42ViAyQTwvdGV4dD48L3N2Zz4="
         },
         {
           id: 4,
+          codigo: "C20-1004",
           nombre: "Faro LED + Bocina",
+          descripcion: "Kit completo de iluminación LED con bocina integrada. Fácil instalación y alta durabilidad.",
           precio: 14990,
           stock: 20,
+          categoria: "Iluminación",
+          marca: "Custom20",
           img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMTBiOTgxIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5GYXJvIExFRCArIEJvY2luYTwvdGV4dD48L3N2Zz4="
         },
         {
           id: 5,
+          codigo: "C20-1005",
           nombre: "Acelerador tipo moto",
+          descripcion: "Acelerador estilo motocicleta con mango de goma antideslizante. Ideal para scooters de alta potencia.",
           precio: 20000,
           stock: 6,
+          categoria: "Control",
+          marca: "Custom20",
           img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZWY0NDQ0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BY2VsZXJhZG9yIFRpcG8gTW90bzwvdGV4dD48L3N2Zz4="
         },
         {
           id: 6,
+          codigo: "C20-1006",
           nombre: "BMS 10S 15A",
+          descripcion: "Sistema de gestión de batería 10S 15A para baterías de litio. Compacto y eficiente.",
           precio: 18000,
           stock: 10,
-          img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDZiNmQ0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5CTVMgMTBTIDE1QTwvdGV4dD48L3N2Zz4="
+          categoria: "Batería",
+          marca: "Custom20",
+          img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDZiNmQ0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5CTVMgMTNTIDE1QTwvdGV4dD48L3N2Zz4="
+        },
+        {
+          id: 7,
+          codigo: "C20-1007",
+          nombre: "Motor 1000W 48V",
+          descripcion: "Motor brushless 1000W 48V de alta eficiencia. Ideal para conversiones y upgrades de scooters.",
+          precio: 45000,
+          stock: 5,
+          categoria: "Accesorios",
+          marca: "Custom20",
+          img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY2YjAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Nb3RvciAxMDAwVyA0OFY8L3RleHQ+PC9zdmc+"
+        },
+        {
+          id: 8,
+          codigo: "C20-1008",
+          nombre: "Controlador 48V 30A",
+          descripcion: "Controlador inteligente 48V 30A con display LCD. Compatible con motores brushless.",
+          precio: 35000,
+          stock: 7,
+          categoria: "Control",
+          marca: "Custom20",
+          img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjOWM5YzljIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Db250cm9sYWRvciA0OFYgMzBBPC90ZXh0Pjwvc3ZnPg=="
+        },
+        {
+          id: 9,
+          codigo: "C20-1009",
+          nombre: "Batería Li-ion 48V 20Ah",
+          descripcion: "Batería de litio 48V 20Ah con celdas de alta calidad. Autonomía de hasta 60km.",
+          precio: 120000,
+          stock: 3,
+          categoria: "Batería",
+          marca: "Custom20",
+          img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA3Y2ZmIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5CYXRlcmlhIDQ4ViAyMEFoPC90ZXh0Pjwvc3ZnPg=="
+        },
+        {
+          id: 10,
+          codigo: "C20-1010",
+          nombre: "Luces LED traseras",
+          descripcion: "Kit de luces LED traseras con intermitentes. Fácil instalación y máxima visibilidad.",
+          precio: 8500,
+          stock: 15,
+          categoria: "Iluminación",
+          marca: "Custom20",
+          img: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY0NDQ0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5MdWNlcyBMRUQgdHJhc2VyYXM8L3RleHQ+PC9zdmc+"
         }
       ];
       localStorage.setItem('APP_PRODS', JSON.stringify(seedProducts));
