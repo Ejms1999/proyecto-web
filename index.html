@@ -121,6 +121,7 @@
           <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
         </ul>
 
+        
         <ul class="navbar-nav ms-auto">
           <!-- ScooterPoints (solo visible cuando hay usuario logueado) -->
           <li class="nav-item d-none me-2" id="scooterPointsSection">
@@ -151,8 +152,67 @@
       </div>
     </div>
   </nav>
-  
-  <div id="navbar-container" style="display: none;"></div>
+  <style>
+  /* Colores personalizados para los títulos de cada slide */
+  #heroCarousel .carousel-item:nth-child(1) h2 { color: #00FFAA; } 
+  #heroCarousel .carousel-item:nth-child(2) h2 { color: #c64364; } 
+  #heroCarousel .carousel-item:nth-child(3) h2 { color: #c9f734; } 
+
+  /* Mejora la legibilidad del texto sobre las imágenes */
+  #heroCarousel .carousel-caption h2,
+  #heroCarousel .carousel-caption p {
+    text-shadow: 0 2px 8px rgba(8, 8, 8, 0.7);
+  }
+</style>
+
+<div id="navbar-container" style="display: none;"></div>
+
+<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <!-- Slide 1 -->
+    <div class="carousel-item active position-relative">
+      <a href="servicios.html">
+        <img src="Imagenes/servicio.JPEG" class="d-block w-100" alt="Servicio">
+      </a>
+      <div class="carousel-caption d-block">
+        <a href="servicios.html" class="text-decoration-none">
+          <h2 class="fw-bold">Nuestros Servicios</h2>
+        </a>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="carousel-item position-relative">
+      <a href="productos.html">
+        <img src="Imagenes/producto.JPEG"class ="d-block w-100" alt="Producto">
+      </a>
+      <div class="carousel-caption d-block">
+        <a href="productos.html" class="text-decoration-none">
+          <h2 class="fw-bold">Respuestos y accesorios</h2>
+        </a>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="carousel-item position-relative">
+      <a href="contacto.html">
+        <img src="Imagenes/contacto.JPEG" class="d-block w-100" alt="Contacto">
+      </a>
+      <div class="carousel-caption d-block">
+        <a href="contacto.html" class="text-decoration-none">
+          <h2 class="fw-bold">Contacto</h2>
+        </a>
+      </div>
+    </div>
+  <!-- Controles -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
 
   <header class="bg-primary text-white text-center py-5">
     <div class="container">
@@ -166,6 +226,7 @@
     </div>
   </header>
 
+  
   <main class="container my-5">
     <section class="welcome-section">
       <header>

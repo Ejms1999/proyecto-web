@@ -4,161 +4,89 @@
   <meta charset="utf-8">
   <title>Catálogo | Custom20</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <!-- Custom20 Styles -->
+  <!-- Custom20 Styles (opcional) -->
   <link href="assets/css/styles.css" rel="stylesheet">
-  
-  <!-- Estilos específicos para scooters -->
+
+  <!-- Estilos específicos -->
   <style>
-    :root {
-      --scooter-orange: #FF6B35;
-      --scooter-blue: #2E86AB; 
-      --scooter-dark: #1a1a1a;
-      --scooter-success: #28A745;
-      --scooter-warning: #FFC107;
+    :root{
+      --scooter-orange:#FF6B35;
+      --scooter-blue:#2E86AB;
+      --scooter-dark:#1a1a1a;
+      --scooter-success:#28A745;
+      --scooter-warning:#FFC107;
     }
 
-    /* Aplicar colores scooter */
-    .bg-primary { background-color: var(--scooter-orange) !important; }
-    .btn-primary { background-color: var(--scooter-orange); border-color: var(--scooter-orange); }
-    .btn-primary:hover { background-color: #e55a2b; border-color: #e55a2b; }
-    .btn-outline-primary { color: var(--scooter-orange); border-color: var(--scooter-orange); }
-    .btn-outline-primary:hover { background-color: var(--scooter-orange); border-color: var(--scooter-orange); }
-    .text-primary { color: var(--scooter-orange) !important; }
-    .badge.bg-primary { background-color: var(--scooter-blue) !important; }
-    
-    /* Navbar brand con gradiente */
-    .navbar-brand {
-      background: linear-gradient(45deg, var(--scooter-orange), var(--scooter-blue));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .bg-primary{background-color:var(--scooter-orange)!important;}
+    .btn-primary{background-color:var(--scooter-orange);border-color:var(--scooter-orange);}
+    .btn-primary:hover{background-color:#e55a2b;border-color:#e55a2b;}
+    .btn-outline-primary{color:var(--scooter-orange);border-color:var(--scooter-orange);}
+    .btn-outline-primary:hover{background-color:var(--scooter-orange);border-color:var(--scooter-orange);color:#fff;}
+    .text-primary{color:var(--scooter-orange)!important;}
+    .badge.bg-primary{background-color:var(--scooter-blue)!important;}
+
+    .navbar-brand{
+      background:linear-gradient(45deg,var(--scooter-orange),var(--scooter-blue));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
     }
 
-    /* ScooterPoints en navbar */
-    .scooter-points {
-      background: linear-gradient(135deg, var(--scooter-orange), var(--scooter-blue));
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      margin-right: 1rem;
-      font-size: 0.9rem;
-      font-weight: 500;
+    .scooter-points{
+      background:linear-gradient(135deg,var(--scooter-orange),var(--scooter-blue));
+      color:#fff;padding:.5rem 1rem;border-radius:20px;margin-right:1rem;font-size:.9rem;font-weight:500;
     }
 
-    /* Sidebar de filtros */
-    .filters-sidebar {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 15px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      border: 1px solid rgba(255, 107, 53, 0.2);
+    .filters-sidebar{
+      background:rgba(255,255,255,.05);border-radius:15px;padding:1.5rem;margin-bottom:2rem;
+      border:1px solid rgba(255,107,53,.2);
+    }
+    .filter-group{margin-bottom:1.5rem;}
+    .filter-group h5{color:var(--scooter-orange);font-weight:600;margin-bottom:.8rem;}
+
+    .search-section{
+      background:linear-gradient(135deg,rgba(255,107,53,.1),rgba(46,134,171,.1));
+      border-radius:15px;padding:1.5rem;margin-bottom:2rem;border:1px solid var(--scooter-orange);
+    }
+    .search-input{border:2px solid var(--scooter-blue);border-radius:25px;padding:.75rem 1.5rem;}
+    .search-input:focus{border-color:var(--scooter-orange);box-shadow:0 0 0 .2rem rgba(255,107,53,.25);}
+
+    .custom20-product-card{
+      border:2px solid transparent;border-radius:15px;overflow:hidden;transition:all .3s ease;background:#fff;
+      box-shadow:0 4px 6px rgba(0,0,0,.1);
+    }
+    .custom20-product-card:hover{
+      border-color:var(--scooter-orange);transform:translateY(-5px);
+      box-shadow:0 10px 25px rgba(255,107,53,.2);
     }
 
-    .filter-group {
-      margin-bottom: 1.5rem;
+    .compatibility-badge{
+      background:var(--scooter-blue);color:#fff;padding:.25rem .5rem;border-radius:12px;font-size:.75rem;margin:.2rem;display:inline-block;
+    }
+    .stock-badge{
+      position:absolute;top:10px;right:10px;padding:.25rem .75rem;border-radius:15px;font-size:.8rem;font-weight:600;z-index:2;
+    }
+    .stock-available{background:var(--scooter-success);color:#fff;}
+    .stock-low{background:var(--scooter-warning);color:#000;}
+    .stock-out{background:#dc3545;color:#fff;}
+
+    .points-earned{
+      background:linear-gradient(45deg,var(--scooter-orange),var(--scooter-blue));
+      color:#fff;padding:.25rem .5rem;border-radius:10px;font-size:.8rem;font-weight:500;
     }
 
-    .filter-group h5 {
-      color: var(--scooter-orange);
-      font-weight: 600;
-      margin-bottom: 0.8rem;
-    }
+    /* Filtros móviles */
+    .filters-sidebar.active{position:fixed;left:0;right:0;bottom:0;background:#fff;z-index:1050;border-radius:15px 15px 0 0;}
+    .mobile-filter-toggle{position:fixed;bottom:20px;left:20px;z-index:1051;}
 
-    /* Búsqueda avanzada */
-    .search-section {
-      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(46, 134, 171, 0.1));
-      border-radius: 15px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      border: 1px solid var(--scooter-orange);
-    }
-
-    .search-input {
-      border: 2px solid var(--scooter-blue);
-      border-radius: 25px;
-      padding: 0.75rem 1.5rem;
-    }
-
-    .search-input:focus {
-      border-color: var(--scooter-orange);
-      box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
-    }
-
-    /* Cards de productos mejoradas */
-    .custom20-product-card {
-      border: 2px solid transparent;
-      border-radius: 15px;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      background: white;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    .custom20-product-card:hover {
-      border-color: var(--scooter-orange);
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(255, 107, 53, 0.2);
-    }
-
-    .compatibility-badge {
-      background: var(--scooter-blue);
-      color: white;
-      padding: 0.25rem 0.5rem;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      margin: 0.2rem;
-      display: inline-block;
-    }
-
-    .stock-badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 0.25rem 0.75rem;
-      border-radius: 15px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      z-index: 2;
-    }
-
-    .stock-available { background: var(--scooter-success); color: white; }
-    .stock-low { background: var(--scooter-warning); color: black; }
-    .stock-out { background: #dc3545; color: white; }
-
-    .points-earned {
-      background: linear-gradient(45deg, var(--scooter-orange), var(--scooter-blue));
-      color: white;
-      padding: 0.25rem 0.5rem;
-      border-radius: 10px;
-      font-size: 0.8rem;
-      font-weight: 500;
-    }
-
-      
-      .filters-sidebar.active {
-        bottom: 0;
-      }
-      
-      .mobile-filter-toggle {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        z-index: 1051;
-      }
-    
-
-    header.bg-primary {
-      background: linear-gradient(135deg, #2563EB, #0891B2) !important;
-    }
+    header.bg-primary{background:linear-gradient(135deg,#2563EB,#0891B2)!important;}
   </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
   <div class="container">
     <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-scooter"></i> Custom20.cl</a>
-    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -175,14 +103,12 @@
       </ul>
 
       <ul class="navbar-nav ms-auto">
-        <!-- ScooterPoints (solo visible cuando hay usuario logueado) -->
         <li class="nav-item d-none me-2" id="scooterPointsSection">
           <span class="scooter-points">
-            <i class="bi bi-trophy"></i> <span id="user-tier">Beginner</span> | 
+            <i class="bi bi-trophy"></i> <span id="user-tier">Beginner</span> |
             <i class="bi bi-star"></i> <span id="user-points">0</span> pts
           </span>
         </li>
-        
         <li class="nav-item me-3">
           <a class="nav-link position-relative" href="carrito.html">
             <i class="bi bi-cart"></i> Carrito
@@ -212,17 +138,17 @@
   </div>
 </header>
 
-<!-- Botón flotante para filtros en móvil -->
+<!-- Botón flotante filtros móvil -->
 <button class="btn btn-primary mobile-filter-toggle d-md-none" onclick="toggleMobileFilters()">
   <i class="bi bi-funnel"></i> Filtros
 </button>
 
 <main class="container my-4">
-  <!-- Sección de búsqueda avanzada -->
+  <!-- Búsqueda avanzada -->
   <div class="search-section">
     <div class="row">
       <div class="col-md-6">
-        <h4><i class="bi bi-search text-primary"></i> <span style="color: #FF6B35;">Búsqueda Avanzada</span></h4>
+        <h4><i class="bi bi-search text-primary"></i> <span style="color:#FF6B35;">Búsqueda Avanzada</span></h4>
         <div class="input-group mb-3">
           <input type="text" class="form-control search-input" placeholder="Buscar por nombre, código o descripción..." id="searchInput">
           <button class="btn btn-primary" type="button" onclick="searchProducts()">
@@ -231,7 +157,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <h5 style="color: #FF6B35;">Búsqueda por código de repuesto:</h5>
+        <h5 style="color:#FF6B35;">Búsqueda por código de repuesto:</h5>
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Ej: BAT-36V-10AH" id="codeSearchInput">
           <button class="btn btn-outline-primary" onclick="searchByCode()">
@@ -243,15 +169,14 @@
   </div>
 
   <div class="row">
-    <!-- Sidebar de filtros -->
+    <!-- Sidebar filtros -->
     <div class="col-md-3">
       <div class="filters-sidebar" id="filtersSidebar">
-        <h4><i class="bi bi-funnel text-primary"></i> <span style="color: #FF6B35;">Filtros</span></h4>
-        
-        <!-- Filtro por categoría -->
+        <h4><i class="bi bi-funnel text-primary"></i> <span style="color:#FF6B35;">Filtros</span></h4>
+
         <div class="filter-group">
           <h5>Categoría</h5>
-          <select class="form-select" id="categoryFilter" onchange="applyFilters()">
+          <select class="form-select" id="categoryFilter">
             <option value="">Todas las categorías</option>
             <option value="baterias">Baterías</option>
             <option value="cargadores">Cargadores</option>
@@ -264,10 +189,9 @@
           </select>
         </div>
 
-        <!-- Filtro por marca compatible -->
         <div class="filter-group">
           <h5>Marca Compatible</h5>
-          <select class="form-select" id="brandFilter" onchange="applyFilters()">
+          <select class="form-select" id="brandFilter">
             <option value="">Todas las marcas</option>
             <option value="xiaomi">Xiaomi</option>
             <option value="segway">Segway-Ninebot</option>
@@ -277,35 +201,30 @@
           </select>
         </div>
 
-        <!-- Filtro por rango de precio -->
         <div class="filter-group">
           <h5>Rango de Precio</h5>
           <div class="row">
             <div class="col-6">
-              <input type="number" class="form-control form-control-sm" placeholder="Mín" id="minPrice" onchange="applyFilters()">
+              <input type="number" class="form-control form-control-sm" placeholder="Mín" id="minPrice">
             </div>
             <div class="col-6">
-              <input type="number" class="form-control form-control-sm" placeholder="Máx" id="maxPrice" onchange="applyFilters()">
+              <input type="number" class="form-control form-control-sm" placeholder="Máx" id="maxPrice">
             </div>
           </div>
           <small class="text-muted">Precios en CLP</small>
         </div>
 
-        <!-- Filtro por disponibilidad -->
         <div class="filter-group">
           <h5>Disponibilidad</h5>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="inStockOnly" onchange="applyFilters()">
-            <label class="form-check-label" for="inStockOnly">
-              Solo productos en stock
-            </label>
+            <input class="form-check-input" type="checkbox" id="inStockOnly">
+            <label class="form-check-label" for="inStockOnly">Solo productos en stock</label>
           </div>
         </div>
 
-        <!-- Verificador de compatibilidad -->
         <div class="filter-group">
           <h5>Verificar Compatibilidad</h5>
-          <select class="form-select form-select-sm mb-2" id="scooterModel" onchange="checkCompatibility()">
+          <select class="form-select form-select-sm mb-2" id="scooterModel">
             <option value="">Selecciona tu modelo</option>
             <option value="xiaomi-m365">Xiaomi M365</option>
             <option value="xiaomi-pro2">Xiaomi Pro 2</option>
@@ -318,7 +237,6 @@
           </button>
         </div>
 
-        <!-- Botón limpiar filtros -->
         <button class="btn btn-outline-secondary w-100" onclick="clearFilters()">
           <i class="bi bi-x-circle"></i> Limpiar Filtros
         </button>
@@ -327,13 +245,10 @@
 
     <!-- Lista de productos -->
     <div class="col-md-9">
-      <!-- Información de resultados -->
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <div>
-          <span id="resultsCount" class="text-muted">Cargando productos...</span>
-        </div>
+        <div><span id="resultsCount" class="text-muted">Cargando productos...</span></div>
         <div class="d-flex gap-2">
-          <select class="form-select form-select-sm" id="sortFilter" onchange="applyFilters()" style="width: auto;">
+          <select class="form-select form-select-sm" id="sortFilter" style="width:auto;">
             <option value="name">Ordenar por nombre</option>
             <option value="price-asc">Precio: menor a mayor</option>
             <option value="price-desc">Precio: mayor a menor</option>
@@ -341,7 +256,6 @@
           </select>
         </div>
       </div>
-
       <section class="products-section">
         <div class="row" id="listaProductos"></div>
       </section>
@@ -352,8 +266,8 @@
 <footer class="custom20-footer mt-5">
   <div class="container text-center">
     <p class="mb-2">
-      <i class="bi bi-whatsapp text-success"></i> 
-      <a href="https://wa.me/56912345678?text=Necesito%20ayuda%20para%20encontrar%20un%20repuesto%20específico" class="text-decoration-none">
+      <i class="bi bi-whatsapp text-success"></i>
+      <a href="https://wa.me/56912345678?text=Necesito%20ayuda%20para%20encontrar%20un%20repuesto%20espec%C3%ADfico" class="text-decoration-none">
         Ayuda para encontrar repuestos por WhatsApp
       </a>
     </p>
@@ -361,450 +275,385 @@
   </div>
 </footer>
 
+<!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/auth.js"></script>
+
 <script>
-// Sistema ScooterPoints
-class ScooterPointsSystem {
-  constructor() {
+// ===== Helpers =====
+const norm = (v) => (v ?? '')
+  .toString()
+  .toLowerCase()
+  .normalize('NFD')
+  .replace(/\p{Diacritic}/gu, '');
+
+function safeNumber(v, fallback = 0) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : fallback;
+}
+
+// ===== ScooterPoints =====
+class ScooterPointsSystem{
+  constructor(){
     this.userPoints = parseInt(localStorage.getItem('scooterPoints') || '0');
     this.userTier = this.calculateTier(this.userPoints);
     this.updateDisplay();
   }
-  
-  calculateTier(points) {
-    if (points >= 1000) return "Pro";
-    if (points >= 500) return "Expert";
-    if (points >= 200) return "Advanced";
+  calculateTier(points){
+    if(points>=1000) return "Pro";
+    if(points>=500) return "Expert";
+    if(points>=200) return "Advanced";
     return "Beginner";
   }
-  
-  addPoints(points) {
+  addPoints(points){
     this.userPoints += points;
     localStorage.setItem('scooterPoints', this.userPoints.toString());
     this.userTier = this.calculateTier(this.userPoints);
     this.updateDisplay();
     this.showPointsNotification(points);
   }
-  
-  updateDisplay() {
-    const tierElement = document.getElementById('user-tier');
-    const pointsElement = document.getElementById('user-points');
-    if (tierElement) tierElement.textContent = this.userTier;
-    if (pointsElement) pointsElement.textContent = this.userPoints;
+  updateDisplay(){
+    const t=document.getElementById('user-tier');
+    const p=document.getElementById('user-points');
+    if(t) t.textContent=this.userTier;
+    if(p) p.textContent=this.userPoints;
   }
-  
-  showPointsNotification(points) {
-    showToast(`+${points} ScooterPoints ganados!`, 'success');
-  }
+  showPointsNotification(points){ showToast(`+${points} ScooterPoints ganados!`,'success'); }
 }
-
 let scooterPoints = new ScooterPointsSystem();
+
 let allProducts = [];
 let filteredProducts = [];
 
-// Función para obtener productos del localStorage
-function getProducts() {
-  try {
-    return JSON.parse(localStorage.getItem('APP_PRODS')) || [];
-  } catch {
-    return [];
-  }
+// ===== LocalStorage: Productos =====
+function getProducts(){
+  try{ return JSON.parse(localStorage.getItem('APP_PRODS')) || []; }
+  catch{ return []; }
 }
 
-// Función para mostrar notificaciones (manteniendo tu implementación)
-function showToast(message, type = 'success') {
-  const toast = document.createElement('div');
-  toast.className = 'toast-container position-fixed top-0 end-0 p-3';
-  
-  const iconClass = type === 'success' ? 'bi-check-circle-fill text-success' : 
-                   type === 'error' ? 'bi-exclamation-triangle-fill text-danger' :
-                   type === 'warning' ? 'bi-exclamation-triangle-fill text-warning' :
-                   'bi-info-circle-fill text-info';
-  
-  toast.innerHTML = `
+// Seed demo (solo si no hay productos)
+function seedDemoProducts(){
+  const existing = getProducts();
+  if (existing && existing.length) return;
+
+  const demo = [
+    {id:1, codigo:'BAT-36V-10AH', nombre:'Batería 36V 10Ah', descripcion:'Batería litio 10s4p para Xiaomi/Segway', precio:89990, stock:12, categoria:'baterias', marca:'universal', img:'https://picsum.photos/seed/bat1/400/260'},
+    {id:2, codigo:'BRK-PADS-M365', nombre:'Pastillas de Freno M365', descripcion:'Pastillas orgánicas para Xiaomi M365', precio:6990, stock:4, categoria:'frenos', marca:'xiaomi', img:'https://picsum.photos/seed/freno/400/260'},
+    {id:3, codigo:'CHG-42V-2A', nombre:'Cargador 42V 2A', descripcion:'Cargador estándar para scooters 36V', precio:14990, stock:0, categoria:'cargadores', marca:'universal', img:'https://picsum.photos/seed/charger/400/260'},
+    {id:4, codigo:'MOTOR-350W', nombre:'Motor Hub 350W', descripcion:'Motor delantero compatible con Segway ES2', precio:129990, stock:7, categoria:'motor', marca:'segway', img:'https://picsum.photos/seed/motor/400/260'},
+    {id:5, codigo:'TYR-8-1/2', nombre:'Neumático 8.5"', descripcion:'Neumático 8.5" para Xiaomi Pro 2', precio:11990, stock:22, categoria:'neumaticos', marca:'xiaomi', img:'https://picsum.photos/seed/tyre/400/260'},
+    {id:6, codigo:'CABL-ELC', nombre:'Cableado Eléctrico', descripcion:'Kit de cables eléctricos para upgrades', precio:9990, stock:15, categoria:'electrico', marca:'universal', img:'https://picsum.photos/seed/cable/400/260'}
+  ];
+  localStorage.setItem('APP_PRODS', JSON.stringify(demo));
+}
+
+// ===== Toast =====
+function showToast(message, type='success'){
+  const toast=document.createElement('div');
+  toast.className='toast-container position-fixed top-0 end-0 p-3';
+  const iconClass = type==='success'?'bi-check-circle-fill text-success'
+                   : type==='error'?'bi-exclamation-triangle-fill text-danger'
+                   : type==='warning'?'bi-exclamation-triangle-fill text-warning'
+                   : 'bi-info-circle-fill text-info';
+  toast.innerHTML=`
     <div class="toast show" role="alert">
       <div class="toast-header">
         <i class="bi ${iconClass} me-2"></i>
         <strong class="me-auto">Custom20</strong>
         <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
       </div>
-      <div class="toast-body">
-        ${message}
-      </div>
-    </div>
-  `;
+      <div class="toast-body">${message}</div>
+    </div>`;
   document.body.appendChild(toast);
-  
-  setTimeout(() => {
-    if (toast.parentNode) {
-      toast.remove();
-    }
-  }, 3000);
+  setTimeout(()=>{toast.remove();},3000);
 }
 
-// Función para agregar al carrito (manteniendo tu lógica + ScooterPoints)
-function addToCart(producto) {
-  if (producto.stock <= 0) {
-    showToast('Producto sin stock disponible', 'error');
-    return;
-  }
-  
-  const cart = JSON.parse(localStorage.getItem('APP_CART') || '[]');
-  const existingItem = cart.find(item => item.id === producto.id);
-  
-  if (existingItem) {
-    const newQty = (existingItem.qty || 1) + 1;
-    if (newQty > producto.stock) {
-      showToast(`Solo hay ${producto.stock} unidades disponibles. Ya tienes ${existingItem.qty} en el carrito.`, 'warning');
+// ===== Carrito =====
+function addToCart(producto){
+  if (producto.stock<=0){ showToast('Producto sin stock disponible','error'); return; }
+  const cart=JSON.parse(localStorage.getItem('APP_CART')||'[]');
+  const existing=cart.find(i=>i.id===producto.id);
+  if (existing){
+    const newQty=(existing.qty||1)+1;
+    if (newQty>producto.stock){
+      showToast(`Solo hay ${producto.stock} unidades disponibles. Ya tienes ${existing.qty} en el carrito.`,'warning');
       return;
     }
-    existingItem.qty = newQty;
-  } else {
+    existing.qty=newQty;
+  }else{
     cart.push({
-      id: producto.id,
-      codigo: producto.codigo,
-      name: producto.nombre,
-      descripcion: producto.descripcion,
-      price: producto.precio,
-      qty: 1,
-      img: producto.img,
-      stock: producto.stock,
-      categoria: producto.categoria,
-      marca: producto.marca
+      id:producto.id,codigo:producto.codigo,name:producto.nombre,descripcion:producto.descripcion,
+      price:producto.precio,qty:1,img:producto.img,stock:producto.stock,categoria:producto.categoria,marca:producto.marca
     });
   }
-  
   localStorage.setItem('APP_CART', JSON.stringify(cart));
-  
-  // Agregar ScooterPoints
-  const points = Math.floor(producto.precio / 1000);
+  const points=Math.floor(safeNumber(producto.precio,0)/1000);
   scooterPoints.addPoints(points);
-  
-  showToast(`${producto.nombre} agregado al carrito`, 'success');
-  
-  if (window.dispatchEvent) {
-    window.dispatchEvent(new CustomEvent('cart:updated'));
-  }
-  
+  showToast(`${producto.nombre} agregado al carrito`,'success');
+  window.dispatchEvent?.(new CustomEvent('cart:updated'));
   renderProducts();
 }
 
-// Nuevas funciones de filtrado
-function applyFilters() {
-  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-  const category = document.getElementById('categoryFilter').value;
-  const brand = document.getElementById('brandFilter').value;
-  const minPrice = parseInt(document.getElementById('minPrice').value) || 0;
-  const maxPrice = parseInt(document.getElementById('maxPrice').value) || Infinity;
+function updateCartCount(){
+  const cart=JSON.parse(localStorage.getItem('APP_CART')||'[]');
+  const total=cart.reduce((s,i)=>s+(i.qty||1),0);
+  const el=document.getElementById('cartCount');
+  if(el) el.textContent=total;
+}
+
+// ===== Filtros =====
+function applyFilters(){
+  const searchTerm = norm(document.getElementById('searchInput').value);
+  const category = norm(document.getElementById('categoryFilter').value);
+  const brand = norm(document.getElementById('brandFilter').value);
+  const minPrice = safeNumber(document.getElementById('minPrice').value, 0);
+  const maxPriceInput = document.getElementById('maxPrice').value;
+  const maxPrice = maxPriceInput === '' ? Infinity : safeNumber(maxPriceInput, Infinity);
   const inStockOnly = document.getElementById('inStockOnly').checked;
   const sortBy = document.getElementById('sortFilter').value;
-  
-  filteredProducts = allProducts.filter(producto => {
-    const matchesSearch = !searchTerm || 
-      producto.nombre.toLowerCase().includes(searchTerm) ||
-      producto.descripcion.toLowerCase().includes(searchTerm) ||
-      (producto.codigo && producto.codigo.toLowerCase().includes(searchTerm));
-    
-    const matchesCategory = !category || producto.categoria === category;
-    const matchesBrand = !brand || producto.marca === brand;
-    const matchesPrice = producto.precio >= minPrice && producto.precio <= maxPrice;
-    const matchesStock = !inStockOnly || producto.stock > 0;
-    
+
+  filteredProducts = allProducts.filter(p=>{
+    const nombre=norm(p.nombre);
+    const descripcion=norm(p.descripcion);
+    const codigo=norm(p.codigo);
+    const categoria=norm(p.categoria);
+    const marca=norm(p.marca);
+    const precio=safeNumber(p.precio,0);
+    const stock=safeNumber(p.stock,0);
+
+    const matchesSearch = !searchTerm || nombre.includes(searchTerm) || descripcion.includes(searchTerm) || codigo.includes(searchTerm);
+    const matchesCategory = !category || categoria===category;
+    const matchesBrand = !brand || marca===brand;
+    const matchesPrice = precio>=minPrice && precio<=maxPrice;
+    const matchesStock = !inStockOnly || stock>0;
+
     return matchesSearch && matchesCategory && matchesBrand && matchesPrice && matchesStock;
   });
-  
-  // Ordenar
-  if (sortBy === 'price-asc') {
-    filteredProducts.sort((a, b) => a.precio - b.precio);
-  } else if (sortBy === 'price-desc') {
-    filteredProducts.sort((a, b) => b.precio - a.precio);
-  } else if (sortBy === 'stock') {
-    filteredProducts.sort((a, b) => b.stock - a.stock);
-  } else {
-    filteredProducts.sort((a, b) => a.nombre.localeCompare(b.nombre));
+
+  if (sortBy==='price-asc'){
+    filteredProducts.sort((a,b)=>safeNumber(a.precio,0)-safeNumber(b.precio,0));
+  }else if (sortBy==='price-desc'){
+    filteredProducts.sort((a,b)=>safeNumber(b.precio,0)-safeNumber(a.precio,0));
+  }else if (sortBy==='stock'){
+    filteredProducts.sort((a,b)=>safeNumber(b.stock,0)-safeNumber(a.stock,0));
+  }else{
+    filteredProducts.sort((a,b)=>norm(a.nombre).localeCompare(norm(b.nombre)));
   }
-  
+
   updateResultsCount();
   renderProducts();
 }
 
-function searchProducts() {
-  applyFilters();
-}
+function searchProducts(){ applyFilters(); }
 
-function searchByCode() {
-  const code = document.getElementById('codeSearchInput').value.trim();
-  if (code) {
-    document.getElementById('searchInput').value = code;
+function searchByCode(){
+  const code=document.getElementById('codeSearchInput').value.trim();
+  if(code){
+    document.getElementById('searchInput').value=code;
     applyFilters();
   }
 }
 
-function checkCompatibility() {
-  const model = document.getElementById('scooterModel').value;
-  if (model) {
-    showToast(`Mostrando repuestos compatibles con ${model}`, 'info');
-    // Aquí implementarías la lógica de compatibilidad específica
-  }
+function checkCompatibility(){
+  const model=document.getElementById('scooterModel').value;
+  if(model){ showToast(`Mostrando repuestos compatibles con ${model}`,'info'); }
 }
 
-function filterByCompatibility() {
-  const model = document.getElementById('scooterModel').value;
-  if (!model) {
-    showToast('Selecciona un modelo primero', 'warning');
-    return;
-  }
-  
-  // Filtrar por compatibilidad (ejemplo básico)
-  filteredProducts = allProducts.filter(producto => {
-    return producto.marca === 'universal' || 
-           producto.descripcion.toLowerCase().includes(model.split('-')[0]);
+function filterByCompatibility(){
+  const model=document.getElementById('scooterModel').value;
+  if(!model){ showToast('Selecciona un modelo primero','warning'); return; }
+  filteredProducts = allProducts.filter(p=>{
+    return norm(p.marca)==='universal' || norm(p.descripcion).includes(model.split('-')[0]);
   });
-  
   updateResultsCount();
   renderProducts();
 }
 
-function clearFilters() {
-  document.getElementById('searchInput').value = '';
-  document.getElementById('codeSearchInput').value = '';
-  document.getElementById('categoryFilter').value = '';
-  document.getElementById('brandFilter').value = '';
-  document.getElementById('minPrice').value = '';
-  document.getElementById('maxPrice').value = '';
-  document.getElementById('inStockOnly').checked = false;
-  document.getElementById('scooterModel').value = '';
-  document.getElementById('sortFilter').value = 'name';
-  
-  filteredProducts = [...allProducts];
+function clearFilters(){
+  document.getElementById('searchInput').value='';
+  document.getElementById('codeSearchInput').value='';
+  document.getElementById('categoryFilter').value='';
+  document.getElementById('brandFilter').value='';
+  document.getElementById('minPrice').value='';
+  document.getElementById('maxPrice').value='';
+  document.getElementById('inStockOnly').checked=false;
+  document.getElementById('scooterModel').value='';
+  document.getElementById('sortFilter').value='name';
+  filteredProducts=[...allProducts];
   updateResultsCount();
   renderProducts();
 }
 
-function updateResultsCount() {
-  const count = filteredProducts.length;
-  const total = allProducts.length;
-  document.getElementById('resultsCount').textContent = 
-    `Mostrando ${count} de ${total} productos`;
+function updateResultsCount(){
+  const total=allProducts.length;
+  const count=filteredProducts.length;
+  const el=document.getElementById('resultsCount');
+  if(el) el.textContent=`Mostrando ${count} de ${total} productos`;
 }
 
-function toggleMobileFilters() {
-  const sidebar = document.getElementById('filtersSidebar');
+function toggleMobileFilters(){
+  const sidebar=document.getElementById('filtersSidebar');
   sidebar.classList.toggle('active');
 }
 
-// Renderizar productos (mejorado)
-function renderProducts() {
-  const lista = document.getElementById("listaProductos");
-  const productos = filteredProducts.length > 0 ? filteredProducts : allProducts;
-  
-  if (productos.length === 0) {
-    lista.innerHTML = `
+// ===== Render =====
+function renderProducts(){
+  const lista=document.getElementById('listaProductos');
+  const productos=filteredProducts;
+
+  if(!productos || productos.length===0){
+    lista.innerHTML=`
       <div class="col-12 text-center">
         <div class="alert alert-info">
           <i class="bi bi-info-circle me-2"></i>
           No hay productos disponibles con los filtros seleccionados.
-          <button class="btn btn-sm btn-outline-primary ms-2" onclick="clearFilters()">
-            Limpiar filtros
-          </button>
+          <button class="btn btn-sm btn-outline-primary ms-2" onclick="clearFilters()">Limpiar filtros</button>
         </div>
-      </div>
-    `;
+      </div>`;
     return;
   }
-  
-  const carrito = JSON.parse(localStorage.getItem('APP_CART') || '[]');
-  
-  lista.innerHTML = '';
-  productos.forEach(producto => {
-    const itemEnCarrito = carrito.find(item => item.id === producto.id);
-    const stockDisponible = producto.stock - (itemEnCarrito ? itemEnCarrito.qty : 0);
-    
-    const stockClass = stockDisponible > 0 ? 'btn-primary' : 'btn-secondary disabled';
-    const stockText = stockDisponible > 0 ? 'Agregar al carrito' : 'Sin stock';
-    
-    let stockBadge = '';
-    if (stockDisponible > 10) {
-      stockBadge = `<span class="stock-badge stock-available">En Stock</span>`;
-    } else if (stockDisponible > 0) {
-      stockBadge = `<span class="stock-badge stock-low">Quedan ${stockDisponible}</span>`;
-    } else {
-      stockBadge = `<span class="stock-badge stock-out">Sin Stock</span>`;
-    }
-    
-    const points = Math.floor(producto.precio / 1000);
-    const compatibilidad = producto.marca ? [`Compatible: ${producto.marca}`] : ['Universal'];
-    
+
+  const carrito=JSON.parse(localStorage.getItem('APP_CART')||'[]');
+  lista.innerHTML='';
+  productos.forEach(producto=>{
+    const item=carrito.find(i=>i.id===producto.id);
+    const stockDisp = safeNumber(producto.stock,0) - (item ? safeNumber(item.qty,1) : 0);
+    const stockClass = stockDisp>0?'btn-primary':'btn-secondary disabled';
+    const stockText = stockDisp>0?'Agregar al carrito':'Sin stock';
+    let stockBadge='';
+    if(stockDisp>10) stockBadge=`<span class="stock-badge stock-available">En Stock</span>`;
+    else if(stockDisp>0) stockBadge=`<span class="stock-badge stock-low">Quedan ${stockDisp}</span>`;
+    else stockBadge=`<span class="stock-badge stock-out">Sin Stock</span>`;
+
+    const points=Math.floor(safeNumber(producto.precio,0)/1000);
+    const compat = producto.marca ? [`Compatible: ${producto.marca}`] : ['Universal'];
+
     lista.innerHTML += `
       <div class="col-lg-4 col-md-6 mb-4">
         <article class="custom20-product-card position-relative">
           ${stockBadge}
           <div class="image-container">
-            <img src="${producto.img}" class="card-img-top" alt="${producto.nombre}" 
-                 loading="lazy" 
+            <img src="${producto.img}" class="card-img-top" alt="${producto.nombre}"
+                 loading="lazy"
                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="image-placeholder" style="display: none; height: 200px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); align-items: center; justify-content: center; border-radius: 0.5rem 0.5rem 0 0;">
-              <i class="bi bi-image text-muted" style="font-size: 2rem;"></i>
+            <div class="image-placeholder" style="display:none;height:200px;background:linear-gradient(135deg,#f8f9fa 0%,#e9ecef 100%);align-items:center;justify-content:center;border-radius:.5rem .5rem 0 0;">
+              <i class="bi bi-image text-muted" style="font-size:2rem;"></i>
             </div>
           </div>
           <div class="card-body">
             <h3 class="card-title h5">${producto.nombre}</h3>
             <div class="mb-2">
-              ${compatibilidad.map(comp => `<span class="compatibility-badge">${comp}</span>`).join('')}
+              ${compat.map(c=>`<span class="compatibility-badge">${c}</span>`).join('')}
             </div>
-            <p class="text-muted small mb-1">
-              <strong>Código:</strong> ${producto.codigo || 'N/A'}
-            </p>
-            <p class="text-muted small mb-2">
-              <strong>Categoría:</strong> ${producto.categoria || 'N/A'}
-            </p>
-            <p class="price h5 text-primary">$${producto.precio.toLocaleString("es-CL")}</p>
+            <p class="text-muted small mb-1"><strong>Código:</strong> ${producto.codigo || 'N/A'}</p>
+            <p class="text-muted small mb-2"><strong>Categoría:</strong> ${producto.categoria || 'N/A'}</p>
+            <p class="price h5 text-primary">$${safeNumber(producto.precio,0).toLocaleString('es-CL')}</p>
             <div class="d-flex justify-content-between align-items-center mb-2">
               <span class="points-earned">+${points} ScooterPoints</span>
-              <small class="text-muted">Stock: ${stockDisponible}</small>
+              <small class="text-muted">Stock: ${Math.max(0, stockDisp)}</small>
             </div>
-            <button class="btn ${stockClass} btn-sm w-100" 
-                    onclick="addToCart(${JSON.stringify(producto).replace(/"/g, '&quot;')})"
-                    ${stockDisponible === 0 ? 'disabled' : ''}>
+            <button class="btn ${stockClass} btn-sm w-100"
+              onclick="addToCart(${JSON.stringify(producto).replace(/"/g,'&quot;')})"
+              ${stockDisp<=0?'disabled':''}>
               <i class="bi bi-cart-plus me-2"></i>${stockText}
             </button>
           </div>
         </article>
-      </div>
-    `;
+      </div>`;
   });
 }
 
-// Función para actualizar contador del carrito
-function updateCartCount() {
-  const cart = JSON.parse(localStorage.getItem('APP_CART') || '[]');
-  const totalItems = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
-  
-  const cartCountEl = document.getElementById('cartCount');
-  if (cartCountEl) {
-    cartCountEl.textContent = totalItems;
-  }
-}
+// ===== Init =====
+document.addEventListener('DOMContentLoaded', function(){
+  // Seed demo si no hay productos
+  seedDemoProducts();
 
-// Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', function() {
   allProducts = getProducts();
   filteredProducts = [...allProducts];
-  
+
+  // Render inicial
   renderProducts();
   updateCartCount();
   updateResultsCount();
-  
-  // Actualizar año en footer
-  const yearEl = document.getElementById("yearNow");
-  if (yearEl) {
-    yearEl.textContent = new Date().getFullYear();
-  }
-  
+
+  // Año footer
+  const yearEl=document.getElementById('yearNow');
+  if(yearEl) yearEl.textContent=new Date().getFullYear();
+
   // Búsqueda en tiempo real
-  document.getElementById('searchInput').addEventListener('input', function() {
-    setTimeout(applyFilters, 300); // Debounce
+  document.getElementById('searchInput').addEventListener('input', ()=>{ applyFilters(); });
+
+  // Listeners filtros
+  ['minPrice','maxPrice'].forEach(id=>{
+    const el=document.getElementById(id);
+    el?.addEventListener('input', applyFilters);
+    el?.addEventListener('change', applyFilters);
   });
-  
-  // Manejar visibilidad del login y ScooterPoints
-  function updateNavbarAuth() {
-    console.log('Actualizando navbar de autenticación en productos...');
-    
-    let user = null;
-    if (window.AuthStore && window.AuthStore.getCurrentUser) {
-      user = window.AuthStore.getCurrentUser();
-    } else {
-      try {
-        const userData = localStorage.getItem('APP_CURRENT_USER');
-        if (userData) {
-          user = JSON.parse(userData);
-          console.log('Usuario obtenido desde localStorage:', user);
-        }
-      } catch (e) {
-        console.error('Error al obtener usuario desde localStorage:', e);
-      }
+  document.getElementById('inStockOnly')?.addEventListener('change', applyFilters);
+  document.getElementById('brandFilter')?.addEventListener('change', applyFilters);
+  document.getElementById('categoryFilter')?.addEventListener('change', applyFilters);
+  document.getElementById('sortFilter')?.addEventListener('change', applyFilters);
+
+  // Auth navbar (si usas auth.js)
+  function updateNavbarAuth(){
+    let user=null;
+    if(window.AuthStore && window.AuthStore.getCurrentUser){
+      user=window.AuthStore.getCurrentUser();
+    }else{
+      try{
+        const userData=localStorage.getItem('APP_CURRENT_USER');
+        if(userData){ user=JSON.parse(userData); }
+      }catch(e){ console.error('Error leyendo usuario:',e); }
     }
-    
-    const loginSection = document.getElementById('loginSection');
-    const userSection = document.getElementById('userSection');
-    const scooterPointsSection = document.getElementById('scooterPointsSection');
-    
-    if (user) {
-      // Usuario logueado
-      if (loginSection) loginSection.classList.add('d-none');
-      if (userSection) {
+    const loginSection=document.getElementById('loginSection');
+    const userSection=document.getElementById('userSection');
+    const scooterPointsSection=document.getElementById('scooterPointsSection');
+
+    if(user){
+      loginSection?.classList.add('d-none');
+      if(userSection){
         userSection.classList.remove('d-none');
-        const userNameEl = document.getElementById('navUserName');
-        if (userNameEl) userNameEl.textContent = user.name;
+        const userNameEl=document.getElementById('navUserName');
+        if(userNameEl) userNameEl.textContent=user.name || 'Usuario';
       }
-      
-      // Mostrar ScooterPoints
-      if (scooterPointsSection) {
-        scooterPointsSection.classList.remove('d-none');
-      }
-      
-      // Mostrar enlaces de admin si es admin
-      if (user.role === 'admin') {
-        const adminLinks = document.querySelectorAll('.admin-only');
-        adminLinks.forEach(link => link.classList.remove('d-none'));
-      }
-    } else {
-      // Usuario no logueado
-      if (loginSection) loginSection.classList.remove('d-none');
-      if (userSection) userSection.classList.add('d-none');
-      if (scooterPointsSection) scooterPointsSection.classList.add('d-none');
+      scooterPointsSection?.classList.remove('d-none');
+      if(user.role==='admin'){ document.querySelectorAll('.admin-only').forEach(l=>l.classList.remove('d-none')); }
+    }else{
+      loginSection?.classList.remove('d-none');
+      userSection?.classList.add('d-none');
+      scooterPointsSection?.classList.add('d-none');
     }
   }
-  
-  // Ejecutar inmediatamente
   updateNavbarAuth();
-  setTimeout(updateNavbarAuth, 100);
-  
-  // Escuchar eventos de autenticación
+  setTimeout(updateNavbarAuth,100);
   window.addEventListener('auth:login', updateNavbarAuth);
   window.addEventListener('auth:logout', updateNavbarAuth);
-  
-  // Botón de logout
-  document.getElementById('btnLogout')?.addEventListener('click', function(e) {
-    e.preventDefault();
-    console.log('Cerrando sesión...');
-    
-    if (window.globalLogout) {
-      window.globalLogout();
-    } else {
-      localStorage.removeItem('APP_CURRENT_USER');
-      updateNavbarAuth();
-      window.location.href = 'index.html';
-    }
-  });
 
-  // Procesar parámetros URL para filtros automáticos
-  const urlParams = new URLSearchParams(window.location.search);
-  const searchParam = urlParams.get('search');
-  const categoryParam = urlParams.get('categoria');
-  
-  if (searchParam) {
-    document.getElementById('searchInput').value = searchParam;
-    applyFilters();
-  }
-  
-  if (categoryParam) {
-    document.getElementById('categoryFilter').value = categoryParam;
-    applyFilters();
-  }
+  // Parámetros URL
+  const urlParams=new URLSearchParams(window.location.search);
+  const searchParam=urlParams.get('search');
+  const categoryParam=urlParams.get('categoria');
+  if(searchParam){ document.getElementById('searchInput').value=searchParam; applyFilters(); }
+  if(categoryParam){ document.getElementById('categoryFilter').value=categoryParam; applyFilters(); }
 });
 
 // Cerrar filtros móviles al hacer clic fuera
-document.addEventListener('click', function(event) {
-  const sidebar = document.getElementById('filtersSidebar');
-  const toggle = document.querySelector('.mobile-filter-toggle');
-  
-  if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
-    if (!sidebar.contains(event.target) && !toggle.contains(event.target)) {
+document.addEventListener('click', function(ev){
+  const sidebar=document.getElementById('filtersSidebar');
+  const toggle=document.querySelector('.mobile-filter-toggle');
+  if(window.innerWidth<=768 && sidebar.classList.contains('active')){
+    if(!sidebar.contains(ev.target) && !toggle.contains(ev.target)){
       sidebar.classList.remove('active');
     }
+  }
+});
+
+// Sincronizar cuando cambie APP_PRODS en otra pestaña
+window.addEventListener('storage', (e)=>{
+  if(e.key==='APP_PRODS'){
+    allProducts=getProducts();
+    applyFilters();
   }
 });
 </script>
