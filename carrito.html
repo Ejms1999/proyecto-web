@@ -7,6 +7,37 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Custom20 Styles -->
   <link href="assets/css/styles.css" rel="stylesheet">
+
+  <!-- ScooterPoints styles -->
+  <style>
+    /* Estilos para ScooterPoints */
+    .scooter-points {
+      background: linear-gradient(135deg, #FF6B35, #2E86AB);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      margin-right: 1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .points-summary {
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(46, 134, 171, 0.1));
+      border: 1px solid #FF6B35;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .points-badge {
+      background: linear-gradient(135deg, #FF6B35, #2E86AB);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      display: inline-block;
+      min-width: 56px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
@@ -29,6 +60,14 @@
         </ul>
 
         <ul class="navbar-nav ms-auto">
+          <!-- ScooterPoints (solo visible logueado) -->
+          <li class="nav-item d-none me-2" id="scooterPointsSection">
+            <span class="scooter-points">
+              <i class="bi bi-trophy"></i> Nivel: <span id="user-tier">Beginner</span> | 
+              <i class="bi bi-star"></i> <span id="user-points">0</span> pts
+            </span>
+          </li>
+
           <li class="nav-item me-3">
             <a class="nav-link position-relative" href="carrito.html">
               🛒 Carrito
@@ -66,7 +105,22 @@
         <button class="btn btn-outline-danger btn-sm" id="btnCleanInvalid" title="Limpiar productos inválidos del carrito">
           <i class="bi bi-exclamation-triangle"></i>
         </button>
-        <span class="badge bg-primary fs-6" id="cartCount">0 productos</span>
+        <span class="badge bg-primary fs-6" id="cartCountHeader">0 productos</span>
+      </div>
+    </div>
+
+    <!-- Resumen de puntos -->
+    <div class="points-summary">
+      <h2 class="h5"><i class="bi bi-star-fill text-warning"></i> ScooterPoints</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <p class="mb-1">Puntos acumulados: <strong id="current-points">0</strong></p>
+          <p class="mb-1">Puntos por esta compra: <strong id="points-from-cart">0</strong></p>
+        </div>
+        <div class="col-md-6">
+          <p class="mb-1">Total después de compra: <strong id="total-after-purchase">0</strong></p>
+          <p class="mb-0">Nivel después de compra: <span class="badge bg-primary" id="tier-after-purchase">Beginner</span></p>
+        </div>
       </div>
     </div>
 
@@ -90,6 +144,7 @@
             <th>Código</th>
             <th class="text-end">Precio</th>
             <th class="text-center">Cantidad</th>
+            <th class="text-end">Puntos</th> <!-- Nueva columna -->
             <th class="text-end">Subtotal</th>
             <th class="text-center">Acciones</th>
           </tr>
@@ -97,7 +152,7 @@
         <tbody></tbody>
         <tfoot class="table-light">
           <tr>
-            <th colspan="5" class="text-end fs-5">Total a pagar:</th>
+            <th colspan="6" class="text-end fs-5">Total a pagar:</th>
             <th class="text-end fs-4 text-primary" id="cartTotal">$0</th>
             <th></th>
           </tr>
@@ -142,6 +197,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/auth.js"></script>
   <script src="assets/js/layaout.js"></script>
+
   <script>
     const CART_KEY = 'APP_CART';
     const PROD_KEY = 'APP_PRODS';
@@ -174,7 +230,78 @@
       return null;
     }
 
-    // Función para validar y corregir el carrito contra el inventario
+    // =========================
+    //   SISTEMA SCOOTERPOINTS
+    // =========================
+    class ScooterPointsSystem {
+      constructor() {
+        this.userPoints = parseInt(localStorage.getItem('scooterPoints') || '0', 10);
+        this.userTier = this.calculateTier(this.userPoints);
+        this.updateDisplay();
+      }
+      calculateTier(points) {
+        if (points >= 1000) return "Pro";
+        if (points >= 500) return "Expert";
+        if (points >= 200) return "Advanced";
+        return "Beginner";
+      }
+      addPoints(points) {
+        this.userPoints += points;
+        localStorage.setItem('scooterPoints', String(this.userPoints));
+        this.userTier = this.calculateTier(this.userPoints);
+        this.updateDisplay();
+        return this.userPoints;
+      }
+      updateDisplay() {
+        const tierElement = document.getElementById('user-tier');
+        const pointsElement = document.getElementById('user-points');
+        if (tierElement) tierElement.textContent = this.userTier;
+        if (pointsElement) pointsElement.textContent = this.userPoints;
+      }
+      getPoints() { return this.userPoints; }
+      getTier() { return this.userTier; }
+    }
+
+    // 1 punto por cada $1000 CLP de gasto
+    function calculatePointsFromPrice(price) {
+      return Math.floor(price / 1000);
+    }
+
+    // Inicializar sistema (global para que auth/layaout puedan usarlo si quieren)
+    window.scooterPoints = new ScooterPointsSystem();
+
+    // Actualiza el resumen de puntos
+    function updatePointsDisplay() {
+      const cart = getCart();
+      let totalPoints = 0;
+      let totalPrice = 0;
+
+      cart.forEach(item => {
+        const prodInfo = findProdInfo(item.id);
+        const price = (typeof item.price === 'number') ? item.price : (prodInfo?.price || 0);
+        const qty = Number(item.qty) || 1;
+        const itemTotal = price * qty;
+        totalPrice += itemTotal;
+        totalPoints += calculatePointsFromPrice(itemTotal);
+      });
+
+      const $current = document.getElementById('current-points');
+      const $fromCart = document.getElementById('points-from-cart');
+      const $after = document.getElementById('total-after-purchase');
+      const $tierAfter = document.getElementById('tier-after-purchase');
+
+      if ($current) $current.textContent = window.scooterPoints.getPoints();
+      if ($fromCart) $fromCart.textContent = totalPoints;
+      if ($after) $after.textContent = window.scooterPoints.getPoints() + totalPoints;
+      if ($tierAfter) $tierAfter.textContent =
+        window.scooterPoints.calculateTier(window.scooterPoints.getPoints() + totalPoints);
+
+      return totalPoints;
+    }
+
+    // =========================
+    //   VALIDAR CARRITO
+    // =========================
     function validateCartAgainstInventory() {
       const cart = getCart();
       const products = getProds();
@@ -186,7 +313,6 @@
         const product = products.find(p => String(p.id) === String(item.id));
         
         if (!product) {
-          // Producto no existe en inventario
           removedItems.push(item.name || `Producto ${item.id}`);
           cartModified = true;
           return false;
@@ -196,7 +322,6 @@
         const requestedQty = Number(item.qty) || 1;
 
         if (requestedQty > availableStock) {
-          // Ajustar cantidad al stock disponible
           if (availableStock > 0) {
             item.qty = availableStock;
             adjustedItems.push({
@@ -207,24 +332,19 @@
             cartModified = true;
             return true;
           } else {
-            // Sin stock disponible
             removedItems.push(item.name || product.nombre);
             cartModified = true;
             return false;
           }
         }
-
         return true;
       });
 
       if (cartModified) {
         saveCart(validCart);
-        
-        // Mostrar notificaciones
         if (removedItems.length > 0) {
           alert(`Productos eliminados del carrito (sin stock):\n${removedItems.join('\n')}`);
         }
-        
         if (adjustedItems.length > 0) {
           const adjustments = adjustedItems.map(item => 
             `${item.name}: ${item.requested} → ${item.available}`
@@ -232,19 +352,16 @@
           alert(`Cantidades ajustadas por stock disponible:\n${adjustments}`);
         }
       }
-
       return validCart;
     }
 
+    // =========================
+    //   RENDER CARRITO
+    // =========================
     function renderCarrito() {
-      // Validar carrito contra inventario antes de renderizar
       const validCart = validateCartAgainstInventory();
       const $tbody = $('#tablaCarrito tbody').empty();
       let total = 0;
-      
-      // Debug: mostrar carrito en consola
-      console.log('Carrito actual:', validCart);
-      console.log('Productos disponibles:', getProds());
 
       if (!validCart.length) {
         $('#cartEmpty').removeClass('d-none');
@@ -255,23 +372,16 @@
       }
 
       validCart.forEach((it, i) => {
-        // Obtener información completa del producto
         const prodInfo = findProdInfo(it.id);
-        
-        console.log(`Procesando item ${i}:`, it);
-        console.log(`Info del producto:`, prodInfo);
-        
-        // Usar información del carrito o del producto como fallback
         let name = it.name || prodInfo?.name || `Producto ${it.id}`;
         let price = (typeof it.price === 'number') ? it.price : (prodInfo?.price || 0);
         let codigo = it.codigo || prodInfo?.codigo || 'N/A';
         let descripcion = it.descripcion || prodInfo?.descripcion || '';
         let qty = Number(it.qty) || 1;
 
-        console.log(`Datos finales:`, { name, price, codigo, descripcion, qty });
-
         const subtotal = price * qty;
         total += subtotal;
+        const itemPoints = calculatePointsFromPrice(subtotal);
 
         $tbody.append(`
           <tr data-id="${it.id}">
@@ -282,150 +392,125 @@
                 ${descripcion ? `<br><small class="text-muted">${descripcion}</small>` : ''}
               </div>
             </td>
-            <td>
-              <code class="text-primary">${codigo}</code>
-            </td>
+            <td><code class="text-primary">${codigo}</code></td>
             <td class="text-end">${fmt.format(price)}</td>
             <td class="text-center">
               <div class="btn-group btn-group-sm" role="group">
-                <button class="btn btn-outline-secondary btnQty" data-delta="-1">-</button>
-                <span class="btn btn-light disabled px-3">${qty}</span>
-                <button class="btn btn-outline-secondary btnQty" data-delta="1">+</button>
+              <button type="button" class="btn btn-outline-secondary btnQty" data-delta="-1">-</button>
+              <span class="btn btn-light disabled px-3">${qty}</span>
+              <button type="button" class="btn btn-outline-secondary btnQty" data-delta="1">+</button>
               </div>
+            </td>
+            <td class="text-end">
+              <span class="points-badge">${itemPoints} pts</span>
             </td>
             <td class="text-end">${fmt.format(subtotal)}</td>
             <td class="text-center">
-              <button class="btn btn-sm btn-outline-danger btnRemove" title="Eliminar producto">
+              <button type="button" class="btn btn-sm btn-outline-danger btnRemove" title="Eliminar producto">
                 <i class="bi bi-trash"></i>
-              </button>
+            </button>
             </td>
-          </tr>
+            </tr>
         `);
       });
 
       $('#cartTotal').text(fmt.format(total));
-      
-      console.log(`Carrito renderizado: ${validCart.length} productos, total: ${fmt.format(total)}`);
+
+      // Actualizar resumen de puntos
+      updatePointsDisplay();
     }
 
-    // Función para actualizar contador del carrito
+    // =========================
+    //   CONTADOR CARRITO
+    // =========================
     function updateCartCount() {
-      const cart = JSON.parse(localStorage.getItem('APP_CART') || '[]');
-      const totalItems = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
-      
-      // Actualizar badge del navbar
-      const cartCountEl = document.getElementById('cartCount');
-      if (cartCountEl) {
-        cartCountEl.textContent = totalItems;
-      }
-      
-      // Actualizar badge del header
-      const headerCartCount = document.querySelector('main .badge');
-      if (headerCartCount) {
-        headerCartCount.textContent = `${totalItems} producto${totalItems !== 1 ? 's' : ''}`;
-      }
-    }
+  const cart = JSON.parse(localStorage.getItem('APP_CART') || '[]');
+  const totalItems = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+
+  // Badge del navbar
+  const cartCountEl = document.getElementById('cartCount');
+  if (cartCountEl) cartCountEl.textContent = totalItems;
+
+  // Badge del header
+  const headerCartCount = document.getElementById('cartCountHeader');
+  if (headerCartCount) {
+    headerCartCount.textContent = `${totalItems} producto${totalItems !== 1 ? 's' : ''}`;
+  }
+}
 
     $(function () {
       console.log('Inicializando carrito...');
-      
-      // Inicializar año
       document.getElementById("yearNow").textContent = new Date().getFullYear();
-      
-      // Inicializar contador del carrito
-      updateCartCount();
-      // Escuchar cambios del carrito desde otras páginas  
-      window.addEventListener('cart:updated', function() {
-      console.log('Evento cart:updated recibido');
-      updateCartCount();
-      renderCarrito();
-});
 
-// Escuchar cambios en localStorage (para múltiples pestañas)
-      window.addEventListener('storage', function(e) {
-      if (e.key === 'APP_CART') {
-        console.log('Cambio detectado en localStorage del carrito');
+      updateCartCount();
+
+      // Refrescar por eventos entre páginas
+      window.addEventListener('cart:updated', () => {
+        console.log('Evento cart:updated recibido');
         updateCartCount();
         renderCarrito();
-    }
-});
-      // Manejar visibilidad del login
+      });
+      window.addEventListener('storage', function(e) {
+        if (e.key === 'APP_CART') {
+          console.log('Cambio detectado en localStorage del carrito');
+          updateCartCount();
+          renderCarrito();
+        }
+      });
+
+      // Auth en navbar (con fallback)
       function updateNavbarAuth() {
         console.log('Actualizando navbar de autenticación en carrito...');
-        
-        // Fallback si AuthStore no está disponible
         let user = null;
         if (window.AuthStore && window.AuthStore.getCurrentUser) {
           user = window.AuthStore.getCurrentUser();
         } else {
-          // Fallback directo desde localStorage
           try {
             const userData = localStorage.getItem('APP_CURRENT_USER');
-            if (userData) {
-              user = JSON.parse(userData);
-              console.log('Usuario obtenido desde localStorage:', user);
-            }
-          } catch (e) {
-            console.error('Error al obtener usuario desde localStorage:', e);
-          }
+            if (userData) user = JSON.parse(userData);
+          } catch (e) { console.error('Error al obtener usuario desde localStorage:', e); }
         }
-        
+
         const loginSection = document.getElementById('loginSection');
         const userSection = document.getElementById('userSection');
-        
+        const spSection = document.getElementById('scooterPointsSection');
+
         if (user) {
-          // Usuario logueado
           if (loginSection) loginSection.classList.add('d-none');
           if (userSection) {
             userSection.classList.remove('d-none');
             const userNameEl = document.getElementById('navUserName');
-            if (userNameEl) userNameEl.textContent = user.name;
+            if (userNameEl) userNameEl.textContent = user.name || 'Usuario';
           }
-          
-          // Mostrar enlaces de admin si es admin
+          // Enlaces admin
           if (user.role === 'admin') {
-            const adminLinks = document.querySelectorAll('.admin-only');
-            adminLinks.forEach(link => link.classList.remove('d-none'));
+            document.querySelectorAll('.admin-only').forEach(link => link.classList.remove('d-none'));
           }
+          // Mostrar ScooterPoints + refrescar visor
+          if (spSection) spSection.classList.remove('d-none');
+          if (window.scooterPoints) window.scooterPoints.updateDisplay();
         } else {
-          // Usuario no logueado
           if (loginSection) loginSection.classList.remove('d-none');
           if (userSection) userSection.classList.add('d-none');
+          document.querySelectorAll('.admin-only').forEach(link => link.classList.add('d-none'));
+          if (spSection) spSection.classList.add('d-none');
         }
       }
-      
-      // Ejecutar inmediatamente
+
+      // Ejecutar auth navbar
       updateNavbarAuth();
-      
-      // También ejecutar después de un pequeño delay
       setTimeout(updateNavbarAuth, 100);
-      
-      // Escuchar eventos de autenticación
       window.addEventListener('auth:login', updateNavbarAuth);
       window.addEventListener('auth:logout', updateNavbarAuth);
-      
-      // Botón de logout
-      document.getElementById('btnLogout')?.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('Cerrando sesión...');
-        
-        // Usar función global de logout
-        if (window.globalLogout) {
-          window.globalLogout();
-        } else {
-          // Fallback si la función global no está disponible
-          localStorage.removeItem('APP_CURRENT_USER');
-          updateNavbarAuth();
-          window.location.href = 'index.html';
-        }
-      });
-      
-      // Cargar partials y renderizar carrito (funciona sin login)
+
+      // Cargar partials (si existen)
       if (window.Layout && window.Layout.loadPartials) {
         Layout.loadPartials();
       } else {
         console.warn('Layout no está disponible, continuando sin partials');
       }
+
+      // Render inicial
       renderCarrito();
 
       // Botón de debug
@@ -435,62 +520,59 @@
         console.log('Productos:', getProds());
         console.log('localStorage APP_CART:', localStorage.getItem('APP_CART'));
         console.log('localStorage APP_PRODS:', localStorage.getItem('APP_PRODS'));
+        console.log('scooterPoints:', localStorage.getItem('scooterPoints'));
         alert('Datos mostrados en consola (F12)');
       });
 
-      // Botón de reset
+      // Reset
       $('#btnReset').on('click', function() {
         if (confirm('¿Estás seguro? Esto limpiará el carrito y regenerará los productos.')) {
           localStorage.removeItem('APP_CART');
           localStorage.removeItem('APP_PRODS');
-          // Recargar la página para regenerar productos
           location.reload();
         }
       });
 
-      // Botón de limpiar productos inválidos
+      // Limpiar inválidos
       $('#btnCleanInvalid').on('click', function() {
         if (confirm('¿Limpiar productos que exceden el stock disponible?')) {
-          const validCart = validateCartAgainstInventory();
+          validateCartAgainstInventory();
           renderCarrito();
           updateCartCount();
           alert('Carrito validado contra inventario');
         }
       });
 
-      // Vaciar carrito
-      $('#btnVaciar').on('click', function() {
-        if (confirm('¿Estás seguro de que quieres vaciar el carrito?')) {
-          saveCart([]);
-          renderCarrito();
-          updateCartCount();
-          console.log('Carrito vaciado');
-        }
-      });
+      // Vaciar (robusto)
+      $('#btnVaciar').off('click').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
 
+        if (!confirm('¿Estás seguro de que quieres vaciar el carrito?')) return;
+
+        // Limpieza a prueba de todo
+        localStorage.removeItem(CART_KEY);          // borra la clave
+        localStorage.setItem(CART_KEY, '[]');       // y deja un array vacío por compatibilidad
+        window.dispatchEvent(new CustomEvent('cart:updated')); // avisa a otros componentes
+
+        renderCarrito();    // re-render tabla
+        updateCartCount();  // actualiza badges
+        console.log('Carrito vaciado');
+      });
       // Cambiar cantidades
       $(document).on('click', '.btnQty', function () {
         const delta = Number($(this).data('delta'));
         const id = $(this).closest('tr').data('id');
-        console.log('Cambiando cantidad:', { delta, id });
-        
         const cart = getCart();
         const item = cart.find(x => String(x.id) === String(id));
-        if (!item) {
-          console.log('Item no encontrado en carrito');
-          return;
-        }
-        
+        if (!item) return;
+
         const newQty = (Number(item.qty) || 1) + delta;
-        console.log('Nueva cantidad:', newQty);
-        
+
         if (newQty <= 0) {
-          // eliminar si queda en 0
           const next = cart.filter(x => String(x.id) !== String(id));
           saveCart(next);
-          console.log('Producto eliminado del carrito');
         } else {
-          // Verificar stock disponible antes de actualizar
           const product = getProds().find(p => String(p.id) === String(id));
           if (product) {
             const availableStock = Number(product.stock) || 0;
@@ -499,47 +581,59 @@
               return;
             }
           }
-          
           item.qty = newQty;
           saveCart(cart);
-          console.log('Cantidad actualizada');
         }
         renderCarrito();
         updateCartCount();
       });
 
       // Eliminar item
-      $(document).on('click', '.btnRemove', function () {
-        const id = $(this).closest('tr').data('id');
-        console.log('Eliminando producto:', id);
-        
-        if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
-          const next = getCart().filter(x => String(x.id) !== String(id));
-          saveCart(next);
-          renderCarrito();
-          updateCartCount();
-          console.log('Producto eliminado');
-        }
-      });
+      // Eliminar item (versión robusta)
+      $(document).on('click', '.btnRemove', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
 
+        const $tr = $(this).closest('tr');
+        const id = String($tr.data('id'));
+
+        const cart = getCart();
+        const next = cart.filter(x => String(x.id) !== id);
+
+        saveCart(next);
+        $tr.remove();        // remueve la fila al tiro (optimista)
+        renderCarrito();     // recalcula totales y puntos
+        updateCartCount();   // actualiza badges de carrito
+      });
       // Confirmar compra
       $('#btnConfirmar').on('click', () => {
-        const user = AuthStore.getCurrentUser();
-        
+        // 1) Verifica login
+        let user = null;
+        if (window.AuthStore && window.AuthStore.getCurrentUser) {
+          user = AuthStore.getCurrentUser();
+        } else {
+          try { const u = localStorage.getItem('APP_CURRENT_USER'); if (u) user = JSON.parse(u); } catch(_){}
+        }
         if (!user) {
-          // Si no está logueado, redirigir a login
           alert('Debes iniciar sesión para confirmar tu compra');
           location.href = 'login.html';
           return;
         }
-        
+
+        // 2) Calcula puntos de ESTA compra (no guarda aún)
         const totalText = $('#cartTotal').text();
-        // Guarda total para mostrar en "gracias"
+        const totalPoints = updatePointsDisplay();   // ← solo calcula
+
+        // 3) AHORA SÍ: suma los puntos al acumulado
+        window.scooterPoints.addPoints(totalPoints);
+
+        // 4) Enviar datos a gracias.html
         sessionStorage.setItem('LAST_ORDER_TOTAL', totalText);
-        // Limpia carrito y badge
+        sessionStorage.setItem('LAST_ORDER_POINTS', String(totalPoints));
+
+        // 5) Limpia carrito y redirige
         saveCart([]);
         updateCartCount();
-        // a gracias
         location.href = 'gracias.html';
       });
     });

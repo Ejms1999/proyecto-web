@@ -8,6 +8,68 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Custom20 Styles -->
   <link href="assets/css/styles.css" rel="stylesheet">
+  
+  <!-- ESTILOS FALTANTES: Colores específicos para scooters -->
+  <style>
+    :root {
+      --scooter-orange: #FF6B35;
+      --scooter-blue: #2E86AB; 
+      --scooter-dark: #1a1a1a;
+      --scooter-success: #28A745;
+      --scooter-warning: #FFC107;
+    }
+
+    .bg-primary {
+      background-color: var(--scooter-orange) !important;
+    }
+    
+    .btn-primary {
+      background-color: var(--scooter-orange);
+      border-color: var(--scooter-orange);
+    }
+    
+    .btn-primary:hover {
+      background-color: #e55a2b;
+      border-color: #e55a2b;
+    }
+    
+    .btn-outline-primary {
+      color: var(--scooter-orange);
+      border-color: var(--scooter-orange);
+    }
+    
+    .btn-outline-primary:hover {
+      background-color: var(--scooter-orange);
+      border-color: var(--scooter-orange);
+    }
+    
+    .text-primary {
+      color: var(--scooter-orange) !important;
+    }
+    
+    .badge.bg-primary {
+      background-color: var(--scooter-blue) !important;
+    }
+
+    /* ScooterPoints en navbar */
+    .scooter-points {
+      background: linear-gradient(135deg, var(--scooter-orange), var(--scooter-blue));
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      margin-right: 1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* Navbar brand con gradiente */
+    .navbar-brand {
+      background: linear-gradient(45deg, var(--scooter-orange), var(--scooter-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
@@ -25,7 +87,7 @@
           <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
           <li class="nav-item"><a class="nav-link" href="productos.html">Repuestos</a></li>
           <li class="nav-item"><a class="nav-link" href="servicios.html">Servicios</a></li>
-          <li class="nav-item"><a class="nav-link" href="preguntas.html">Preguntas</a></li>
+          <li class="nav-item"><a class="nav-link active" href="preguntas.html">Preguntas</a></li>
           <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
         </ul>
   
@@ -33,7 +95,7 @@
           <!-- ScooterPoints (solo visible cuando hay usuario logueado) -->
           <li class="nav-item d-none me-2" id="scooterPointsSection">
             <span class="scooter-points">
-              <i class="bi bi-trophy"></i> <span id="user-tier">Beginner</span> | 
+              <i class="bi bi-trophy"></i> Nivel: <span id="user-tier">Beginner</span> | 
               <i class="bi bi-star"></i> <span id="user-points">0</span> pts
             </span>
           </li>
@@ -59,9 +121,16 @@
       </div>
     </div>
   </nav>
-
+<header class="bg-primary text-white py-4">
+  <div class="container">
+    <h1><i class="bi-question-circle"></i> Preguntas frecuentes</h1>
+    <p class="lead"> Dudas frecuentes de nuestros clientes, explicadas simple. 
+      Para cualquier otra duda, puedes <a href="contacto.html" class="link-dark text-decoration-underline" title="Ir a Contacto">
+    contactarnos por aquí  </a></p>
+  </div>
+</header>
 <main class="container py-5">
-  <h1 class="h3 mb-4">Preguntas frecuentes</h1>
+  
   <div class="accordion" id="faq">
     <div class="accordion-item">
       <h2 class="accordion-header">
@@ -76,45 +145,44 @@
       </div>
     </div>
 
-<div class="accordion-item">
-  <h2 class="accordion-header">
-    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f2">
-      ¿Tienen garantía?
-    </button>
-  </h2>
-  <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faq">
-    <div class="accordion-body">
-      Sí, según el tipo de servicio o repuesto.
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f2">
+          ¿Tienen garantía?
+        </button>
+      </h2>
+      <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faq">
+        <div class="accordion-body">
+          Sí, según el tipo de servicio o repuesto.
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<div class="accordion-item">
-  <h2 class="accordion-header">
-    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f3">
-      ¿Cuánto tardan en diagnosticar una batería?
-    </button>
-  </h2>
-  <div id="f3" class="accordion-collapse collapse" data-bs-parent="#faq">
-    <div class="accordion-body">
-      De 1 a 2 días como máximo.
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f3">
+          ¿Cuánto tardan en diagnosticar una batería?
+        </button>
+      </h2>
+      <div id="f3" class="accordion-collapse collapse" data-bs-parent="#faq">
+        <div class="accordion-body">
+          De 1 a 2 días como máximo.
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<div class="accordion-item">
-  <h2 class="accordion-header">
-    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f4">
-      ¿Cuánto demora en fabricar una batería?
-    </button>
-  </h2>
-  <div id="f4" class="accordion-collapse collapse" data-bs-parent="#faq">
-    <div class="accordion-body">
-      De 5 a 7 días hábiles después de que el cliente acepte el presupuesto y aclare todas sus dudas.
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#f4">
+          ¿Cuánto demora en fabricar una batería?
+        </button>
+      </h2>
+      <div id="f4" class="accordion-collapse collapse" data-bs-parent="#faq">
+        <div class="accordion-body">
+          De 5 a 7 días hábiles después de que el cliente acepte el presupuesto y aclare todas sus dudas.
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
   </div>
 </main>
 
@@ -124,10 +192,169 @@
   </div>
 </footer>
 
+<!-- SCRIPTS FALTANTES: jQuery, Bootstrap Bundle, y scripts de autenticación -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/layout.js"></script>
+
 <script>
-  // Actualizar año en footer
-  document.getElementById("yearNow").textContent = new Date().getFullYear();
+  // Sistema ScooterPoints básico (FALTANTE)
+  class ScooterPointsSystem {
+    constructor() {
+      this.userPoints = parseInt(localStorage.getItem('scooterPoints') || '0');
+      this.userTier = this.calculateTier(this.userPoints);
+      this.updateDisplay();
+    }
+    
+    calculateTier(points) {
+      if (points >= 1000) return "Pro";
+      if (points >= 500) return "Expert";
+      if (points >= 200) return "Advanced";
+      return "Beginner";
+    }
+
+    
+    updateDisplay() {
+      const tierElement = document.getElementById('user-tier');
+      const pointsElement = document.getElementById('user-points');
+      if (tierElement) tierElement.textContent = this.userTier;
+      if (pointsElement) pointsElement.textContent = this.userPoints;
+    }
+    
+    showPointsNotification(points) {
+      // Crear notificación toast
+      const toast = document.createElement('div');
+      toast.className = 'toast align-items-center text-white border-0 position-fixed';
+      toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; background: linear-gradient(135deg, #FF6B35, #2E86AB);';
+      toast.innerHTML = `
+        <div class="d-flex">
+          <div class="toast-body">
+            <i class="bi bi-star-fill"></i> +${points} ScooterPoints ganados!
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+      `;
+      
+      document.body.appendChild(toast);
+      const bsToast = new bootstrap.Toast(toast);
+      bsToast.show();
+      
+      // Remover después de que se oculte
+      toast.addEventListener('hidden.bs.toast', () => {
+        toast.remove();
+      });
+    }
+  }
+
+  // Inicializar sistema de puntos (FALTANTE)
+  let scooterPoints = new ScooterPointsSystem();
+
+  // Función para actualizar contador del carrito (FALTANTE)
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('APP_CART') || '[]');
+    const totalItems = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+    
+    const cartCountEl = document.getElementById('cartCount');
+    if (cartCountEl) {
+      cartCountEl.textContent = totalItems;
+    }
+  }
+
+  // CÓDIGO FALTANTE: Manejo de la autenticación en la navbar
+  $(function() {
+    // Actualizar año en footer
+    document.getElementById("yearNow").textContent = new Date().getFullYear();
+    
+    // Inicializar contador del carrito
+    updateCartCount();
+    
+    // Manejar visibilidad del login y ScooterPoints (FALTANTE)
+    function updateNavbarAuth() {
+      console.log('Actualizando navbar de autenticación...');
+      
+      // Fallback si AuthStore no está disponible
+      let user = null;
+      if (window.AuthStore && window.AuthStore.getCurrentUser) {
+        user = window.AuthStore.getCurrentUser();
+      } else {
+        // Fallback directo desde localStorage
+        try {
+          const userData = localStorage.getItem('APP_CURRENT_USER');
+          if (userData) {
+            user = JSON.parse(userData);
+            console.log('Usuario obtenido desde localStorage:', user);
+          }
+        } catch (e) {
+          console.error('Error al obtener usuario desde localStorage:', e);
+        }
+      }
+      
+      const loginSection = document.getElementById('loginSection');
+      const userSection = document.getElementById('userSection');
+      const scooterPointsSection = document.getElementById('scooterPointsSection');
+      
+      console.log('Usuario actual:', user);
+      
+      if (user) {
+        // Usuario logueado
+        console.log('Usuario logueado, actualizando navbar...');
+        if (loginSection) loginSection.classList.add('d-none');
+        if (userSection) {
+          userSection.classList.remove('d-none');
+          const userNameEl = document.getElementById('navUserName');
+          if (userNameEl) {
+            userNameEl.textContent = user.name;
+            console.log('Nombre de usuario actualizado:', user.name);
+          }
+        }
+        
+        // Mostrar ScooterPoints
+        if (scooterPointsSection) {
+          scooterPointsSection.classList.remove('d-none');
+        }
+        
+        // Mostrar enlaces de admin si es admin
+        if (user.role === 'admin') {
+          const adminLinks = document.querySelectorAll('.admin-only');
+          adminLinks.forEach(link => link.classList.remove('d-none'));
+          console.log('Enlaces de admin mostrados');
+        }
+      } else {
+        // Usuario no logueado
+        console.log('Usuario no logueado, mostrando login...');
+        if (loginSection) loginSection.classList.remove('d-none');
+        if (userSection) userSection.classList.add('d-none');
+        if (scooterPointsSection) scooterPointsSection.classList.add('d-none');
+      }
+    }
+    
+    // Ejecutar inmediatamente
+    updateNavbarAuth();
+    
+    // También ejecutar después de un pequeño delay para asegurar que AuthStore esté cargado
+    setTimeout(updateNavbarAuth, 100);
+    
+    // Escuchar eventos de autenticación (FALTANTE)
+    window.addEventListener('auth:login', updateNavbarAuth);
+    window.addEventListener('auth:logout', updateNavbarAuth);
+    
+    // Botón de logout (FALTANTE)
+    document.getElementById('btnLogout')?.addEventListener('click', function(e) {
+      e.preventDefault();
+      console.log('Cerrando sesión...');
+      
+      // Usar función global de logout
+      if (window.globalLogout) {
+        window.globalLogout();
+      } else {
+        // Fallback si la función global no está disponible
+        localStorage.removeItem('APP_CURRENT_USER');
+        updateNavbarAuth();
+        window.location.href = 'index.html';
+      }
+    });
+  });
 </script>
 </body>
 </html>

@@ -342,28 +342,50 @@
 
   // Funciones adicionales para ScooterPoints
   function showWelcomeNotification(user) {
-    // Crear notificación de bienvenida
+    // 1) Intenta puntos por usuario (SP_<email>)
+    const email = (user?.email || '').toLowerCase();
+    let points = 0;
+
+    if (email) {
+      const perUser = localStorage.getItem(`SP_${email}`);
+      if (perUser !== null) {
+        points = parseInt(perUser, 10) || 0;
+      }
+    }
+
+    // 2) Si no hay per-usuario, intenta con el usuario de sesión
+    if (!points) {
+      try {
+        const current = JSON.parse(localStorage.getItem('APP_CURRENT_USER') || '{}');
+        if (current && current.scooterPoints != null) {
+          points = parseInt(current.scooterPoints, 10) || 0;
+        }
+      } catch {}
+    }
+
+    // 3) Fallback: clave global 'scooterPoints'
+    if (!points) {
+      points = parseInt(localStorage.getItem('scooterPoints') || '0', 10) || 0;
+    }
+
+    // Toast
     const notification = document.createElement('div');
     notification.className = 'toast align-items-center text-white border-0 position-fixed';
     notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; background: linear-gradient(135deg, #FF6B35, #2E86AB);';
     notification.innerHTML = `
       <div class="d-flex">
         <div class="toast-body">
-          <i class="bi bi-person-check-fill"></i> ¡Bienvenido ${user.name}! 
-          <br><small>Tienes ${user.scooterPoints || 0} ScooterPoints</small>
+          <i class="bi bi-person-check-fill"></i> ¡Bienvenido ${user?.name || ''}!
+          <br><small>Tienes <strong>${points}</strong> ScooterPoints</small>
         </div>
         <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
       </div>
     `;
-    
+
     document.body.appendChild(notification);
     const bsToast = new bootstrap.Toast(notification);
     bsToast.show();
-    
-    // Remover después de que se oculte
-    notification.addEventListener('hidden.bs.toast', () => {
-      notification.remove();
-    });
+    notification.addEventListener('hidden.bs.toast', () => notification.remove());
   }
 
   function detectDuocEmail(email) {

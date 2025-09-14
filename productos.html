@@ -388,8 +388,7 @@ function addToCart(producto){
     });
   }
   localStorage.setItem('APP_CART', JSON.stringify(cart));
-  const points=Math.floor(safeNumber(producto.precio,0)/1000);
-  scooterPoints.addPoints(points);
+
   showToast(`${producto.nombre} agregado al carrito`,'success');
   window.dispatchEvent?.(new CustomEvent('cart:updated'));
   renderProducts();
