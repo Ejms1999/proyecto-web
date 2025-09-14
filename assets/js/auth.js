@@ -42,7 +42,7 @@ const LS_KEYS = {
   
   function setSession(user) {
     localStorage.setItem(LS_KEYS.CURRENT_USER, JSON.stringify({
-      name: user.name, email: user.email, role: user.role
+      name: user.name, email: user.email, role: user.role, points: user.points || 0
     }));
     
     // Disparar evento para actualizar navbar
@@ -228,6 +228,39 @@ const LS_KEYS = {
     return codigo;
   }
 
+  // Funciones para manejo de puntos por usuario
+  function getUserPoints(userEmail) {
+    const users = getUsers();
+    const user = users.find(u => u.email === userEmail);
+    return user ? (user.points || 0) : 0;
+  }
+
+  function addUserPoints(userEmail, points) {
+    const users = getUsers();
+    const userIndex = users.findIndex(u => u.email === userEmail);
+    if (userIndex !== -1) {
+      users[userIndex].points = (users[userIndex].points || 0) + points;
+      saveUsers(users);
+      
+      // Actualizar sesión actual si es el mismo usuario
+      const currentUser = getCurrentUser();
+      if (currentUser && currentUser.email === userEmail) {
+        currentUser.points = users[userIndex].points;
+        localStorage.setItem(LS_KEYS.CURRENT_USER, JSON.stringify(currentUser));
+      }
+      
+      return users[userIndex].points;
+    }
+    return 0;
+  }
+
+  function calculateTier(points) {
+    if (points >= 1000) return "Pro";
+    if (points >= 500) return "Expert";
+    if (points >= 200) return "Advanced";
+    return "Beginner";
+  }
+
   // Exponer función global
   window.globalLogout = globalLogout;
 
@@ -243,6 +276,10 @@ const LS_KEYS = {
     // Funciones de productos
     getProducts,
     saveProducts,
-    generateUniqueProductCode
+    generateUniqueProductCode,
+    // Funciones de puntos
+    getUserPoints,
+    addUserPoints,
+    calculateTier
   };
   

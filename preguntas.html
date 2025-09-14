@@ -83,7 +83,6 @@
       <div class="collapse navbar-collapse" id="mainNav">
         <ul class="navbar-nav me-auto">
           <li class="nav-item admin-only d-none"><a class="nav-link" href="admin.html">Admin Productos</a></li>
-          <li class="nav-item admin-only d-none"><a class="nav-link" href="admin_usuarios.html">Admin Usuarios</a></li>
           <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
           <li class="nav-item"><a class="nav-link" href="productos.html">Repuestos</a></li>
           <li class="nav-item"><a class="nav-link" href="servicios.html">Servicios</a></li>
@@ -270,6 +269,23 @@
     updateCartCount();
     
     // Manejar visibilidad del login y ScooterPoints (FALTANTE)
+    // Función para actualizar ScooterPoints
+    function updateScooterPointsDisplay() {
+      if (window.AuthStore && window.AuthStore.getCurrentUser) {
+        const user = window.AuthStore.getCurrentUser();
+        if (user) {
+          const points = user.points || 0;
+          const tier = window.AuthStore.calculateTier ? window.AuthStore.calculateTier(points) : 'Beginner';
+          
+          const tierElement = document.getElementById('user-tier');
+          const pointsElement = document.getElementById('user-points');
+          
+          if (tierElement) tierElement.textContent = tier;
+          if (pointsElement) pointsElement.textContent = points;
+        }
+      }
+    }
+
     function updateNavbarAuth() {
       console.log('Actualizando navbar de autenticación...');
       
@@ -309,16 +325,18 @@
           }
         }
         
-        // Mostrar ScooterPoints
-        if (scooterPointsSection) {
-          scooterPointsSection.classList.remove('d-none');
-        }
-        
         // Mostrar enlaces de admin si es admin
         if (user.role === 'admin') {
           const adminLinks = document.querySelectorAll('.admin-only');
           adminLinks.forEach(link => link.classList.remove('d-none'));
           console.log('Enlaces de admin mostrados');
+          // Ocultar ScooterPoints para administradores
+          if (scooterPointsSection) scooterPointsSection.classList.add('d-none');
+        } else {
+          // Mostrar ScooterPoints para usuarios normales
+          if (scooterPointsSection) scooterPointsSection.classList.remove('d-none');
+          // Actualizar puntos del usuario
+          updateScooterPointsDisplay();
         }
       } else {
         // Usuario no logueado

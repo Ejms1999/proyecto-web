@@ -226,7 +226,6 @@
     <div class="collapse navbar-collapse" id="mainNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item admin-only d-none"><a class="nav-link" href="admin.html">Admin Productos</a></li>
-        <li class="nav-item admin-only d-none"><a class="nav-link" href="admin_usuarios.html">Admin Usuarios</a></li>
         <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
         <li class="nav-item"><a class="nav-link" href="productos.html">Repuestos</a></li>
         <li class="nav-item"><a class="nav-link" href="servicios.html">Servicios</a></li>
@@ -316,7 +315,7 @@
             <label class="form-label" for="telefono">
               <i class="bi bi-phone me-2"></i>Teléfono
             </label>
-            <input name="telefono" id="telefono" class="form-control" required placeholder="+56 9 1234 5678">
+            <input name="telefono" id="telefono" class="form-control" required placeholder="+56 9 97290901">
           </div>
           
           <div class="col-12">
@@ -581,17 +580,17 @@ const symptomsByType = {
 // Funciones de WhatsApp especializadas
 function openTechnicalWhatsApp() {
   const message = encodeURIComponent("Hola, necesito ayuda técnica con mi scooter eléctrico. Mi consulta es sobre:");
-  window.open(`https://wa.me/56912345678?text=${message}`, '_blank');
+  window.open(`https://wa.me/56997290901?text=${message}`, '_blank');
 }
 
 function openEmergencyWhatsApp() {
   const message = encodeURIComponent("🚨 EMERGENCIA - Mi scooter tiene una falla crítica y necesito ayuda urgente. Detalles:");
-  window.open(`https://wa.me/56912345678?text=${message}`, '_blank');
+  window.open(`https://wa.me/56997290901?text=${message}`, '_blank');
 }
 
 function openQuoteWhatsApp() {
   const message = encodeURIComponent("Hola, necesito cotizar una reparación para mi scooter. Envío fotos del problema:");
-  window.open(`https://wa.me/56912345678?text=${message}`, '_blank');
+  window.open(`https://wa.me/56997290901?text=${message}`, '_blank');
 }
 
 function updateConsultaType() {
@@ -657,7 +656,7 @@ function sendTechnicalWhatsApp() {
   }
   
   const encodedMessage = encodeURIComponent(message);
-  window.open(`https://wa.me/56912345678?text=${encodedMessage}`, '_blank');
+  window.open(`https://wa.me/56997290901?text=${encodedMessage}`, '_blank');
 }
 
 // Validaciones personalizadas para el formulario de contacto (manteniendo tu código original mejorado)
@@ -901,6 +900,23 @@ class ContactFormValidator {
 }
 
 // Funciones para manejar la autenticación y navbar
+  // Función para actualizar ScooterPoints
+  function updateScooterPointsDisplay() {
+    if (window.AuthStore && window.AuthStore.getCurrentUser) {
+      const user = window.AuthStore.getCurrentUser();
+      if (user) {
+        const points = user.points || 0;
+        const tier = window.AuthStore.calculateTier ? window.AuthStore.calculateTier(points) : 'Beginner';
+        
+        const tierElement = document.getElementById('user-tier');
+        const pointsElement = document.getElementById('user-points');
+        
+        if (tierElement) tierElement.textContent = tier;
+        if (pointsElement) pointsElement.textContent = points;
+      }
+    }
+  }
+
 function updateNavbarAuth() {
   let user = null;
   if (window.AuthStore && window.AuthStore.getCurrentUser) {
@@ -927,12 +943,16 @@ function updateNavbarAuth() {
       const userNameEl = document.getElementById('navUserName');
       if (userNameEl) userNameEl.textContent = user.name;
     }
-    if (scooterPointsSection) {
-      scooterPointsSection.classList.remove('d-none');
-    }
     if (user.role === 'admin') {
       const adminLinks = document.querySelectorAll('.admin-only');
       adminLinks.forEach(link => link.classList.remove('d-none'));
+      // Ocultar ScooterPoints para administradores
+      if (scooterPointsSection) scooterPointsSection.classList.add('d-none');
+    } else {
+      // Mostrar ScooterPoints para usuarios normales
+      if (scooterPointsSection) scooterPointsSection.classList.remove('d-none');
+      // Actualizar puntos del usuario
+      updateScooterPointsDisplay();
     }
   } else {
     if (loginSection) loginSection.classList.remove('d-none');

@@ -113,7 +113,6 @@
       <div class="collapse navbar-collapse" id="mainNav">
         <ul class="navbar-nav me-auto">
           <li class="nav-item admin-only d-none"><a class="nav-link" href="admin.html">Admin Productos</a></li>
-          <li class="nav-item admin-only d-none"><a class="nav-link" href="admin_usuarios.html">Admin Usuarios</a></li>
           <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
           <li class="nav-item"><a class="nav-link" href="productos.html">Repuestos</a></li>
           <li class="nav-item"><a class="nav-link" href="servicios.html">Servicios</a></li>
@@ -121,9 +120,8 @@
           <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
         </ul>
 
-        
         <ul class="navbar-nav ms-auto">
-          <!-- ScooterPoints (solo visible cuando hay usuario logueado) -->
+          <!-- ScooterPoints (solo visible para usuarios no admin) -->
           <li class="nav-item d-none me-2" id="scooterPointsSection">
             <span class="scooter-points">
               <i class="bi bi-trophy"></i> Nivel: <span id="user-tier">Beginner</span> | 
@@ -152,6 +150,8 @@
       </div>
     </div>
   </nav>
+  
+  <div id="navbar-container" style="display: none;"></div>
   <style>
   /* Colores personalizados para los títulos de cada slide */
   #heroCarousel .carousel-item:nth-child(1) h2 { color: #00FFAA; } 
@@ -164,8 +164,6 @@
     text-shadow: 0 2px 8px rgba(8, 8, 8, 0.7);
   }
 </style>
-
-<div id="navbar-container" style="display: none;"></div>
 
 <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1999" data-bs-pause="false">
   <div class="carousel-inner">
@@ -535,16 +533,18 @@
             }
           }
           
-          // Mostrar ScooterPoints
-          if (scooterPointsSection) {
-            scooterPointsSection.classList.remove('d-none');
-          }
-          
           // Mostrar enlaces de admin si es admin
           if (user.role === 'admin') {
             const adminLinks = document.querySelectorAll('.admin-only');
             adminLinks.forEach(link => link.classList.remove('d-none'));
             console.log('Enlaces de admin mostrados');
+            // Ocultar ScooterPoints para administradores
+            if (scooterPointsSection) scooterPointsSection.classList.add('d-none');
+          } else {
+            // Mostrar ScooterPoints para usuarios normales
+            if (scooterPointsSection) scooterPointsSection.classList.remove('d-none');
+            // Actualizar puntos del usuario
+            updateScooterPointsDisplay();
           }
         } else {
           // Usuario no logueado
@@ -581,6 +581,23 @@
         }
       });
       
+      // Función para actualizar ScooterPoints
+      function updateScooterPointsDisplay() {
+        if (window.AuthStore && window.AuthStore.getCurrentUser) {
+          const user = window.AuthStore.getCurrentUser();
+          if (user) {
+            const points = user.points || 0;
+            const tier = window.AuthStore.calculateTier ? window.AuthStore.calculateTier(points) : 'Beginner';
+            
+            const tierElement = document.getElementById('user-tier');
+            const pointsElement = document.getElementById('user-points');
+            
+            if (tierElement) tierElement.textContent = tier;
+            if (pointsElement) pointsElement.textContent = points;
+          }
+        }
+      }
+
       // Inicializar navbar logic
       if (window.Layout && window.Layout.initNavbarLogic) {
         window.Layout.initNavbarLogic();
@@ -590,6 +607,9 @@
       if (window.Layout && window.Layout.loadPartials) {
         Layout.loadPartials();
       }
+      
+      // Actualizar puntos después de cargar partials
+      setTimeout(updateScooterPointsDisplay, 200);
     });
   </script>
 </body>

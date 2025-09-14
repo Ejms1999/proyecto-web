@@ -94,7 +94,6 @@
     <div class="collapse navbar-collapse" id="mainNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item admin-only d-none"><a class="nav-link" href="admin.html">Admin Productos</a></li>
-        <li class="nav-item admin-only d-none"><a class="nav-link" href="admin_usuarios.html">Admin Usuarios</a></li>
         <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
         <li class="nav-item"><a class="nav-link" href="productos.html">Repuestos</a></li>
         <li class="nav-item"><a class="nav-link" href="servicios.html">Servicios</a></li>
@@ -594,6 +593,23 @@ document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('categoryFilter')?.addEventListener('change', applyFilters);
   document.getElementById('sortFilter')?.addEventListener('change', applyFilters);
 
+  // Función para actualizar ScooterPoints
+  function updateScooterPointsDisplay() {
+    if (window.AuthStore && window.AuthStore.getCurrentUser) {
+      const user = window.AuthStore.getCurrentUser();
+      if (user) {
+        const points = user.points || 0;
+        const tier = window.AuthStore.calculateTier ? window.AuthStore.calculateTier(points) : 'Beginner';
+        
+        const tierElement = document.getElementById('user-tier');
+        const pointsElement = document.getElementById('user-points');
+        
+        if (tierElement) tierElement.textContent = tier;
+        if (pointsElement) pointsElement.textContent = points;
+      }
+    }
+  }
+
   // Auth navbar (si usas auth.js)
   function updateNavbarAuth(){
     let user=null;
@@ -616,8 +632,16 @@ document.addEventListener('DOMContentLoaded', function(){
         const userNameEl=document.getElementById('navUserName');
         if(userNameEl) userNameEl.textContent=user.name || 'Usuario';
       }
-      scooterPointsSection?.classList.remove('d-none');
-      if(user.role==='admin'){ document.querySelectorAll('.admin-only').forEach(l=>l.classList.remove('d-none')); }
+      if(user.role==='admin'){ 
+        document.querySelectorAll('.admin-only').forEach(l=>l.classList.remove('d-none'));
+        // Ocultar ScooterPoints para administradores
+        scooterPointsSection?.classList.add('d-none');
+      } else {
+        // Mostrar ScooterPoints para usuarios normales
+        scooterPointsSection?.classList.remove('d-none');
+        // Actualizar puntos del usuario
+        updateScooterPointsDisplay();
+      }
     }else{
       loginSection?.classList.remove('d-none');
       userSection?.classList.add('d-none');

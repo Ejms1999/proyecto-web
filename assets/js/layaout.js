@@ -20,6 +20,22 @@
         });
       } catch {}
     }
+
+    function updateScooterPointsDisplay() {
+      if (window.AuthStore && window.AuthStore.getCurrentUser) {
+        const user = window.AuthStore.getCurrentUser();
+        if (user) {
+          const points = user.points || 0;
+          const tier = window.AuthStore.calculateTier ? window.AuthStore.calculateTier(points) : 'Beginner';
+          
+          const tierElement = document.getElementById('user-tier');
+          const pointsElement = document.getElementById('user-points');
+          
+          if (tierElement) tierElement.textContent = tier;
+          if (pointsElement) pointsElement.textContent = points;
+        }
+      }
+    }
   
     function initNavbarLogic() {
       const user = (window.AuthStore && window.AuthStore.getCurrentUser && window.AuthStore.getCurrentUser()) || null;
@@ -28,11 +44,21 @@
       const logoutBtn = document.getElementById('btnLogout');
       const adminEls = document.querySelectorAll('.admin-only');
       const cartCountEl = document.getElementById('cartCount');
+      const scooterPointsSection = document.getElementById('scooterPointsSection');
   
       // Usuario y rol
       if (user) {
         if (nameEl) nameEl.textContent = `${user.name} (${user.role})`;
-        if (user.role === 'admin') adminEls.forEach(el => el.classList.remove('d-none'));
+        if (user.role === 'admin') {
+          adminEls.forEach(el => el.classList.remove('d-none'));
+          // Ocultar ScooterPoints para administradores
+          if (scooterPointsSection) scooterPointsSection.classList.add('d-none');
+        } else {
+          // Mostrar ScooterPoints para usuarios normales
+          if (scooterPointsSection) scooterPointsSection.classList.remove('d-none');
+          // Actualizar puntos del usuario
+          updateScooterPointsDisplay();
+        }
       } else {
         if (nameEl) nameEl.textContent = 'Invitado';
         if (logoutBtn) {
@@ -40,6 +66,8 @@
           logoutBtn.setAttribute('tabindex', '-1');
           logoutBtn.setAttribute('aria-disabled', 'true');
         }
+        // Ocultar ScooterPoints para usuarios no logueados
+        if (scooterPointsSection) scooterPointsSection.classList.add('d-none');
       }
   
       // Carrito

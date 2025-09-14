@@ -151,6 +151,11 @@
         </thead>
         <tbody></tbody>
         <tfoot class="table-light">
+          <tr id="discountRow" class="d-none">
+            <th colspan="6" class="text-end fs-6 text-success">Descuento Duoc (20%):</th>
+            <th class="text-end fs-6 text-success" id="discountAmount">-$0</th>
+            <th></th>
+          </tr>
           <tr>
             <th colspan="6" class="text-end fs-5">Total a pagar:</th>
             <th class="text-end fs-4 text-primary" id="cartTotal">$0</th>
@@ -235,36 +240,100 @@
     // =========================
     class ScooterPointsSystem {
       constructor() {
-        this.userPoints = parseInt(localStorage.getItem('scooterPoints') || '0', 10);
-        this.userTier = this.calculateTier(this.userPoints);
+        this.currentUser = null;
+        this.userPoints = 0;
+        this.userTier = "Beginner";
+        this.updateUserData();
         this.updateDisplay();
       }
+      
+      updateUserData() {
+        if (window.AuthStore && window.AuthStore.getCurrentUser) {
+          this.currentUser = window.AuthStore.getCurrentUser();
+          if (this.currentUser) {
+            this.userPoints = this.currentUser.points || 0;
+            this.userTier = window.AuthStore.calculateTier(this.userPoints);
+          }
+        }
+      }
+      
       calculateTier(points) {
+        if (window.AuthStore && window.AuthStore.calculateTier) {
+          return window.AuthStore.calculateTier(points);
+        }
         if (points >= 1000) return "Pro";
         if (points >= 500) return "Expert";
         if (points >= 200) return "Advanced";
         return "Beginner";
       }
+      
       addPoints(points) {
+        // Actualizar datos del usuario antes de agregar puntos
+        this.updateUserData();
+        
+        if (!this.currentUser) {
+          console.warn('No hay usuario logueado para agregar puntos');
+          return 0;
+        }
+        
+        console.log('Agregando puntos:', points, 'al usuario:', this.currentUser.email);
+        
+        if (window.AuthStore && window.AuthStore.addUserPoints) {
+          this.userPoints = window.AuthStore.addUserPoints(this.currentUser.email, points);
+          this.userTier = this.calculateTier(this.userPoints);
+          this.updateDisplay();
+          console.log('Puntos actualizados:', this.userPoints);
+          return this.userPoints;
+        }
+        
+        // Fallback al sistema anterior si AuthStore no está disponible
         this.userPoints += points;
         localStorage.setItem('scooterPoints', String(this.userPoints));
         this.userTier = this.calculateTier(this.userPoints);
         this.updateDisplay();
         return this.userPoints;
       }
+      
       updateDisplay() {
         const tierElement = document.getElementById('user-tier');
         const pointsElement = document.getElementById('user-points');
         if (tierElement) tierElement.textContent = this.userTier;
         if (pointsElement) pointsElement.textContent = this.userPoints;
       }
-      getPoints() { return this.userPoints; }
-      getTier() { return this.userTier; }
+      
+      getPoints() { 
+        this.updateUserData();
+        return this.userPoints; 
+      }
+      
+      getTier() { 
+        this.updateUserData();
+        return this.userTier; 
+      }
     }
 
     // 1 punto por cada $1000 CLP de gasto
     function calculatePointsFromPrice(price) {
       return Math.floor(price / 1000);
+    }
+
+    // Verificar si el usuario tiene descuento de dominio Duoc
+    function hasDuocDiscount() {
+      if (window.AuthStore && window.AuthStore.getCurrentUser) {
+        const user = window.AuthStore.getCurrentUser();
+        if (user && user.email) {
+          return user.email.toLowerCase().includes('@duocuc.cl') || user.email.toLowerCase().includes('@duoc.cl');
+        }
+      }
+      return false;
+    }
+
+    // Calcular descuento (20% para usuarios Duoc)
+    function calculateDiscount(total) {
+      if (hasDuocDiscount()) {
+        return Math.floor(total * 0.2); // 20% de descuento
+      }
+      return 0;
     }
 
     // Inicializar sistema (global para que auth/layaout puedan usarlo si quieren)
@@ -284,6 +353,9 @@
         totalPrice += itemTotal;
         totalPoints += calculatePointsFromPrice(itemTotal);
       });
+
+      // Actualizar datos del usuario antes de mostrar
+      window.scooterPoints.updateUserData();
 
       const $current = document.getElementById('current-points');
       const $fromCart = document.getElementById('points-from-cart');
@@ -414,7 +486,22 @@
         `);
       });
 
-      $('#cartTotal').text(fmt.format(total));
+      // Calcular descuento y total final
+      const discount = calculateDiscount(total);
+      const finalTotal = total - discount;
+      
+      // Mostrar/ocultar fila de descuento
+      const $discountRow = $('#discountRow');
+      const $discountAmount = $('#discountAmount');
+      
+      if (discount > 0) {
+        $discountRow.removeClass('d-none');
+        $discountAmount.text(`-${fmt.format(discount)}`);
+      } else {
+        $discountRow.addClass('d-none');
+      }
+      
+      $('#cartTotal').text(fmt.format(finalTotal));
 
       // Actualizar resumen de puntos
       updatePointsDisplay();
@@ -623,13 +710,27 @@
         // 2) Calcula puntos de ESTA compra (no guarda aún)
         const totalText = $('#cartTotal').text();
         const totalPoints = updatePointsDisplay();   // ← solo calcula
+        
+        console.log('Puntos calculados para esta compra:', totalPoints);
+        console.log('Usuario actual:', user);
+        
+        // Guardar también el descuento aplicado para mostrar en gracias.html
+        const discount = calculateDiscount(getCart().reduce((sum, item) => {
+          const prodInfo = findProdInfo(item.id);
+          const price = (typeof item.price === 'number') ? item.price : (prodInfo?.price || 0);
+          const qty = Number(item.qty) || 1;
+          return sum + (price * qty);
+        }, 0));
 
-        // 3) AHORA SÍ: suma los puntos al acumulado
-        window.scooterPoints.addPoints(totalPoints);
+        // 3) AHORA SÍ: suma los puntos al acumulado usando el sistema por usuario
+        console.log('Intentando agregar puntos...');
+        const newPoints = window.scooterPoints.addPoints(totalPoints);
+        console.log('Puntos después de agregar:', newPoints);
 
         // 4) Enviar datos a gracias.html
         sessionStorage.setItem('LAST_ORDER_TOTAL', totalText);
         sessionStorage.setItem('LAST_ORDER_POINTS', String(totalPoints));
+        sessionStorage.setItem('LAST_ORDER_DISCOUNT', String(discount));
 
         // 5) Limpia carrito y redirige
         saveCart([]);

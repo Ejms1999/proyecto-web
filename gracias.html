@@ -48,6 +48,12 @@
             <span class="fw-semibold">N° de pedido</span>
             <span id="orderNumber"></span>
           </div>
+          <div id="discountInfo" class="d-none">
+            <div class="d-flex justify-content-between mt-2">
+              <span class="fw-semibold text-success">Descuento Duoc (20%)</span>
+              <span class="text-success" id="orderDiscount">-$0</span>
+            </div>
+          </div>
           <div class="d-flex justify-content-between mt-2">
             <span class="fw-semibold">Total pagado</span>
             <span id="orderTotal">$0</span>
@@ -124,6 +130,14 @@
 
       // Total de la compra (traído desde carrito)
       const total = sessionStorage.getItem('LAST_ORDER_TOTAL') || '$0';
+      const discount = Number(sessionStorage.getItem('LAST_ORDER_DISCOUNT') || '0');
+      
+      // Mostrar descuento si aplica
+      if (discount > 0) {
+        $('#discountInfo').removeClass('d-none');
+        $('#orderDiscount').text(`-$${discount.toLocaleString('es-CL')}`);
+      }
+      
       $('#orderTotal').text(total);
 
       // Número de pedido
@@ -131,15 +145,29 @@
 
       // Mostrar puntos ganados y acumulados
       const earned = Number(sessionStorage.getItem('LAST_ORDER_POINTS') || '0');
-      const totalPoints = Number(localStorage.getItem('scooterPoints') || '0');
-      const tier = calculateTier(totalPoints);
+      let totalPoints = 0;
+      let tier = "Beginner";
+      
+      // Obtener puntos del usuario actual
+      if (window.AuthStore && window.AuthStore.getCurrentUser) {
+        const currentUser = window.AuthStore.getCurrentUser();
+        if (currentUser) {
+          totalPoints = currentUser.points || 0;
+          tier = window.AuthStore.calculateTier(totalPoints);
+        }
+      } else {
+        // Fallback al sistema anterior
+        totalPoints = Number(localStorage.getItem('scooterPoints') || '0');
+        tier = calculateTier(totalPoints);
+      }
 
       $('#pointsEarned').text(`${earned} pts`);
       $('#pointsTotal').text(`${totalPoints} pts`);
       $('#pointsTier').text(tier);
 
-      // Limpiar el dato de sesión para no re-repetir el mensaje al recargar
+      // Limpiar los datos de sesión para no re-repetir el mensaje al recargar
       sessionStorage.removeItem('LAST_ORDER_POINTS');
+      sessionStorage.removeItem('LAST_ORDER_DISCOUNT');
     });
   </script>
 </body>
